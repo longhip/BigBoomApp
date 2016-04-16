@@ -1,0 +1,203 @@
+<div ng-controller="ProductCtrl">
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><span class="text-semibold">{{'LABEL.ARTICLE' | translate}}</span> - {{'LABEL.DETAIL_ARTICLE' | translate}}</h4>
+                <ul class="breadcrumb">
+                    <li><a href="#/app/dashboard">Home</a></li>
+                    <li><a>{{'LABEL.ARTICLE' | translate}}</a></li>
+                    <li class="active">{{'LABEL.DETAIL_ARTICLE' | translate}}</li>
+                </ul>
+            </div>
+            <div class="heading-elements">
+                <a ng-click="create()" class="btn bg-blue btn-labeled heading-btn"><b><i class="icon-task"></i></b> {{'ACTION.ADD_NEW' | translate}}</a>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+    <!-- Content area -->
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">{{article.name}}</h6>
+                        <div class="heading-elements">
+                            <span class="heading-text"><i class="icon-checkmark-circle position-left text-success"></i> {{article.created_at | date:'dd-MM-yyyy HH:mm'}}</span>
+                            <ul class="icons-list">
+                                <li class="dropdown">
+                                    <a href="index.htm#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="icon-arrow-down12"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a><i class="icon-eye-blocked"></i> {{'ACTION.HIDE_THIS_ARTICLE' | translate}}</a></li>
+                                        <li><a ng-click="edit(article._id)"><i class="icon-pencil"></i> {{'ACTION.UPDATE_THIS_ARTICLE' | translate}}</a></li>
+                                        <li class="divider"></li>
+                                        <li><a><i class="icon-trash"></i> {{'ACTION.DELETE_THIS_ARTICLE' | translate}}</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <p>{{article.description}}</p>
+                        <a class="display-block content-group" ng-if="article.feature_image != null">
+                            <img ng-src="{{serverUrl}}{{article.feature_image}}" class="img-responsive content-group" alt="">
+                        </a>
+                        <p ng-bind-html="article.content"></p>
+                        <p>
+                            <strong>Tags:</strong>
+                            <button class="btn btn-primary margin-right-5" ng-repeat="tag in article.tags"><i class="icon-price-tag2"></i> {{tag.text}}</button>
+                        </p>
+                    </div>
+                    <div class="panel-footer">
+                        <ul>
+                            <li><a href="index.htm#"><i class="icon-thumbs-up2 position-left"></i> 438</a></li>
+                            <li><a href="index.htm#"><i class="icon-comment-discussion position-left"></i> 71</a></li>
+                            <li><a href="index.htm#"><i class="icon-eye4 position-left"></i> 438</a></li>
+                        </ul>
+                        <ul class="pull-right">
+                            <li><a href="index.htm#">{{'ACTION.VIEW_DETAIL' | translate}} <i class="icon-arrow-right14 position-right"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Comment -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h5 class="panel-title text-semiold"><i class="icon-bubbles4 position-left"></i> {{'LABEL.COMMENTS' | translate}} <small>({{article.total_comment}} {{'LABEL.COMMENTS' | translate}})</small></h5>
+                        <div class="heading-elements">
+                            <a href="#" class="btn bg-blue btn-xs btn-icon"><i class="icon-plus2"></i></a>
+                        </div>
+                        <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+                    <div class="panel-body">
+                        <ul class="media-list content-group-lg stack-media-on-mobile">
+                            <li class="media" ng-repeat="(comment_index,comment) in article.comments">
+                                <div class="media-left">
+                                    <a href="#"><img ng-src="{{serverUrl}}{{comment.users[0].avatar}}" class="img-circle img-sm" alt=""></a>
+                                </div>
+                                <div class="media-body">
+                                    <div class="media-heading">
+                                        <a class="text-semibold">{{comment.users[0].name.firstname}} {{comment.users[0].name.lastname}} ({{rootStore.name}})</a>
+                                        <span class="media-annotation dotted" am-time-ago="comment.created_at"></span>
+                                    </div>
+                                    <p ng-if="!comment.isEditComment" ng-bind-html="comment.content"></p>
+                                    <ul ng-if="!comment.isEditComment" class="list-inline list-inline-separate text-size-small">
+                                        <li><a ng-click="getReplyComment(comment)">{{'ACTION.REPLY' | translate}} ({{comment.total_replied}})</a></li>
+                                        <li><a ng-click="comment.isEditComment = !comment.isEditComment">{{'ACTION.EDIT' | translate}}</a></li>
+                                        <li><a ng-click="destroyComment(comment_index,comment)">{{'ACTION.DELETE' | translate}}</a></li>
+                                    </ul>
+
+                                    <!-- Edit comment -->
+                                    <textarea ng-if="comment.isEditComment" class="form-control" cols="10" rows="5" ng-model="comment.content"></textarea>
+                                    <ul ng-if="comment.isEditComment" class="list-inline list-inline-separate text-size-small">
+                                        <li><a ng-click="updateComment(comment_index,comment)">{{'ACTION.SAVE' | translate}}</a></li>
+                                        <li><a ng-click="comment.isEditComment = !comment.isEditComment">{{'ACTION.CANCEL' | translate}}</a></li>
+                                    </ul>
+                                    <!-- Edit comment -->
+
+                                    <!-- Replied comment -->
+                                    <div class="media" ng-repeat="(reply_index,reply) in comment.replieds">
+                                        <div class="media-left">
+                                            <a><img ng-src="{{serverUrl}}{{reply.users[0].avatar}}" class="img-circle img-sm" alt=""></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <!-- Comment -->
+                                            <div class="media-heading">
+                                                <a href="#" class="text-semibold">{{reply.users[0].name.firstname}} {{reply.users[0].name.lastname}}</a>
+                                                <span class="media-annotation dotted" am-time-ago="reply.created_at"></span>
+                                            </div>
+                                            <p ng-if="!reply.isEditReplyComment" ng-bind-html="reply.content"></p>
+                                            <ul ng-if="!reply.isEditReplyComment" class="list-inline list-inline-separate text-size-small">
+                                                <li><a ng-click="reply.isEditReplyComment = !reply.isEditReplyComment">{{'ACTION.EDIT' | translate}}</a></li>
+                                                <li><a ng-click="destroyRepliedComment(comment_index,comment,reply_index,reply)">{{'ACTION.DELETE' | translate}}</a></li>
+                                            </ul>
+                                            <!-- Comment -->
+
+                                            <!-- Edit reply comment -->
+                                            <input ng-if="reply.isEditReplyComment" type="text" class="form-control" ng-model="reply.content">
+                                            <ul ng-if="reply.isEditReplyComment" class="list-inline list-inline-separate text-size-small">
+                                                <li><a ng-click="updateReplyComment(comment_index,reply_index,reply)">{{'ACTION.SAVE' | translate}}</a></li>
+                                                <li><a ng-click="reply.isEditReplyComment = !reply.isEditReplyComment">{{'ACTION.CANCEL' | translate}}</a></li>
+                                            </ul>
+                                            <!-- Edit reply comment -->
+
+                                        </div>
+                                    </div>
+                                    <!-- New reply comment -->
+                                    <div class="media" ng-show="comment.isReply">
+                                        <div class="media-left">
+                                            <a><img ng-src="{{serverUrl}}{{rootAuth.avatar}}" class="img-circle img-sm" alt=""></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <form ng-submit="replyComment(comment)">
+                                                <input type="text" ng-model="comment.reply_content" class="form-control" placeholder="{{'LABEL.REPLY_COMMENT' | translate}}...">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- New reply comment -->
+                                    <!-- Replied comment -->
+                                </div>
+                            </li>
+                            <li class="media">
+                                <div class="media-body">
+                                    <div class="media-heading">
+                                        <a class="text-semibold" ng-if="article.comments.length < article.total_comment" ng-click="loadMoreComment()">{{'ACTION.LOAD_MORE_COMMENT' | translate}}</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <h6 class="text-semibold"><i class="icon-pencil7 position-left"></i> {{'LABEL.YOUR_COMMENT' | translate}}</h6>
+                        <div class="content-group">
+                            <textarea class="form-control" cols="10" rows="5" ng-model="comment.content"></textarea>
+                        </div>
+                        <div class="text-right">
+                            <button type="button" class="btn bg-blue" ng-disabled="comment.content == null || comment.content == ''" ng-click="storeComment()"><i class="icon-plus22"></i> {{'ACTION.ADD_COMMENT' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Comment -->
+            </div>
+            <div class="col-lg-3">
+                <!-- /navigation -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">{{'LABEL.NAVIGATOR' | translate}}</h6>
+                    </div>
+                    <div class="list-group list-group-borderless no-padding-top">
+                        <a class="list-group-item" ng-click="backToIndex()"><i class="icon-menu3"></i> {{'ACTION.ALL_ARTICLE' | translate}}</a>
+                        <a class="list-group-item" ng-click="create()"><i class="icon-pencil"></i> {{'ACTION.ADD_NEW_ARTICLE' | translate}}</a>
+                    </div>
+                </div>
+                <!-- /navigation -->
+                <!-- recent post -->
+                <div class="panel panel-flat" ng-repeat="article in articles">
+                    <div class="panel-heading">
+                        <h6 class="panel-title pointer"><a ng-click="detail(article._id)">{{article.name}}</a></h6>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="thumbnail" ng-hide="article.feature_image == null">
+                                    <div class="thumb">
+                                        <img ng-src="{{serverUrl}}{{article.feature_image}}" alt="">
+                                        <div class="caption-overflow">
+                                            <span>
+                                              <a ng-click="detail(article._id)" class="btn bg-warning-300 btn-icon"><i class="icon-arrow-right8"></i></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <p>{{article.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- recent post -->
+            </div>
+        </div>
+    </div>
+    <!-- /content area -->
+</div>

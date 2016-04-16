@@ -1,0 +1,229 @@
+<div ng-controller="UserCtrl" ng-init="profile()">
+    <!-- Page header -->
+    <div class="page-header">
+        <!-- Header content -->
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><span class="text-semibold">{{'LABEL.USER' | translate}}</span> - {{'LABEL.PROFILE' | translate}}</h4>
+                <ul class="breadcrumb">
+                    <li><a href="#/app/dashboard">Home</a></li>
+                    <li><a>{{'LABEL.USER' | translate}}</a></li>
+                    <li class="active">{{'LABEL.PROFILE' | translate}}</li>
+                </ul>
+            </div>
+            <div class="heading-elements">
+                <a href="#/app/user/all" class="btn bg-blue btn-labeled heading-btn"><b><i class="icon-task"></i></b> {{'ACTION.BACK_TO_LIST' | translate}}</a>
+            </div>
+        </div>
+        <!-- /header content -->
+        <!-- Toolbar -->
+        <div class="navbar navbar-default navbar-component navbar-xs">
+            <ul class="nav navbar-nav visible-xs-block">
+                <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+            </ul>
+            <div class="navbar-collapse collapse" id="navbar-filter">
+                <ul class="nav navbar-nav element-active-slate-400">
+                	<li class="active"><a href="index.htm#information" data-toggle="tab"><i class="icon-file-text position-left"></i> {{'LABEL.INFORMATION' | translate}}</a></li>
+                    <li><a href="index.htm#avatar" data-toggle="tab"><i class="icon-image5 position-left"></i> {{'LABEL.AVATAR' | translate}}</a></li>
+                </ul>
+                <!-- <div class="navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li><a><i class="icon-stack-text position-left"></i> Notes</a></li>
+                        <li><a><i class="icon-collaboration position-left"></i> Friends</a></li>
+                        <li><a><i class="icon-images3 position-left"></i> Photos</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a><i class="icon-image2"></i> Update cover</a></li>
+                                <li><a><i class="icon-clippy"></i> Update info</a></li>
+                                <li><a><i class="icon-make-group"></i> Manage sections</a></li>
+                                <li class="divider"></li>
+                                <li><a><i class="icon-three-bars"></i> Activity log</a></li>
+                                <li><a><i class="icon-cog5"></i> Profile settings</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div> -->
+            </div>
+        </div>
+        <!-- /toolbar -->
+    </div>
+    <!-- /page header -->
+    <!-- Content area -->
+    <div class="content">
+        <!-- User profile -->
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- User thumbnail -->
+                <div class="thumbnail">
+                    <div class="thumb thumb-rounded thumb-slide">
+                        <img ng-src="{{serverUrl}}{{user.avatar}}" class="img-responsive" alt="">
+                    </div>
+                    <div class="caption text-center">
+                        <h6 class="text-semibold no-margin">{{user.name.firstname}} {{user.name.lastname}}</h6>
+                        <ul class="icons-list mt-15">
+                            <li><a data-popup="tooltip" title="Google Drive"><i class="icon-google-drive"></i></a></li>
+                            <li><a data-popup="tooltip" title="Twitter"><i class="icon-twitter"></i></a></li>
+                            <li><a data-popup="tooltip" title="Github"><i class="icon-github"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /user thumbnail -->
+                <!-- Navigation -->
+                <!-- <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">Navigation</h6>
+                        <div class="heading-elements">
+                            <a href="index.htm#" class="heading-text">See all &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="list-group list-group-borderless no-padding-top">
+                        <a class="list-group-item"><i class="icon-user"></i> My profile</a>
+                        <a class="list-group-item"><i class="icon-cash3"></i> Balance</a>
+                        <a class="list-group-item"><i class="icon-tree7"></i> Connections <span class="badge bg-danger pull-right">29</span></a>
+                        <a class="list-group-item"><i class="icon-users"></i> Friends</a>
+                        <div class="list-group-divider"></div>
+                        <a class="list-group-item"><i class="icon-calendar3"></i> Events <span class="badge bg-teal-400 pull-right">48</span></a>
+                        <a class="list-group-item"><i class="icon-cog3"></i> Account settings</a>
+                    </div>
+                </div> -->
+                <!-- /navigation -->
+            </div>
+            <div class="col-lg-9">
+                <div class="tabbable">
+                    <div class="tab-content">
+                        <div class="tab-pane fade" id="avatar">
+                            <!-- Available hours -->
+                            <div class="panel panel-flat">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Avatar</h6>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group text-center">
+                                        <span ng-repeat="avatar in avatars" style="padding:10px">
+                                            <input ng-checked="avatar == user.avatar" type="radio" name="optradio" ng-click="setAvatar(avatar)">
+                                            <img ng-src="{{serverUrl}}{{avatar}}" width="50" height="50" alt="">
+                                        </span>
+                                    </div>
+                                    <hr>
+                                    <div class="text-right">
+                                        <button disable-button type="submit" class="btn btn-primary" ng-click="changeAvatar()">{{'ACTION.SAVE' | translate}} <i class="icon-arrow-right14 position-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /available hours -->
+                        </div>
+                        <div class="tab-pane fade in active" id="information">
+                            <!-- Profile info -->
+                            <div class="panel panel-flat">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">{{'LABEL.INFORMATION' | translate}}</h6>
+                                </div>
+                                <div class="panel-body" style="padding-bottom:23px">
+                                    <form name="information">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="">{{'LABEL.FIRST_NAME' | translate}}:</label>
+                                                    <input type="text" name="firstname" class="form-control" ng-model="user.name.firstname"
+                                                      validator="required,maxlength=60"
+                                                      required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
+                                                      maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
+                                                    >
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="">{{'LABEL.LAST_NAME' | translate}}:</label>
+                                                    <input type="text" name="lastname" class="form-control" ng-model="user.name.lastname"
+                                                      validator="required,maxlength=60"
+                                                      required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
+                                                      maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>{{'LABEL.PHONE' | translate}}:</label>
+                                                    <input type="text" class="form-control" ng-model="user.phone"
+                                                        validator="required,maxlength=60"
+                                                        required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
+                                                        maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
+                                                    >
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Email</label>
+                                                    <input type="text" class="form-control" ng-model="user.email"
+                                                      validator="required,email,maxlength=60"
+                                                      required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
+                                                      email-error-message="{{'VALIDATE_MESSAGE.EMAIL_INVALID' | translate}}"
+                                                      maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
+                                                    >
+                                                </div>
+                                                <div class="col-md-12">
+                                                  <label>{{'LABEL.ADDRESS' | translate}}:</label>
+                                                  <input type="text" class="form-control" ng-model="user.address"
+                                                      validator="maxlength=255"
+                                                      required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
+                                                      maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
+                                                  >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <button disable-button type="submit" class="btn btn-primary" ng-click="changeInformation(information)">{{'ACTION.SAVE' | translate}} <i class="icon-arrow-right14 position-right"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /profile info -->
+                            <!-- Account settings -->
+                            <div class="panel panel-flat">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">{{'LABEL.PASSWORD_SETTING' | translate}}</h6>
+                                </div>
+                                <div class="panel-body">
+                                    <form name="password">
+                                    	<div class="form-group">
+                                        	<label>{{'LABEL.OLD_PASSWORD' | translate}}:</label>
+                                            <input type="password" ng-model="user.old_password" class="form-control"
+                                                validator="required,minlength=6,maxlength=60"
+                                                required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
+                                                minlength-error-message="{{'VALIDATE_MESSAGE.PASSWORD_TOO_SHORT' | translate}}"
+                                                maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
+                                            >
+                                        </div>
+                                        <div class="form-group">
+                                        	<label>{{'LABEL.NEW_PASSWORD' | translate}}:</label>
+                                            <input type="password" ng-model="user.new_password" class="form-control"
+                                                validator="required,minlength=6,maxlength=60"
+                                                required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
+                                                minlength-error-message="{{'VALIDATE_MESSAGE.PASSWORD_TOO_SHORT' | translate}}"
+                                                maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
+                                            >
+                                        </div>
+                                        <div class="form-group">
+                                        	<label>{{'LABEL.RE_PASSWORD' | translate}}:</label>
+                                            <input type="password" ng-model="user.re_password" class="form-control"
+                                                validator="required,minlength=6,maxlength=60"
+                                                required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
+                                                minlength-error-message="{{'VALIDATE_MESSAGE.PASSWORD_TOO_SHORT' | translate}}"
+                                                maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
+                                            >
+                                        </div>
+                                        <div class="text-right">
+                                            <button disable-button ng-disabled="user.new_password != user.re_password" type="submit" class="btn btn-primary" ng-click="changePassword(password)">{{'ACTION.SAVE' | translate}} <i class="icon-arrow-right14 position-right"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /account settings -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /user profile -->
+    </div>
+    <!-- /content area -->
+</div>

@@ -1,0 +1,509 @@
+<div ng-controller="StoreCtrl" ng-init="index()">
+    <!-- Page header -->
+    <div class="page-header no-padding">
+        <div class="breadcrumb-line breadcrumb-line-wide no-margin">
+            <ul class="breadcrumb">
+                <li><a href="#/app/dashboard"><i class="icon-home2 position-left"></i> {{'LABEL.HOME' | translate}}</a></li>
+                <li class="active"><a>{{'LABEL.STORE' | translate}}</a></li>
+            </ul>
+            <ul class="breadcrumb-elements">
+                <li><a href="index.htm#"><i class="icon-comment-discussion position-left"></i> Support</a></li>
+                <li class="dropdown">
+                    <a href="index.htm#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-gear position-left"></i> Setting
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="index.htm#"><i class="icon-user-lock"></i> Account security</a></li>
+                        <li><a href="index.htm#"><i class="icon-statistics"></i> Analytics</a></li>
+                        <li><a href="index.htm#"><i class="icon-accessibility"></i> Accessibility</a></li>
+                        <li class="divider"></li>
+                        <li><a href="index.htm#"><i class="icon-gear"></i> All settings</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /page header -->
+    <!-- Cover area -->
+    <div class="profile-cover">
+        <div class="profile-cover-img" ng-style="{'background-image': 'url('+serverUrl+store.cover_image+')'}"></div>
+        <div class="media">
+            <div class="media-left">
+                <a class="profile-thumb" data-toggle="modal" data-target="#modal_update_logo">
+                    <img ng-src="{{serverUrl}}{{store.logo}}" class="img-circle" alt="">
+                </a>
+            </div>
+            <div class="media-body">
+                <h1>{{store.name}} <small class="display-block">{{store.email}}</small></h1>
+            </div>
+            <div class="media-right media-middle">
+                <ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
+                    <li>
+                        <button class="btn btn-default btn-file"><i class="icon-file-picture position-left"></i> {{'LABEL.COVER_IMAGE' | translate}}
+                            <input ngf-select="changeCoverImage($file)" name="file" accept="image/*" ngf-max-size="2MB" type="file">
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /cover area -->
+    <!-- Toolbar -->
+    <div class="navbar navbar-default navbar-xs content-group">
+        <ul class="nav navbar-nav visible-xs-block">
+            <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+        </ul>
+        <div class="navbar-collapse collapse" id="navbar-filter">
+            <ul class="nav navbar-nav element-active-slate-400">
+                <li class="active"><a href="index.htm#activity" data-toggle="tab"><i class="icon-equalizer position-left"></i> {{'LABEL.STORE_ACTIVITY' | translate}}</a></li>
+                <li><a href="index.htm#schedule" data-toggle="tab"><i class="icon-magazine position-left"></i> {{'LABEL.ARTICLE' | translate}} <span class="badge badge-success badge-inline position-right">32</span></a></li>
+                <li><a href="index.htm#settings" data-toggle="tab"><i class="icon-cog3 position-left"></i> {{'LABEL.STORE_INFORMATION' | translate}}</a></li>
+            </ul>
+            <!-- <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.htm#"><i class="icon-stack-text position-left"></i> Notes</a></li>
+                    <li><a href="index.htm#"><i class="icon-magazine position-left"></i> Friends</a></li>
+                    <li><a href="index.htm#"><i class="icon-images3 position-left"></i> Photos</a></li>
+                    <li class="dropdown">
+                        <a href="index.htm#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="index.htm#"><i class="icon-image2"></i> Update cover</a></li>
+                            <li><a href="index.htm#"><i class="icon-clippy"></i> Update info</a></li>
+                            <li><a href="index.htm#"><i class="icon-make-group"></i> Manage sections</a></li>
+                            <li class="divider"></li>
+                            <li><a href="index.htm#"><i class="icon-three-bars"></i> Activity log</a></li>
+                            <li><a href="index.htm#"><i class="icon-cog5"></i> Profile settings</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div> -->
+        </div>
+    </div>
+    <!-- /toolbar -->
+    <!-- Content area -->
+    <div class="content">
+        <!-- User profile -->
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- Navigation -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">Navigation</h6>
+                        <div class="heading-elements">
+                            <a href="index.htm#" class="heading-text">See all &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="list-group list-group-borderless no-padding-top">
+                        <a class="list-group-item" ng-click="createArticle()"><i class="icon-pencil"></i> Thêm bài viết mới</a>
+                        <a href="index.htm#" class="list-group-item"><i class="icon-cash3"></i> Balance</a>
+                        <a href="index.htm#" class="list-group-item"><i class="icon-tree7"></i> Connections <span class="badge bg-danger pull-right">29</span></a>
+                        <a href="index.htm#" class="list-group-item"><i class="icon-users"></i> Friends</a>
+                        <div class="list-group-divider"></div>
+                        <a href="index.htm#" class="list-group-item"><i class="icon-calendar3"></i> Events <span class="badge bg-teal-400 pull-right">48</span></a>
+                        <a href="index.htm#" class="list-group-item"><i class="icon-cog3"></i> Account settings</a>
+                    </div>
+                </div>
+                <!-- /navigation -->
+                <!-- Share your thoughts -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">Share your thoughts</h6>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li>
+                                    <a data-action="close"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <form action="index.htm#">
+                            <div class="form-group">
+                                <textarea name="enter-message" class="form-control mb-15" rows="3" cols="1" placeholder="What's on your mind?"></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="icons-list icons-list-extended mt-10">
+                                        <li><a href="index.htm#" data-popup="tooltip" title="Add photo" data-container="body"><i class="icon-images2"></i></a></li>
+                                        <li><a href="index.htm#" data-popup="tooltip" title="Add video" data-container="body"><i class="icon-film2"></i></a></li>
+                                        <li><a href="index.htm#" data-popup="tooltip" title="Add event" data-container="body"><i class="icon-calendar2"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <button type="button" class="btn btn-primary btn-labeled btn-labeled-right">Share <b><i class="icon-circle-right2"></i></b></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /share your thoughts -->
+                <!-- Balance chart -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">Balance changes</h6>
+                        <div class="heading-elements">
+                            <span class="heading-text"><i class="icon-arrow-down22 text-danger"></i> <span class="text-semibold">- 29.4%</span></span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="chart-container">
+                            <div class="chart" id="visits" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /balance chart -->
+                <!-- Connections -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">Latest connections</h6>
+                        <div class="heading-elements">
+                            <span class="badge badge-success heading-text">+32</span>
+                        </div>
+                    </div>
+                    <ul class="media-list media-list-linked pb-5">
+                        <li class="media-header">Office staff</li>
+                        <li class="media">
+                            <a href="index.htm#" class="media-link">
+                                <div class="media-left"><img src="assets/images/demo/users/face1.jpg" class="img-circle" alt=""></div>
+                                <div class="media-body">
+                                    <span class="media-heading text-semibold">James Alexander</span>
+                                    <span class="media-annotation">UI/UX expert</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark bg-success"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="media">
+                            <a href="index.htm#" class="media-link">
+                                <div class="media-left"><img src="assets/images/demo/users/face2.jpg" class="img-circle" alt=""></div>
+                                <div class="media-body">
+                                    <span class="media-heading text-semibold">Jeremy Victorino</span>
+                                    <span class="media-annotation">Senior designer</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark bg-danger"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="media">
+                            <a href="index.htm#" class="media-link">
+                                <div class="media-left"><img src="assets/images/demo/users/face6.jpg" class="img-circle" alt=""></div>
+                                <div class="media-body">
+                                    <div class="media-heading"><span class="text-semibold">Jordana Mills</span></div>
+                                    <span class="text-muted">Sales consultant</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark bg-grey-300"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="media">
+                            <a href="index.htm#" class="media-link">
+                                <div class="media-left"><img src="assets/images/demo/users/face9.jpg" class="img-circle" alt=""></div>
+                                <div class="media-body">
+                                    <div class="media-heading"><span class="text-semibold">William Miles</span></div>
+                                    <span class="text-muted">SEO expert</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark bg-success"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="media-header">Partners</li>
+                        <li class="media">
+                            <a href="index.htm#" class="media-link">
+                                <div class="media-left"><img src="assets/images/demo/users/face3.jpg" class="img-circle" alt=""></div>
+                                <div class="media-body">
+                                    <span class="media-heading text-semibold">Margo Baker</span>
+                                    <span class="media-annotation">Google</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark bg-success"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="media">
+                            <a href="index.htm#" class="media-link">
+                                <div class="media-left"><img src="assets/images/demo/users/face4.jpg" class="img-circle" alt=""></div>
+                                <div class="media-body">
+                                    <span class="media-heading text-semibold">Beatrix Diaz</span>
+                                    <span class="media-annotation">Facebook</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark bg-warning-400"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="media">
+                            <a href="index.htm#" class="media-link">
+                                <div class="media-left"><img src="assets/images/demo/users/face5.jpg" class="img-circle" alt=""></div>
+                                <div class="media-body">
+                                    <span class="media-heading text-semibold">Richard Vango</span>
+                                    <span class="media-annotation">Microsoft</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark bg-grey-300"></span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /connections -->
+            </div>
+            <div class="col-lg-9">
+                <div class="tabbable">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="activity">
+                            <div class="panel panel-flat" ng-repeat="article in articles">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">{{article.name}}</h6>
+                                    <div class="heading-elements">
+                                        <span class="heading-text"><i class="icon-checkmark-circle position-left text-success"></i> {{article.created_at | date:'dd-MM-yyyy HH:mm'}}</span>
+                                        <ul class="icons-list">
+                                            <li class="dropdown">
+                                                <a href="index.htm#" class="dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="icon-arrow-down12"></i>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li><a><i class="icon-eye-blocked"></i> Hide this article</a></li>
+                                                    <li><a><i class="icon-pencil"></i> Update this article</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a><i class="icon-trash"></i> Remove this article</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <a class="display-block content-group" ng-if="article.feature_image != ''">
+                                        <img ng-src="{{serverUrl}}{{article.feature_image}}" class="img-responsive content-group" alt="">
+                                    </a>
+                                    <h6 class="content-group">
+                                                    <i class="icon-comment-discussion position-left"></i>
+                                                    Comment from <a href="index.htm#">Jason Ansley</a>:
+                                                </h6>
+                                    <blockquote>
+                                        <p>When suspiciously goodness labrador understood rethought yawned grew piously endearingly inarticulate oh goodness jeez trout distinct hence cobra despite taped laughed the much audacious less inside tiger groaned darn stuffily metaphoric unihibitedly inside cobra.br</p>
+                                        <footer>Jason,
+                                            <cite title="Source Title">10:39 am</cite>
+                                        </footer>
+                                    </blockquote>
+                                </div>
+                                <div class="panel-footer">
+                                    <ul>
+                                        <li><a href="index.htm#"><i class="icon-eye4 position-left"></i> 438</a></li>
+                                        <li><a href="index.htm#"><i class="icon-comment-discussion position-left"></i> 71</a></li>
+                                    </ul>
+                                    <ul class="pull-right">
+                                        <li><a href="index.htm#">Read post <i class="icon-arrow-right14 position-right"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="schedule">
+                            <!-- Article -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Tất cả bài viết</h6>
+                                    <div class="heading-elements">
+                                        <form class="heading-form" action="#">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Search...">
+                                                    <div class="input-group-btn">
+                                                        <button type="button" class="btn btn-info btn-icon"><i class="icon-search4"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="btn-group heading-btn">
+                                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu6"></i> Menu <span class="caret"></span></button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="#">Action</a></li>
+                                                <li><a href="#">Another action</a></li>
+                                                <li><a href="#">Something else here</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#">One more separated line</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+                            </div>
+                            <div class="panel panel-flat" ng-repeat="article in articles">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">{{article.name}}</h6>
+                                    <div class="heading-elements">
+                                        <span class="heading-text"><i class="icon-checkmark-circle position-left text-success"></i> {{article.created_at | date:'dd-MM-yyyy HH:mm'}}</span>
+                                        <ul class="icons-list">
+                                            <li class="dropdown">
+                                                <a href="index.htm#" class="dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="icon-arrow-down12"></i>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li><a><i class="icon-eye-blocked"></i> Hide this article</a></li>
+                                                    <li><a><i class="icon-pencil"></i> Update this article</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a><i class="icon-trash"></i> Remove this article</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <a class="display-block content-group" ng-if="article.feature_image != ''">
+                                        <img ng-src="{{serverUrl}}{{article.feature_image}}" class="img-responsive content-group" alt="">
+                                    </a>
+                                    <h6 class="content-group">
+                                                    <i class="icon-comment-discussion position-left"></i>
+                                                    Comment from <a href="index.htm#">Jason Ansley</a>:
+                                                </h6>
+                                    <blockquote>
+                                        <p>When suspiciously goodness labrador understood rethought yawned grew piously endearingly inarticulate oh goodness jeez trout distinct hence cobra despite taped laughed the much audacious less inside tiger groaned darn stuffily metaphoric unihibitedly inside cobra.br</p>
+                                        <footer>Jason,
+                                            <cite title="Source Title">10:39 am</cite>
+                                        </footer>
+                                    </blockquote>
+                                </div>
+                                <div class="panel-footer">
+                                    <ul>
+                                        <li><a href="index.htm#"><i class="icon-eye4 position-left"></i> 438</a></li>
+                                        <li><a href="index.htm#"><i class="icon-comment-discussion position-left"></i> 71</a></li>
+                                    </ul>
+                                    <ul class="pull-right">
+                                        <li><a href="index.htm#">Read post <i class="icon-arrow-right14 position-right"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Article -->
+                        </div>
+                        <div class="tab-pane fade" id="settings">
+                            <!-- START STORE INFORMATION -->
+                            <div class="panel panel-flat">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">{{'LABEL.STORE_INFORMATION' | translate}}</h6>
+                                    <div class="heading-elements">
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <form name="storeForm" novalidate>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label>{{'LABEL.STORE_NAME' | translate}}:</label>
+                                                    <input type="text" name="name" ng-model="store.name" class="form-control" validator="required,maxlength=255" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>{{'LABEL.EMAIL' | translate}}</label>
+                                                    <input type="text" name="email" ng-model="store.email" class="form-control" validator="required,maxlength=60,email" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" email-error-message="{{'VALIDATE_MESSAGE.EMAIL_INVALID' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>{{'LABEL.PHONE' | translate}}</label>
+                                                    <input type="text" name="phone" ng-model="store.phone" class="form-control" validator="required,maxlength=30" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>{{'LABEL.ADDRESS' | translate}}</label>
+                                                    <input type="text" name="address" ng-model="store.address" class="form-control" validator="required,maxlength=255" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>{{'LABEL.CITY' | translate}}</label>
+                                                    <select ng-model="store.city" name="city" class="form-control" ng-options="city.name as city.name for city in cities"></select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>{{'LABEL.REGOIN' | translate}}</label>
+                                                    <select class="form-control" name="region" ng-model="store.region" ng-options="region.id as region.name for region in regions"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>{{'LABEL.OPEN_TIME' | translate}} {{store.open}}</label>
+                                                    <select class="form-control" id="" ng-model="store.open" ng-options="time.name as time.name for time in times"></select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>{{'LABEL.CLOSE_TIME' | translate}}</label>
+                                                    <select class="form-control" ng-model="store.close" ng-options="time.name as time.name for time in times"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>{{'LABEL.WIFI_NAME' | translate}}</label>
+                                                    <input type="text" name="wifi_name" ng-model="store.wifi_name" class="form-control" validator="required,maxlength=60" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>{{'LABEL.WIFI_PASS' | translate}}</label>
+                                                    <input type="text" name="wifi_pass" ng-model="store.wifi_pass" class="form-control" validator="required,maxlength=60" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>{{'LABEL.PRICE_FROM' | translate}}</label>
+                                                    <input type="text" ng-model="store.price_from" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>{{'LABEL.TO_PRICE' | translate}}</label>
+                                                    <input type="text" ng-model="store.to_price" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <button disable-button ng-click="update(storeForm)" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- END STORE INFORMATION -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /user profile -->
+    </div>
+    <div id="modal_update_logo" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">{{'LABEL.CHANGE_STORE_LOGO' | translate}}</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button class="btn btn-primary btn-file" ngf-select ng-model="picFile" accept="image/*">
+                                <i class="icon-image-compare"></i> Chọn ảnh đại diện</button>
+                            <img class="margin-top-10" ng-src="{{croppedDataUrl}}" />
+                        </div>
+                        <div class="col-md-8">
+                            <form name="myForm">
+                                <div ngf-drop ng-model="picFile" ngf-pattern="image/*" class="cropArea">
+                                    <img-crop image="picFile  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+                                    </img-crop>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link" data-dismiss="modal">{{'ACTION.CANCEL' | translate}}</button>
+                    <button type="button" class="btn btn-info" ng-click="changeLogo(croppedDataUrl, picFile.name)" data-dismiss="modal">{{'ACTION.SAVE' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /content area -->
+</div>

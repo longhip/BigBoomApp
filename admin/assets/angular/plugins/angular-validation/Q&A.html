@@ -1,0 +1,131 @@
+<!doctype html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="distribution" content="global" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="Huei Tan" />
+    <meta name="publisher" content="Huei Tan" />
+    <meta name="rating" content="general" />
+    <meta name="robots" content="all" />
+    <meta name="spiders" content="all" />
+    <meta name="webcrawlers" content="all" />
+
+    <meta name="company" content="angular-validation" />
+    <meta name="abstract" content="Client-side Validation for AngularJS" />
+    <!-- <link rel="SHORTCUT ICON" type="image/x-icon" href="/images/favicon.ico" sizes="16x16 24x24 32x32 48x48 64x64" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" sizes="16x16 24x24 32x32 48x48 64x64" /> -->
+
+    <meta name="subject" content="angular-validation" />
+    <meta name="description" content="Client-side Validation for AngularJS" />
+    <meta name="keywords" content="angular","angularjs","validation","angular validation","validator","client-side" />
+
+    <meta property="og:title" content="angular-validation" />
+    <meta property="og:url" content="http://huei90.github.io/angular-validation/" />
+    <meta property="og:description" content="Client-side Validation for AngularJS" />
+    <meta property="og:image" content="//avatars0.githubusercontent.com/u/2560096?v=3&s=460" />
+
+    <title>Angular Validation</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.2.2/css/foundation.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/styles/solarized_light.min.css"/>
+    <link rel="stylesheet" href="demo/main.css"/>
+
+</head>
+
+<body ng-controller="index">
+<div class="row">
+    <div class="small-12 medium-12 large-12 large-centered columns">
+      <h1 style="text-align:center;">Angular Validation Q&A</h1>
+    </div>
+</div>
+
+<div class="row">
+  <div class="small-12 medium-12 large-12 columns">
+    <form name="Form">
+      <fieldset>
+        <h2>Can I validate the form when init ? <a href="https://github.com/huei90/angular-validation/issues/10" target="_blank">#</a></h2>
+        <p>angular-validation will check iff $dirty status is true, means $pristine status doesn't do the validation. You are suggested to use submit to trigger validation at the first.</p>
+
+  <pre ><code class="javascript">$scope.form = {
+    number: null,
+    submit: function (form) {
+
+        $validationProvider.validate(form);
+    }
+};
+
+<span data-tooltip aria-haspopup="true" class="has-tip" title="timeout to validate the form">$timeout</span>(function () {
+  $validationProvider.validate($scope.Form);
+});
+  </code></pre>
+</fieldset>
+</form>
+</div>
+
+  <div class="small-12 medium-12 large-12 columns">
+    <form name="Form">
+      <fieldset>
+        <h2>What's the differentiate between validator-method `submit` and `submit-only`<a href="https://github.com/huei90/angular-validation/issues/4" target="_blank">#</a></h2>
+        <p>`submit` : when user click submit, then start watching using `watch` to validate<br/>
+        `submit-only` : when user click `submit`, doesn't validate through `watch` until `submit` button is clicked.</p>
+
+</fieldset>
+</form>
+</div>
+
+
+    <div class="small-12 medium-12 large-12 columns">
+        <form style="text-align: center;">
+          <a href="//huei90.github.io/angular-validation/" target="_blank">
+            <fieldset>
+                More API Documentation
+            </fieldset>
+          </a>
+          <a href="//huei90.github.io/angular-validation/Q&A.html" target="_blank">
+            <fieldset>
+                Q&A
+            </fieldset>
+          </a>
+          <a href="//github.com/huei90/angular-validation/issues" target="_blank">
+            <fieldset>
+                Found a bug/issue?
+            </fieldset>
+          </a>
+          <a href="//github.com/huei90/angular-validation" target="_blank">
+            <fieldset>
+                Buy me a Star!
+            </fieldset>
+          </a>
+        </form>
+    </div>
+</div>
+
+<a href="https://github.com/huei90/angular-validation" target="_blank"><img src="demo/iconmonstr-github-10-icon-128.png" id="github-link" alt="Fork me on Github"/></a>
+<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation/foundation.tooltip.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular.min.js"></script>
+<script src="dist/angular-validation.js"></script>
+<script src="dist/angular-validation-rule.js"></script>
+<script src="demo/demo.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+  $(document).foundation();
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-62825613-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</body>
+</html>

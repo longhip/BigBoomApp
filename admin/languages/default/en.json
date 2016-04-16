@@ -1,0 +1,15 @@
+{
+	"MESSAGE": {
+		"LOGIN_SUCCESS" : "Login success!",
+		"SOME_THING_WENT_WRONG":"Opp! Some thing went wrong!",
+		"USER_IS_NOT_ACTIVE" : "Your account don't have active!",
+		"EMAIL_OR_PASSWORD_IS_INCORRECT" : "Email or pasword is incorrect!",
+		"LOGOUT_SUCCESS" : "Logout success!",
+		"CREATE_SUCCESS": "Create success!",
+		"CREATE_FAILED": "Create failed!",
+		"UPDATE_SUCESS": "Update sucess!",
+		"UPDATE_FAILED": "Update failed!",
+		"CHANGE_PASSWORD_SUCCESS": "Password is changed",
+		"PASSWORD_OLD_NOT_INCORRECT": "Password old is incorrect!"
+	}
+}

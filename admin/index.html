@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="BigBoomApp">
+<head>
+    <title>BigBoom App</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/custom.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css">
+    <link href="assets/angular/plugins/angular-toasty/dist/angular-toasty.min.css" rel="stylesheet" type="text/css">
+    <link rel='stylesheet' href='node_modules/angular-loading-bar/src/loading-bar.css' media='all' />
+    <link rel="stylesheet" href="node_modules/sweetalert/dist/sweetalert.css">
+</head>
+<body>
+
+  <div ui-view></div>
+
+    <!-- END CORE JQUERY PLUGINS -->
+    <!-- Core JS files -->
+    <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+    <!-- /core JS files -->
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
+    <!-- /theme JS files -->
+    <!-- BEGIN CORE ANGULARJS PLUGINS -->
+    <script src="assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
+    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js" type="text/javascript"></script>
+    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/angularjs/angular-cookies.min.js" type="text/javascript"></script>
+    <!-- END CORE ANGULARJS PLUGINS -->
+    <!-- BEGIN CUSTOMER JS -->
+    <script type="text/javascript" src="assets/angular/plugins/angular-toasty/dist/angular-toasty.min.js"></script>
+    <script type="text/javascript" src="assets/angular/plugins/translate/angular-translate.min.js"></script>
+    <script type="text/javascript" src="assets/angular/plugins/translate/angular-local-storage.min.js"></script>
+    <script type="text/javascript" src="assets/angular/plugins/translate/angular-translate-loader-partial.min.js"></script>
+    <script type="text/javascript" src="assets/angular/plugins/translate/angular-translate-storage-cookie.min.js"></script>
+    <script type="text/javascript" src="assets/angular/plugins/angular-validation/dist/angular-validation.js"></script>
+    <script type="text/javascript" src="assets/angular/plugins/angular-validation/dist/angular-validation-rule.js"></script>
+    <script src="assets/angular/plugins/angular-animate.min.js"></script>
+
+
+    <script type="text/javascript" src="node_modules/angular-scroll/angular-scroll.min.js"></script>
+    <script type="text/javascript" src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="node_modules/angular-sweetalert/SweetAlert.min.js"></script>
+    <script type='text/javascript' src="node_modules/angular-loading-bar/src/loading-bar.js"></script>
+    <script type='text/javascript' src="node_modules/moment/moment.js"></script>
+    <script type='text/javascript' src="node_modules/angular-moment/angular-moment.js"></script>
+    <script type='text/javascript' src="node_modules/moment/locale/vi.js"></script>
+
+    <!-- END CUSTOMER JS -->
+    <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
+    <script src="app/app.js" type="text/javascript"></script>
+    <script src="app/routes.js" type="text/javascript"></script>
+    <script src="configs/app.js" type="text/javascript"></script>
+    <script src="app/factories/ToastFactory.js" type="text/javascript"></script>
+    <script src="app/factories/CommonApiRequest.js" type="text/javascript"></script>
+    <script src="app/factories/CommonFactory.js" type="text/javascript"></script>
+    <script src="app/directives.js" type="text/javascript"></script>
+    <script src="app/filters.js" type="text/javascript"></script>
+    <script src="modules/auth/auth.component.js"></script>
+    <!-- END APP LEVEL ANGULARJS SCRIPTS -->
+    <!-- END BODY -->
+    <toasty></toasty>
+</html>

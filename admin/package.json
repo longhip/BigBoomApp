@@ -1,0 +1,39 @@
+{
+  "name": "steedoffice_core_mvc",
+  "version": "1.0.0",
+  "description": "Author: longhip.dev@gmail.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/longhip/steedoffice_core_mvc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/longhip/steedoffice_core_mvc/issues"
+  },
+  "homepage": "https://github.com/longhip/steedoffice_core_mvc#readme",
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "express": "^4.13.4",
+    "gulp": "^3.9.0",
+    "socket.io": "^1.4.5"
+  },
+  "dependencies": {
+    "angular-animate": "^1.4.3",
+    "angular-block-ui": "^0.2.0",
+    "angular-loading-bar": "^0.9.0",
+    "angular-moment": "^0.10.3",
+    "angular-scroll": "^1.0.0",
+    "angular-sweetalert": "^1.1.0",
+    "angular-ui-bootstrap": "^1.2.5",
+    "gulp-connect": "^3.2.0",
+    "moment": "^2.12.0",
+    "ng-file-upload": "^12.0.4",
+    "ng-tags-input": "^3.0.0",
+    "sweetalert": "^1.1.3"
+  }
+}

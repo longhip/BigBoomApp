@@ -1,0 +1,44 @@
+<!-- Page container -->
+<div class="page-container login-container login-cover" ng-controller="AuthCtrl" ng-style="style">
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Content area -->
+            <div class="content">
+                <!-- Simple login form -->
+                <form name="loginForm">
+                    <div class="panel panel-body login-form">
+                        <div class="text-center">
+                            <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                            <h5 class="content-group">WELCOME TO BIGBOOM! <small class="display-block">Enter your credentials below</small></h5>
+                        </div>
+                        <div class="form-group has-feedback has-feedback-left" >
+                            <input type="email" name="email" class="form-control" ng-model="credential.email" placeholder="{{'LABEL.EMAIL' | translate}}" validator="required,maxlength=60" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                            <div class="form-control-feedback">
+                                <i class="icon-user text-muted"></i>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback has-feedback-left">
+                            <input type="password" name="password" class="form-control"  ng-model="credential.password" placeholder="{{'LABEL.PASSWORD' | translate}}" validator="required,maxlength=60" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                            <div class="form-control-feedback">
+                                <i class="icon-lock2 text-muted"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button validation-submit="loginForm" ng-disabled="isSubmitting" ng-click="login()" class="btn btn-primary btn-block">{{'LABEL.SIGN_IN' | translate}} <i class="icon-circle-right2 position-right"></i></button>
+                        </div>
+                        <div class="text-center">
+                            <a>{{'LABEL.FORGOT_PASSWORD' | translate}}</a>
+                        </div>
+                    </div>
+                </form>
+                <!-- /simple login form -->
+            </div>
+            <!-- /content area -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->

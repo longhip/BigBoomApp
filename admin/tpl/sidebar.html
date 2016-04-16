@@ -1,0 +1,65 @@
+<div class="sidebar sidebar-main">
+    <div class="sidebar-content">
+        <!-- User menu -->
+        <div class="sidebar-user">
+            <div class="category-content">
+                <div class="media">
+                    <a class="media-left"><img ng-src="{{serverUrl}}{{rootAuth.avatar}}" class="img-circle img-sm" alt=""></a>
+                    <div class="media-body">
+                        <span class="media-heading text-semibold">{{rootAuth.name.firstname}} {{rootAuth.name.lastname}}</span>
+                        <div class="text-size-mini text-muted">
+                            <i class="icon-pin text-size-small"></i> &nbsp;Santa Ana, CA
+                        </div>
+                    </div>
+                    <div class="media-right media-middle">
+                        <ul class="icons-list">
+                            <li>
+                                <a href="index.htm#"><i class="icon-cog3"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /user menu -->
+        <!-- Main navigation -->
+        <div class="sidebar-category sidebar-category-visible">
+            <div class="category-content no-padding">
+                <ul class="navigation navigation-main navigation-accordion">
+                    <!-- Main -->
+                    <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
+                    <li data-ng-class="{'active': $state.includes('app.dashboard')}">
+                        <a href="#/app/dashboard"><i class="icon-home4"></i> <span>Trang chủ</span></a>
+                    </li>
+                    <li data-ng-class="{'active': $state.includes('app.store')}">
+                        <a><i class="icon-store2"></i> <span>Cửa hàng</span></a>
+                        <ul data-ng-class="{'hidden-ul': !$state.includes('app.store')}">
+                            <li data-ng-class="{'active': $state.includes('app.store.index')}">
+                                <a href="#/app/store/index">Cửa hàng của tôi</a>
+                            </li>
+                            <li data-ng-class="{'active': $state.includes('app.store.article')}">
+                                <a href="#/app/store/article/index">Bài viết của tôi</a>
+                            </li>
+                            <li data-ng-class="{'active': $state.includes('app.store.product')}">
+                                <a href="#/app/store/product/index">Thực đơn của tôi</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li data-ng-class="{'active': $state.includes('app.order')}">
+                        <a href="#/app/order"><i class="icon-cart2"></i> <span>Đơn hàng</span></a>
+                    </li>
+                    <li data-ng-class="{'active': $state.includes('app.user')}">
+                        <a><i class="icon-user"></i> <span>Nhân viên</span></a>
+                        <ul data-ng-class="{'hidden-ul': !$state.includes('app.user')}">
+                            <li><a href="#/app/user/all">Tất cả nhân viên</a></li>
+                            <li><a href="#/app/user/create">Thêm mới nhân viên</a></li>
+                            <li><a href="#/app/user/profile">Trang cá nhân</a></li>
+                        </ul>
+                    </li>
+                    <!-- /page kits -->
+                </ul>
+            </div>
+        </div>
+        <!-- /main navigation -->
+    </div>
+</div>
