@@ -62,33 +62,39 @@ var ArticleController = {
 
 
     show: function(req, res) {
-        Article.findOne({ _id: req.params.id, store_id: req.auth.store_id }, function(err, article) {
-            if (err) {
-                ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
-            }
-            if (article) {
-                var articleJson = article.toJSON();
-                ArticleController.getComments(req.params.id).then(function(comments) {
-                    if(articleJson.comments.length > 0){
-                        articleJson.comments = comments;
-                    }
-                    Article.find({ store_id: req.auth.store_id }).sort({ created_at: -1 }).limit(limit).exec(function(err, articles) {
-                        if (err) {
-                            ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
+        req.checkParams('id', 'VALIDATE_MESSAGE.PARAMS_REQUIRED').notEmpty();
+        var errors = req.validationErrors();
+        if (errors) {
+            ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
+        } else {
+            Article.findOne({ _id: req.params.id, store_id: req.auth.store_id }, function(err, article) {
+                if (err) {
+                    ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
+                }
+                if (article) {
+                    var articleJson = article.toJSON();
+                    ArticleController.getComments(req.params.id).then(function(comments) {
+                        if(articleJson.comments.length > 0){
+                            articleJson.comments = comments;
                         }
-                        if (articles.length > 0) {
-                            ResponseService.json(res, true, { article: articleJson, articles: articles }, '');
-                        }
-                        if (articles.length === 0) {
-                            ResponseService.json(res, true, { article: articleJson, articles: [] }, '');
-                        }
+                        Article.find({ store_id: req.auth.store_id }).sort({ created_at: -1 }).limit(limit).exec(function(err, articles) {
+                            if (err) {
+                                ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
+                            }
+                            if (articles.length > 0) {
+                                ResponseService.json(res, true, { article: articleJson, articles: articles }, '');
+                            }
+                            if (articles.length === 0) {
+                                ResponseService.json(res, true, { article: articleJson, articles: [] }, '');
+                            }
+                        });
                     });
-                });
-            }
-            if (!article) {
-                ResponseService.json(res, false, '', 'MESSAGE.DATA_NOT_FOUND');
-            }
-        });
+                }
+                if (!article) {
+                    ResponseService.json(res, false, '', 'MESSAGE.DATA_NOT_FOUND');
+                }
+            });
+        }
     },
 
     update: function(req, res) {
@@ -102,6 +108,7 @@ var ArticleController = {
             Article.findOne({ _id: req.params.id, created_by: req.auth._id }, function(err, article) {
                 if (article) {
                     article.name = req.body.name;
+                    article.slug = getSlug(req.body.name) + '-' + Date.now(),
                     article.content = req.body.content;
                     article.seo_title = req.body.seo_title;
                     article.seo_description = req.body.seo_description;

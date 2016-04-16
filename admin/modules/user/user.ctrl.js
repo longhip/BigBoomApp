@@ -1,5 +1,5 @@
 'use strict';
-angular.module('BigBoomApp.User').controller('UserCtrl', function($rootScope, $state, $scope, $cookieStore, ValidateFactory, CommonApiRequest, UserFactory, Toasty, USER_CONSTANT) {
+angular.module('BigBoomApp.User').controller('UserCtrl', function($rootScope, $state, $scope, $cookieStore, CommonFactory, CommonApiRequest, UserFactory, Toasty, USER_CONSTANT) {
 
     function __construct() {
         $scope.user = {};
@@ -35,7 +35,7 @@ angular.module('BigBoomApp.User').controller('UserCtrl', function($rootScope, $s
     };
 
     $scope.changeInformation = function(form) {
-      ValidateFactory.handle(form).success(function() {
+      CommonFactory.validateHandle(form).success(function() {
         CommonApiRequest.handle('PUT', $scope.moduleApiUrl + '/information', $scope.user, '').then(function(response) {
             if (response.data.status) {
                 $cookieStore.put('member', response.data.data);
@@ -51,17 +51,17 @@ angular.module('BigBoomApp.User').controller('UserCtrl', function($rootScope, $s
     };
 
     $scope.changePassword = function(form) {
-      ValidateFactory.handle(form).success(function() {
-        CommonApiRequest.handle('PUT', $scope.moduleApiUrl + '/password', $scope.user, '').then(function(response) {
-            if (response.data.status) {
-                Toasty.popSuccess(response.data.message);
-            } else {
-                Toasty.popErrors(response.data.message);
-            }
-        });
-      }).error(function(){
-        Toasty.popErrors('MESSAGE.FORM_INVALID');
-      });
+        CommonFactory.validateHandle(form).success(function() {
+            CommonApiRequest.handle('PUT', $scope.moduleApiUrl + '/password', $scope.user, '').then(function(response) {
+                if (response.data.status) {
+                    Toasty.popSuccess(response.data.message);
+                } else {
+                    Toasty.popErrors(response.data.message);
+                }
+            });
+          }).error(function(){
+            Toasty.popErrors('MESSAGE.FORM_INVALID');
+          });
     };
 
     $scope.changeAvatar = function() {
@@ -81,7 +81,7 @@ angular.module('BigBoomApp.User').controller('UserCtrl', function($rootScope, $s
     };
 
     $scope.store = function(form) {
-        ValidateFactory.handle(form).success(function() {
+        CommonFactory.validateHandle(form).success(function() {
             CommonApiRequest.handle('POST', $scope.moduleApiUrl, $scope.user, '').then(function(response) {
                 if (response.data.status) {
                     $state.go('app.user.all');

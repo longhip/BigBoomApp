@@ -10,6 +10,8 @@ var StoreController = require('./store.controller');
 var ArticleController = require('./article/article.controller');
 var ArticleCommentController = require('./article/article_comment.controller');
 var MiddlewareAuth = require.main.require('./middleware/auth');
+var MenuController = require('./menu/menu.controller');
+var FoodController = require('./menu/food.controller');
 var multer  = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -76,6 +78,44 @@ router.post('/article/comment/reply/:article_id/:comment_id',MiddlewareAuth.hand
 router.get('/article/comment/replied/:article_id/:comment_id',MiddlewareAuth.handle,ArticleCommentController.getRepliedComments);
 router.get('/article/comment/more/:article_id',MiddlewareAuth.handle,ArticleCommentController.moreComments);
 router.delete('/article/comment/:article_id/:comment_id',MiddlewareAuth.handle,ArticleCommentController.destroy);
+
+/*
+  |--------------------------------------------------------------------------
+  | Store Menu
+  |--------------------------------------------------------------------------
+  | GET:      api/v1/admin/store/menu                                         ArticleController => store
+  | POST:     api/v1/admin/store/menu                                         ArticleController => update
+  | PUT:      api/v1/admin/store/menu/:menu_id                                ArticleController => update
+  | GET:      api/v1/admin/store/menu/:menu_id                                ArticleController => update
+  | DELETE:   api/v1/admin/store/menu/:menu_id                                ArticleController => destroy
+  |
+  |--------------------------------------------------------------------------
+*/
+router.get('/menu',MiddlewareAuth.handle,MenuController.index);
+router.post('/menu',MiddlewareAuth.handle,MenuController.store);
+router.put('/menu/:menu_id',MiddlewareAuth.handle,MenuController.update);
+router.put('/menu/active/:menu_id',MiddlewareAuth.handle,MenuController.active);
+router.get('/menu/:menu_id',MiddlewareAuth.handle,MenuController.show);
+router.delete('/menu/:menu_id',MiddlewareAuth.handle,MenuController.delete);
+
+/*
+  |--------------------------------------------------------------------------
+  | Store Food
+  |--------------------------------------------------------------------------
+  | GET:     api/v1/admin/store/food                                ArticleController => index (limit:5)
+  | POST:    api/v1/admin/store/food                                ArticleController => store
+  | PUT:     api/v1/admin/store/food/:id                            ArticleController => update
+  | DELETE:  api/v1/admin/store/food/:id                            ArticleController => destroy
+  |
+  |--------------------------------------------------------------------------
+*/
+router.get('/food/:food_id',MiddlewareAuth.handle,FoodController.show);
+router.get('/food/search/result',MiddlewareAuth.handle,FoodController.search);
+router.post('/food/:menu_id',MiddlewareAuth.handle,FoodController.store);
+router.put('/food/:food_id',MiddlewareAuth.handle,FoodController.update);
+router.put('/food/hide/:food_id',MiddlewareAuth.handle,FoodController.hideThisFood);
+router.put('/food/display/:food_id',MiddlewareAuth.handle,FoodController.displayThisFood);
+router.delete('/food/:food_id',MiddlewareAuth.handle,FoodController.destroy);
 
 
 
