@@ -1,4 +1,4 @@
-<div ng-controller="UserCtrl" ng-init="index()">
+<div ng-controller="UserController as vm" ng-init="vm.index()">
     <!-- Page header -->
     <div class="page-header">
         <div class="page-header-content">
@@ -11,7 +11,7 @@
                 </ul>
             </div>
             <div class="heading-elements">
-                <a href="#" class="btn bg-blue btn-labeled heading-btn"><b><i class="icon-task"></i></b> {{'ACTION.ADD_NEW' | translate}}</a>
+                <a ng-click="vm.create()" class="btn bg-blue btn-labeled heading-btn"><b><i class="icon-task"></i></b> {{'ACTION.ADD_NEW' | translate}}</a>
             </div>
         </div>
     </div>
@@ -37,9 +37,9 @@
                         </div>
                     </div>
                     <ul class="media-list media-list-linked">
-                        <li class="media" ng-repeat="user in users | filter:search">
+                        <li class="media" ng-repeat="user in vm.users | filter:search">
                             <div class="media-link cursor-pointer" data-toggle="collapse" data-target="#monica{{user._id}}">
-                                <div class="media-left"><img ng-src="{{user.avatar}}" class="img-circle" alt=""></div>
+                                <div class="media-left"><img ng-src="{{serverUrl}}{{user.avatar}}" class="img-circle" alt=""></div>
                                 <div class="media-body">
                                     <div class="media-heading text-semibold">{{user.name.firstname}} {{user.name.lastname}}</div>
                                     <div class="media-heading text-info">{{roles[user.role_id].name}}</div>

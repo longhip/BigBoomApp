@@ -15,7 +15,7 @@
     <link href="assets/css/colors.css" rel="stylesheet" type="text/css">
     <link href="assets/css/custom.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css">
-    <link href="assets/angular/plugins/angular-toasty/dist/angular-toasty.min.css" rel="stylesheet" type="text/css">
+    <link href="node_modules/angular-toasty/dist/angular-toasty.min.css" rel="stylesheet" type="text/css">
     <link rel='stylesheet' href='node_modules/angular-loading-bar/src/loading-bar.css' media='all' />
     <link rel="stylesheet" href="node_modules/sweetalert/dist/sweetalert.css">
 </head>
@@ -33,25 +33,25 @@
     <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
     <!-- /theme JS files -->
     <!-- BEGIN CORE ANGULARJS PLUGINS -->
-    <script src="assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
+    <script src="node_modules/angular/angular.min.js" type="text/javascript"></script>
+    <script src="node_modules/angular-sanitize/angular-sanitize.min.js" type="text/javascript"></script>
     <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js" type="text/javascript"></script>
     <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/angularjs/angular-cookies.min.js" type="text/javascript"></script>
+    <script src="node_modules/angular-touch/angular-touch.min.js" type="text/javascript"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
+    <script src="node_modules/oclazyload/dist/ocLazyLoad.min.js" type="text/javascript"></script>
+    <script src="node_modules/angular-cookies/angular-cookies.min.js" type="text/javascript"></script>
     <!-- END CORE ANGULARJS PLUGINS -->
     <!-- BEGIN CUSTOMER JS -->
-    <script type="text/javascript" src="assets/angular/plugins/angular-toasty/dist/angular-toasty.min.js"></script>
-    <script type="text/javascript" src="assets/angular/plugins/translate/angular-translate.min.js"></script>
-    <script type="text/javascript" src="assets/angular/plugins/translate/angular-local-storage.min.js"></script>
-    <script type="text/javascript" src="assets/angular/plugins/translate/angular-translate-loader-partial.min.js"></script>
-    <script type="text/javascript" src="assets/angular/plugins/translate/angular-translate-storage-cookie.min.js"></script>
-    <script type="text/javascript" src="assets/angular/plugins/angular-validation/dist/angular-validation.js"></script>
-    <script type="text/javascript" src="assets/angular/plugins/angular-validation/dist/angular-validation-rule.js"></script>
-    <script src="assets/angular/plugins/angular-animate.min.js"></script>
-
+    <script type="text/javascript" src="node_modules/angular-toasty/dist/angular-toasty.min.js"></script>
+    <script type="text/javascript" src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
+    <script type="text/javascript" src="node_modules/angular-translate/dist/angular-translate-loader-partial/angular-translate-loader-partial.min.js"></script>
+    <script type="text/javascript" src="node_modules/angular-translate/dist/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
+    <script type="text/javascript" src="node_modules/angular-validation/dist/angular-validation.js"></script>
+    <script type="text/javascript" src="node_modules/angular-validation/dist/angular-validation-rule.js"></script>
+    <script type="text/javascript" src="node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js"></script>
+    <script type="text/javascript" src="node_modules/angular-animate/angular-animate.min.js"></script>
 
     <script type="text/javascript" src="node_modules/angular-scroll/angular-scroll.min.js"></script>
     <script type="text/javascript" src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
@@ -63,14 +63,11 @@
 
     <!-- END CUSTOMER JS -->
     <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
-    <script src="app/app.js" type="text/javascript"></script>
-    <script src="app/routes.js" type="text/javascript"></script>
+    <script src="core/app.js" type="text/javascript"></script>
+    <script src="core/routes.js" type="text/javascript"></script>
     <script src="configs/app.js" type="text/javascript"></script>
-    <script src="app/factories/ToastFactory.js" type="text/javascript"></script>
-    <script src="app/factories/CommonApiRequest.js" type="text/javascript"></script>
-    <script src="app/factories/CommonFactory.js" type="text/javascript"></script>
-    <script src="app/directives.js" type="text/javascript"></script>
-    <script src="app/filters.js" type="text/javascript"></script>
+    <script src="core/factories/Core.js" type="text/javascript"></script>
+    <script src="core/directives.js" type="text/javascript"></script>
     <script src="modules/auth/auth.component.js"></script>
     <!-- END APP LEVEL ANGULARJS SCRIPTS -->
     <!-- END BODY -->

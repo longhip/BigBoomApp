@@ -12,33 +12,33 @@ var MenuController = {
 		var query_active = { store_id: CreateObjectIdService.generate(req.auth.store_id), active: 1 };
 		var query_non_active = { store_id: CreateObjectIdService.generate(req.auth.store_id), active: 0 };
 		return new Promise(function(resolve,reject){
-			Menu.find(query_non_active,function(err,menuNonActive){
+			Menu.find(query_non_active,function(err,listMenuNonActive){
 				if(err){
 					reject({err:err, message:'SOME_THING_WENT_WRONG'})
 				}else{
-					resolve(menuNonActive);
+					resolve(listMenuNonActive);
 				}
 			});
-		}).then(function(menuNonActive){
-			Menu.find(query_active,function(err,menuActive){
+		}).then(function(listMenuNonActive){
+			Menu.find(query_active,function(err,listMenuActive){
 				if(err){
 					ResponseService.json(res, false, err, 'MESSAGE.SOME_THING_WENT_WRONG');
 				}else{
-					if(menuActive.length > 0){
-						var firstMenu = menuActive[0];
-						Food.find({ store_id: CreateObjectIdService.generate(req.auth.store_id), menu_id: CreateObjectIdService.generate(firstMenu._id) },function(err,food){
+					if(listMenuActive.length > 0){
+						var firstMenuActive = listMenuActive[0];
+						Food.find({ store_id: CreateObjectIdService.generate(req.auth.store_id), menu_id: CreateObjectIdService.generate(firstMenuActive._id) },function(err,listFood){
 							if(err){
 								ResponseService.json(res, false, err, 'MESSAGE.SOME_THING_WENT_WRONG');
 							}
-							if(food.length > 0) {
-								ResponseService.json(res, true, {menuActive:menuActive,menuNonActive: menuNonActive, food: food});
+							if(listFood.length > 0) {
+								ResponseService.json(res, true, {listMenuActive:listMenuActive,listMenuNonActive: listMenuNonActive, listFood: listFood});
 							}
-							if(food.length == 0){
-								ResponseService.json(res, true, {menuActive:menuActive,menuNonActive: menuNonActive, food: []});
+							if(listFood.length == 0){
+								ResponseService.json(res, true, {listMenuActive:listMenuActive,listMenuNonActive: listMenuNonActive, listFood: []});
 							}
 						})
 					}else{
-						ResponseService.json(res, true, {menuActive:[],menuNonActive: menuNonActive, food: []});
+						ResponseService.json(res, true, {listMenuActive:[],listMenuNonActive: listMenuNonActive, listFood: []});
 					}
 				}
 			})

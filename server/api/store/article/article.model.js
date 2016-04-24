@@ -23,7 +23,8 @@ module.exports = mongoose.model('Store_Article', {
         updated_at:{type:Date,default:Date.now}
     }],
     active:Number,
-    tags:[],
+    tags: [],
+    photos: [],
     created_at:{type:Date,},
     updated_at:{type:Date,default:Date.now},
     created_by:{type:String, index:true},

@@ -12,6 +12,7 @@ var ArticleCommentController = require('./article/article_comment.controller');
 var MiddlewareAuth = require.main.require('./middleware/auth');
 var MenuController = require('./menu/menu.controller');
 var FoodController = require('./menu/food.controller');
+var FoodCommentController = require('./menu/food_comment.controller');
 var multer  = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -110,12 +111,28 @@ router.delete('/menu/:menu_id',MiddlewareAuth.handle,MenuController.delete);
   |--------------------------------------------------------------------------
 */
 router.get('/food/:food_id',MiddlewareAuth.handle,FoodController.show);
-router.get('/food/search/result',MiddlewareAuth.handle,FoodController.search);
 router.post('/food/:menu_id',MiddlewareAuth.handle,FoodController.store);
 router.put('/food/:food_id',MiddlewareAuth.handle,FoodController.update);
 router.put('/food/hide/:food_id',MiddlewareAuth.handle,FoodController.hideThisFood);
 router.put('/food/display/:food_id',MiddlewareAuth.handle,FoodController.displayThisFood);
 router.delete('/food/:food_id',MiddlewareAuth.handle,FoodController.destroy);
+
+/*
+  |--------------------------------------------------------------------------
+  | Store Food Comment
+  |--------------------------------------------------------------------------
+  | POST:    api/v1/admin/store/food/comment/:food_id                                ArticleController => store
+  | PUT:     api/v1/admin/store/food/comment/:comment_id                                ArticleController => update
+  | DELETE:  api/v1/admin/store/food/comment/:food_id/:comment_id                    ArticleController => destroy
+  |
+  |--------------------------------------------------------------------------
+*/
+router.post('/food/comment/:food_id',MiddlewareAuth.handle,FoodCommentController.store);
+router.put('/food/comment/:comment_id',MiddlewareAuth.handle,FoodCommentController.update);
+router.post('/food/comment/reply/:food_id/:comment_id',MiddlewareAuth.handle,FoodCommentController.replyComment);
+router.get('/food/comment/replied/:food_id/:comment_id',MiddlewareAuth.handle,FoodCommentController.getRepliedComments);
+router.get('/food/comment/more/:food_id',MiddlewareAuth.handle,FoodCommentController.moreComments);
+router.delete('/food/comment/:food_id/:comment_id',MiddlewareAuth.handle,FoodCommentController.destroy);
 
 
 

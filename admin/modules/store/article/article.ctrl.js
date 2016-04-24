@@ -1,345 +1,469 @@
-'use strict';
-angular.module('BigBoomApp.Store').controller('ArticleCtrl', function($rootScope, $timeout, $translate, $stateParams, $state, $scope, $cookieStore, CommonApiRequest,CommonFactory, ArticleFactory, SweetAlert, Upload, Toasty, ARTICLE_CONSTANT) {
-    function __construct() {
-        $scope.article = {
-            tags: []
-        };
-        $scope.isSearch = false;
-        $scope.articles = [];
-        $scope.query = '';
-        $scope.comment = {};
-        $scope.moduleApiUrl = $rootScope.serverApiUrl + ARTICLE_CONSTANT.MODULE_URL;
-        $scope.defaultLimitComment = 10;
-    }
-    __construct();
 
-    $scope.index = function() {
-        CommonApiRequest.handle('GET', $scope.moduleApiUrl, '', '').then(function(response) {
-            if (response.data.status) {
-                $scope.articles = response.data.data.articles;
-                $scope.total = response.data.data.total;
-            } else {
-                Toasty.popErrors(response.data.message);
-            }
-        });
-    };
+(function() {
+    'use strict';
 
-    $scope.store = function(form) {
-        CommonFactory.validateHandle(form).success(function() {
-            CommonApiRequest.handle('POST', $scope.moduleApiUrl, $scope.article, '').then(function(response) {
-                if (response.data.status) {
-                    $state.go('app.store.article.index');
-                    Toasty.popSuccess(response.data.message);
-                } else {
-                    Toasty.popErrors(response.data.message);
-                }
-            });
-        }).error(function() {
-            Toasty.popErrors('MESSAGE.FORM_INVALID');
-        });
-    };
+    angular
+        .module('BigBoomApp.Store')
+        .controller('ArticleController', ArticleController);
 
-    $scope.show = function() {
-        CommonApiRequest.handle('GET', $scope.moduleApiUrl + '/' + $stateParams.article_id, '', '').then(function(response) {
-            if (response.data.status) {
-                $scope.article = response.data.data.article;
-                $scope.articles = response.data.data.articles;
-            } else {
-                Toasty.popErrors(response.data.message);
-            }
-        });
-    };
+    function ArticleController(Core,ARTICLE_CONSTANT,$stateParams) {
 
-    $scope.update = function(form) {
-        CommonFactory.validateHandle(form).success(function() {
-            CommonApiRequest.handle('PUT', $scope.moduleApiUrl + '/' + $scope.article._id, $scope.article, '').then(function(response) {
-                if (response.data.status) {
-                    Toasty.popSuccess(response.data.message);
-                } else {
-                    Toasty.popErrors(response.data.message);
-                }
-            });
-        }).error(function() {
-            Toasty.popErrors('MESSAGE.FORM_INVALID');
-        });
-    };
-
-    $scope.hideThisArticle = function(article) {
-        CommonApiRequest.handle('PUT', $scope.moduleApiUrl + '/hide/' + article._id, '', '').then(function(response) {
-            if (response.data.status) {
-                article.active = 0;
-            } else {
-                Toasty.popErrors(response.data.message);
-            }
-        });
-    };
-
-    $scope.destroy = function(article) {
-        CommonFactory.sweetAlertHandle(ARTICLE_CONSTANT.DO_YOU_WANT_REMOVE_THIS_ARTICLE).then(function(){
-            CommonApiRequest.handle('DELETE', $scope.moduleApiUrl + '/' + article._id, '', '').then(function(response) {
-                if (response.data.status) {
-                    $scope.articles.splice($scope.articles.indexOf(article), 1);
-                    $scope.total -= 1;
-                    SweetAlert.swal($translate.instant('LABEL.DELETED'), $translate.instant('LABEL.THIS_ARTICLE_HAS_DELETED'), 'success');
-                } else {
-                    Toasty.popErrors(response.data.message);
-                }
-            });
-        });
-    };
-
-    $scope.displayThisArticle = function(article) {
-        CommonApiRequest.handle('PUT', $scope.moduleApiUrl + '/display/' + article._id, '', '').then(function(response) {
-            if (response.data.status) {
-                article.active = 1;
-            } else {
-                Toasty.popErrors(response.data.message);
-            }
-        });
-    };
-
-    $scope.more = function() {
-        if ($scope.isSearch) {
-            CommonApiRequest.handle('GET', $scope.moduleApiUrl + '/more/' + $scope.articles.length, '', { query: $scope.query }).then(function(response) {
-                if (response.data.status) {
-                    $scope.articles = $scope.articles.concat(response.data.data);
-                } else {
-                    Toasty.popErrors(response.data.message);
-                }
-            });
-        } else {
-            CommonApiRequest.handle('GET', $scope.moduleApiUrl + '/more/' + $scope.articles.length, '', '').then(function(response) {
-                if (response.data.status) {
-                    $scope.articles = $scope.articles.concat(response.data.data);
-                } else {
-                    Toasty.popErrors(response.data.message);
-                }
-            });
+        var vm = this;
+        
+        function __construct() {
+             vm.article = {
+                tags: [],
+                photos: [],
+                listPhotoRemoved: []
+            };
+            vm.isSearch = false;
+            vm.articles = [];
+            vm.query = '';
+            vm.comment = {};
+            vm.moduleApiUrl = Core.$rootScope.serverApiUrl + ARTICLE_CONSTANT.MODULE_URL;
+            vm.defaultLimitComment = 10;
         }
-    };
+        __construct();
 
-    $scope.search = function() {
-        $scope.isSearch = true;
-        CommonApiRequest.handle('GET', $scope.moduleApiUrl + '/search/result', '', { query: $scope.query }).then(function(response) {
-            if (response.data.status) {
-                $scope.articles = response.data.data.articles;
-                $scope.searchTotal = response.data.data.total;
+        vm.index = function() {
+            Core.apiRequest('GET', vm.moduleApiUrl, '', '').then(function(response) {
+                if (response.data.status) {
+                    vm.articles = response.data.data.articles;
+                    vm.total = response.data.data.total;
+                } else {
+                    Core.toastyPopErrors(response.data.message);
+                }
+            });
+        };
+
+        vm.store = function(form) {
+            Core.validateHandle(form).success(function() {
+                Core.apiRequest('POST', vm.moduleApiUrl, vm.article, '').then(function(response) {
+                    if (response.data.status) {
+                        Core.$state.go('app.store.article.index');
+                        Core.toastyPopSuccess(response.data.message);
+                    } else {
+                        Core.toastyPopErrors(response.data.message);
+                    }
+                });
+            }).error(function() {
+                Core.toastyPopErrors('MESSAGE.FORM_INVALID');
+            });
+        };
+
+        vm.show = function() {
+            Core.apiRequest('GET', vm.moduleApiUrl + '/' + $stateParams.article_id, '', '').then(function(response) {
+                if (response.data.status) {
+                    vm.article = response.data.data.article;
+                    vm.articles = response.data.data.articles;
+                    vm.article.listPhotoInserted = [];
+                    vm.article.listPhotoRemoved = [];
+                } else {
+                    Core.toastyPopErrors(response.data.message);
+                }
+            });
+        };
+
+        vm.update = function(form) {
+            new Promise(function(resolve){
+                angular.forEach(vm.article.photos, function(photo){
+                    photo.new = false;
+                })
+                resolve();
+            }).then(function(){
+                Core.validateHandle(form).success(function() {
+                    Core.apiRequest('PUT', vm.moduleApiUrl + '/' + vm.article._id, vm.article, '').then(function(response) {
+                        if (response.data.status) {
+                            vm.article.listPhotoInserted = [];
+                            vm.article.listPhotoRemoved = [];
+                            Core.toastyPopSuccess(response.data.message);
+                        } else {
+                            Core.toastyPopErrors(response.data.message);
+                        }
+                    });
+                }).error(function() {
+                    Core.toastyPopErrors('MESSAGE.FORM_INVALID');
+                });
+            });
+        };
+
+        vm.hideThisArticle = function(article) {
+            Core.apiRequest('PUT', vm.moduleApiUrl + '/hide/' + article._id, '', '').then(function(response) {
+                if (response.data.status) {
+                    article.active = 0;
+                } else {
+                    Core.toastyPopErrors(response.data.message);
+                }
+            });
+        };
+
+        vm.destroy = function(article,type) {
+            Core.sweetAlertHandle(ARTICLE_CONSTANT.DO_YOU_WANT_REMOVE_THIS_ARTICLE).then(function(){
+                Core.apiRequest('DELETE', vm.moduleApiUrl + '/' + article._id, '', '').then(function(response) {
+                    if (response.data.status) {
+                        if(type === 'FROM_DETAIL'){
+                            vm.backToIndex();
+                        } else {
+                            vm.articles.splice(vm.articles.indexOf(article), 1);
+                            vm.total -= 1;
+                        }
+                        Core.sweetAlert.swal(Core.$translate.instant('LABEL.DELETED'), Core.$translate.instant('LABEL.THIS_ARTICLE_HAS_DELETED'), 'success');
+                    } else {
+                        Core.toastyPopErrors(response.data.message);
+                    }
+                });
+            });
+        };
+
+        vm.displayThisArticle = function(article) {
+            Core.apiRequest('PUT', vm.moduleApiUrl + '/display/' + article._id, '', '').then(function(response) {
+                if (response.data.status) {
+                    article.active = 1;
+                } else {
+                    Core.toastyPopErrors(response.data.message);
+                }
+            });
+        };
+
+        vm.more = function() {
+            if (vm.isSearch) {
+                Core.apiRequest('GET', vm.moduleApiUrl + '/more/' + vm.articles.length, '', { query: vm.query }).then(function(response) {
+                    if (response.data.status) {
+                        vm.articles = vm.articles.concat(response.data.data);
+                    } else {
+                        Core.toastyPopErrors(response.data.message);
+                    }
+                });
             } else {
-                Toasty.popErrors(response.data.message);
+                Core.apiRequest('GET', vm.moduleApiUrl + '/more/' + vm.articles.length, '', '').then(function(response) {
+                    if (response.data.status) {
+                        vm.articles = vm.articles.concat(response.data.data);
+                    } else {
+                        Core.toastyPopErrors(response.data.message);
+                    }
+                });
             }
-        });
-    };
+        };
 
-    $scope.cancelSearch = function() {
-        $scope.isSearch = false;
-        $scope.index();
-    };
+        vm.search = function() {
+            vm.isSearch = true;
+            Core.apiRequest('GET', vm.moduleApiUrl + '/search/result', '', { query: vm.query }).then(function(response) {
+                if (response.data.status) {
+                    vm.articles = response.data.data.articles;
+                    vm.searchTotal = response.data.data.total;
+                } else {
+                    Core.toastyPopErrors(response.data.message);
+                }
+            });
+        };
 
-    $scope.onSelectFeatureImage = function(file) {
-        if (file) {
-            Upload.upload({
-                url: $rootScope.singleUploadUrl,
-                data: {
-                    file: file,
-                },
-                headers: { 'x-access-token': $cookieStore.get('token') }
-            }).then(function(response) {
-                var feature_image = response.data.data.path;
-                if ($scope.article.feature_image != null) {
-                    CommonFactory.removeSingleFile($scope.article.feature_image).then(function(){
-                        $scope.article.feature_image = feature_image;
+        vm.cancelSearch = function() {
+            vm.isSearch = false;
+            vm.index();
+        };
+
+        vm.onSelectFeatureImage = function(file) {
+            if (file) {
+                Core.uploadSingleFile(file).then(function(file){
+                    vm.article.photos.push(file);
+                    var feature_image = file.path;
+                    if (vm.article.feature_image != null) {
+                        vm.food.photos.forEach(function(photo){
+                            if(vm.article.feature_image == photo.path){
+                                vm.article.photos.splice(vm.article.photos.indexOf(photo),1);
+                            }
+                        })
+                        Core.removeSingleFile(vm.article.feature_image).then(function(){
+                            vm.article.feature_image = feature_image;
+                        });
+                    }
+                    vm.article.feature_image = feature_image;
+                },function(){
+                    Core.toastyPopErrors('MESSAGE.SOMETHING_WENT_WRONG');
+                })
+            }
+        };
+
+        vm.onSelectFeatureImageEdit = function(file) {
+            if (file) {
+                Core.uploadSingleFile(file).then(function(file){
+                    new Promise(function(resolve){
+                        vm.article.photos.forEach(function(photo){
+                            if(vm.article.feature_image == photo.path){
+                                vm.article.photos.splice(vm.article.photos.indexOf(photo),1);
+                                vm.article.listPhotoRemoved.push(photo);
+                                resolve();
+                            }
+                        })
+                    }).then(function(){
+                        vm.article.photos.push(file);
+                        vm.article.listPhotoInserted.push(file);
+                        var feature_image = file.path;
+                        vm.article.feature_image = feature_image;
+                    })
+                },function(){
+                    Core.toastyPopErrors('MESSAGE.SOMETHING_WENT_WRONG');
+                })
+            }
+        };
+
+        vm.removeFeatureImage = function(type) {
+            if(type == 'FROM_EDIT'){
+                vm.article.photos.forEach(function(photo){
+                    if(vm.article.feature_image == photo.path){
+                        vm.article.photos.splice(vm.article.photos.indexOf(photo),1);
+                        vm.article.listPhotoRemoved.push(photo);
+                        vm.article.feature_image = null;
+                    }
+                })
+            } else {
+                if (vm.article.feature_image != null) {
+                    Core.removeSingleFile(vm.article.feature_image).then(function(){
+                        vm.article.photos.forEach(function(photo){
+                            if(vm.article.feature_image == photo.path){
+                                vm.article.photos.splice(vm.article.photos.indexOf(photo),1);
+                                vm.article.feature_image = null;
+                            }
+                        })
                     });
                 }
-                $scope.article.feature_image = feature_image;
-            }, function() {
-                Toasty.popErrors('MESSAGE.SOMETHING_WENT_WRONG');
+            }
+        };
+
+        vm.onEditorMediaDelete = function(target) {
+            vm.article.photos.forEach(function(photo){
+                if(target.attrs.src == (Core.$rootScope.serverUrl + photo.path)){
+                    vm.article.photos.splice(vm.article.photos.indexOf(photo),1);
+                    Core.removeSingleFile(photo.path);
+                }
             });
-        }
-    };
+        };
 
-    $scope.removeFeatureImage = function() {
-        if ($scope.article.feature_image != null) {
-            CommonFactory.removeSingleFile($scope.article.feature_image).then(function(){
-                $scope.article.feature_image = null;
+        vm.uploadImageForEditor = function(files) {
+            Core.uploadSingleFile(files[0]).then(function(file){
+                vm.editor.summernote('editor.insertImage', Core.$rootScope.serverUrl + file.path);
+                vm.article.photos.push(file);
+            },function(){
+                Core.toastyPopErrors('MESSAGE.SOMETHING_WENT_WRONG');
+            })
+        };
+
+        vm.cancelCreateArticle = function(){
+            var i = 0;
+            if(vm.article.photos.length > 0){
+                angular.forEach(vm.article.photos, function(photo){
+                    i++;
+                    Core.removeSingleFile(photo.path).then(function(){
+                        if(i == vm.article.photos.length){
+                            vm.backToIndex();
+                        }
+                    });
+                });
+            } else {
+                vm.backToIndex();
+            }
+        }
+
+        vm.onEditorMediaDeleteEdit = function(target) {
+            vm.article.photos.forEach(function(photo){
+                if(target.attrs.src == (Core.$rootScope.serverUrl + photo.path)){
+                    vm.article.photos.splice(vm.article.photos.indexOf(photo),1);
+                    if(photo.new){
+                        vm.article.listPhotoInserted.splice(vm.article.listPhotoInserted.indexOf(photo),1);
+                        Core.removeSingleFile(photo.path);
+                    } else {
+                        vm.article.listPhotoRemoved.push(photo);
+                    }
+                }
             });
+        };
+
+        vm.uploadImageForEditorEdit = function(files) {
+            Core.uploadSingleFile(files[0]).then(function(file){
+                vm.editor.summernote('editor.insertImage', Core.$rootScope.serverUrl + file.path);
+                file.new = true;
+                vm.article.photos.push(file);
+                vm.article.listPhotoInserted.push(file);
+            },function(){
+                Core.toastyPopErrors('MESSAGE.SOMETHING_WENT_WRONG');
+            })
+        };
+
+        vm.cancelEditArticle = function(){
+            var i = 0;
+            if(vm.article.listPhotoInserted.length > 0){
+                angular.forEach(vm.article.listPhotoInserted, function(photo){
+                    i++;
+                    Core.removeSingleFile(photo.path).then(function(){
+                        if(i == vm.article.listPhotoInserted.length){
+                            vm.backToIndex();
+                        }
+                    });
+                });
+            } else {
+                vm.backToIndex();
+            }
         }
-    };
 
+        /*
+          |---------------------------------------------------------------------------------------------
+          | ARTICLE COMMENTS
+          |---------------------------------------------------------------------------------------------
+        */
 
-    $scope.updateImageForEditor = function(files) {
-        Upload.upload({
-            url: $rootScope.singleUploadUrl,
-            data: {
-                file: files[0]
-            },
-            headers: { 'x-access-token': $cookieStore.get('token') }
-        }).then(function(response) {
-            $scope.editor.summernote('editor.insertImage', $rootScope.serverUrl + response.data.data.path);
-        }, function() {
-            Toasty.popErrors('MESSAGE.SOMETHING_WENT_WRONG');
-        });
-    };
+        vm.storeComment = function() {
+            Core.apiRequest('POST', vm.moduleApiUrl + '/comment/' + vm.article._id, vm.comment, '').then(function(response) {
+                if (response.data.status) {
+                    var comment = {
+                        _id: response.data.data._id,
+                        content: response.data.data.content,
+                        created_at: response.data.data.created_at,
+                        total_replied: 0,
+                        users: [],
+                    };
+                    comment.users.push(Core.$rootScope.rootAuth);
+                    vm.article.comments.splice(0, 0, comment);
+                    vm.article.total_comment += 1;
+                    vm.comment = {};
+                    Core.toastyPopSuccess(response.data.message);
+                } else {
+                    Core.toastyPopErrors(response.data.message);
+                }
+            });
+        };
 
-    /*
-      |---------------------------------------------------------------------------------------------
-      | ARTICLE COMMENTS
-      |---------------------------------------------------------------------------------------------
-    */
+        vm.updateComment = function(comment_index, comment) {
+            Core.apiRequest('PUT', vm.moduleApiUrl + '/comment/' + comment._id, comment, '').then(function(response) {
+                if (response.data.status) {
+                    vm.article.comments[comment_index].content = comment.content;
+                    Core.toastyPopSuccess(response.data.message);
+                    comment.isEditComment = false;
+                } else {
+                    Core.toastyPopErrors(response.data.message);
+                    comment.isEditComment = false;
+                }
+            });
+        };
 
-    $scope.storeComment = function() {
-        CommonApiRequest.handle('POST', $scope.moduleApiUrl + '/comment/' + $scope.article._id, $scope.comment, '').then(function(response) {
-            if (response.data.status) {
-                var comment = {
-                    _id: response.data.data._id,
-                    content: response.data.data.content,
-                    created_at: response.data.data.created_at,
-                    total_replied: 0,
-                    users: [],
+        vm.updateReplyComment = function(comment_index, reply_index, reply) {
+            Core.apiRequest('PUT', vm.moduleApiUrl + '/comment/' + reply._id, reply, '').then(function(response) {
+                if (response.data.status) {
+                    vm.article.comments[comment_index].replieds[reply_index].content = reply.content;
+                    Core.toastyPopSuccess(response.data.message);
+                    reply.isEditReplyComment = false;
+                } else {
+                    Core.toastyPopErrors(response.data.message);
+                    reply.isEditReplyComment = false;
+                }
+            });
+        };
+
+        vm.getReplyComment = function(comment) {
+            comment.isReply = true;
+            if (comment.total_replied > 0) {
+                Core.apiRequest('GET', vm.moduleApiUrl + '/comment/replied/' + vm.article._id + '/' + comment._id, '', '').then(function(response) {
+                    if (response.data.status) {
+                        comment.replieds = response.data.data;
+                    } else {
+                        Core.toastyPopErrors(response.data.message);
+                    }
+                });
+            } else {
+                comment.replieds = [];
+            }
+        };
+
+        vm.replyComment = function(comment) {
+            if(comment.reply_content != null && comment.reply_content != ''){
+                var reply = {
+                    content: comment.reply_content,
+                    total_replied: comment.total_replied,
+                    users: []
                 };
-                comment.users.push($rootScope.rootAuth);
-                $scope.article.comments.splice(0, 0, comment);
-                $scope.article.total_comment += 1;
-                $scope.comment = {};
-                Toasty.popSuccess(response.data.message);
-            } else {
-                Toasty.popErrors(response.data.message);
-            }
-        });
-    };
-
-    $scope.updateComment = function(comment_index, comment) {
-        CommonApiRequest.handle('PUT', $scope.moduleApiUrl + '/comment/' + comment._id, comment, '').then(function(response) {
-            if (response.data.status) {
-                $scope.article.comments[comment_index].content = comment.content;
-                Toasty.popSuccess(response.data.message);
-                comment.isEditComment = false;
-            } else {
-                Toasty.popErrors(response.data.message);
-                comment.isEditComment = false;
-            }
-        });
-    };
-
-    $scope.updateReplyComment = function(comment_index, reply_index, reply) {
-        CommonApiRequest.handle('PUT', $scope.moduleApiUrl + '/comment/' + reply._id, reply, '').then(function(response) {
-            if (response.data.status) {
-                $scope.article.comments[comment_index].replieds[reply_index].content = reply.content;
-                Toasty.popSuccess(response.data.message);
-                reply.isEditReplyComment = false;
-            } else {
-                Toasty.popErrors(response.data.message);
-                reply.isEditReplyComment = false;
-            }
-        });
-    };
-
-    $scope.getReplyComment = function(comment) {
-        comment.isReply = true;
-        if (comment.total_replied > 0) {
-            CommonApiRequest.handle('GET', $scope.moduleApiUrl + '/comment/replied/' + $scope.article._id + '/' + comment._id, '', '').then(function(response) {
-                if (response.data.status) {
-                    comment.replieds = response.data.data;
-                } else {
-                    Toasty.popErrors(response.data.message);
-                }
-            });
-        } else {
-            comment.replieds = [];
-        }
-    };
-
-    $scope.replyComment = function(comment) {
-        if(comment.reply_content != null && comment.reply_content != ''){
-            var reply = {
-                content: comment.reply_content,
-                total_replied: comment.total_replied,
-                users: []
-            };
-            CommonApiRequest.handle('POST', $scope.moduleApiUrl + '/comment/reply/' + $scope.article._id + '/' + comment._id, reply, '').then(function(response) {
-                if (response.data.status) {
-                    reply.users.push($rootScope.rootAuth);
-                    reply.created_at = response.data.data.created_at;
-                    comment.total_replied += 1;
-                    reply._id = response.data.data._id;
-                    comment.replieds.push(reply);
-                    comment.reply_content = '';
-                } else {
-                    Toasty.popErrors(response.data.message);
-                }
-            });
-        }
-    };
-
-    $scope.loadMoreComment = function() {
-        CommonApiRequest.handle('GET', $scope.moduleApiUrl + '/comment/more/' + $scope.article._id, '', { limit: $scope.defaultLimitComment, skip: $scope.article.comments.length }).then(function(response) {
-            if (response.data.status) {
-                $scope.article.comments = $scope.article.comments.concat(response.data.data);
-            } else {
-                Toasty.popErrors(response.data.message);
-            }
-        });
-    };
-
-    $scope.destroyComment = function(comment_index, comment) {
-        CommonFactory.sweetAlertHandle(ARTICLE_CONSTANT.DO_YOU_WANT_REMOVE_THIS_COMMENT).then(function(){
-            CommonApiRequest.handle('DELETE', $scope.moduleApiUrl + '/comment/' + $scope.article._id + '/' + comment._id, '', { type: 'comment' }).then(function(response) {
-                if (response.data.status) {
-                    if (parseInt(response.data.data.ok) === 1) {
-                        $scope.article.comments.splice(comment_index, 1);
-                        $scope.article.total_comment -= 1;
-                        Toasty.popSuccess(response.data.message);
-                        SweetAlert.swal($translate.instant('LABEL.DELETED'), $translate.instant('LABEL.THIS_COMMENT_HAS_DELETED'), 'success');
+                Core.apiRequest('POST', vm.moduleApiUrl + '/comment/reply/' + vm.article._id + '/' + comment._id, reply, '').then(function(response) {
+                    if (response.data.status) {
+                        reply.users.push(Core.$rootScope.rootAuth);
+                        reply.created_at = response.data.data.created_at;
+                        comment.total_replied += 1;
+                        reply._id = response.data.data._id;
+                        comment.replieds.push(reply);
+                        comment.reply_content = '';
                     } else {
-                        Toasty.popErrors('MESSAGE.SOMETHING_WENT_WRONG');
+                        Core.toastyPopErrors(response.data.message);    
                     }
-                } else {
-                    Toasty.popErrors(response.data.message);
-                }
-            });
-        },function(){
+                });
+            }
+        };
 
-        });
-    };
-
-    $scope.destroyRepliedComment = function(comment_index, comment, reply_index, reply) {
-        CommonFactory.sweetAlertHandle(ARTICLE_CONSTANT.DO_YOU_WANT_REMOVE_THIS_COMMENT).then(function(){
-            CommonApiRequest.handle('DELETE', $scope.moduleApiUrl + '/comment/' + $scope.article._id + '/' + reply._id, '', { type: 'replied_comment', parent_comment_id: comment._id }).then(function(response) {
+        vm.loadMoreComment = function() {
+            Core.apiRequest('GET', vm.moduleApiUrl + '/comment/more/' + vm.article._id, '', { limit: vm.defaultLimitComment, skip: vm.article.comments.length }).then(function(response) {
                 if (response.data.status) {
-                    if (parseInt(response.data.data.ok) === 1) {
-                        $scope.article.comments[comment_index].replieds.splice(reply_index, 1);
-                        $scope.article.comments[comment_index].total_replied -= 1;
-                        Toasty.popSuccess(response.data.message);
-
-                    } else {
-                        Toasty.popErrors('MESSAGE.SOMETHING_WENT_WRONG');
-                    }
+                    vm.article.comments = vm.article.comments.concat(response.data.data);
                 } else {
-                    Toasty.popErrors(response.data.message);
+                    Core.toastyPopErrors(response.data.message);
                 }
             });
-        });
-    };
+        };
+
+        vm.destroyComment = function(comment_index, comment) {
+            Core.sweetAlertHandle(ARTICLE_CONSTANT.DO_YOU_WANT_REMOVE_THIS_COMMENT).then(function(){
+                Core.apiRequest('DELETE', vm.moduleApiUrl + '/comment/' + vm.article._id + '/' + comment._id, '', { type: 'comment' }).then(function(response) {
+                    if (response.data.status) {
+                        if (parseInt(response.data.data.ok) === 1) {
+                            vm.article.comments.splice(comment_index, 1);
+                            vm.article.total_comment -= 1;
+                            Core.toastyPopSuccess(response.data.message);
+                            Core.sweetAlert.swal(Core.$translate.instant('LABEL.DELETED'), Core.$translate.instant('LABEL.THIS_COMMENT_HAS_DELETED'), 'success');
+                        } else {
+                            Core.toastyPopErrors('MESSAGE.SOMETHING_WENT_WRONG');
+                        }
+                    } else {
+                        Core.toastyPopErrors(response.data.message);
+                    }
+                });
+            },function(){
+
+            });
+        };
+
+        vm.destroyRepliedComment = function(comment_index, comment, reply_index, reply) {
+            Core.sweetAlertHandle(ARTICLE_CONSTANT.DO_YOU_WANT_REMOVE_THIS_COMMENT).then(function(){
+                Core.apiRequest('DELETE', vm.moduleApiUrl + '/comment/' + vm.article._id + '/' + reply._id, '', { type: 'replied_comment', parent_comment_id: comment._id }).then(function(response) {
+                    if (response.data.status) {
+                        if (parseInt(response.data.data.ok) === 1) {
+                            vm.article.comments[comment_index].replieds.splice(reply_index, 1);
+                            vm.article.comments[comment_index].total_replied -= 1;
+                            Core.toastyPopSuccess(response.data.message);
+                            Core.sweetAlert.swal(Core.$translate.instant('LABEL.DELETED'), Core.$translate.instant('LABEL.THIS_COMMENT_HAS_DELETED'), 'success');
+                        } else {
+                            Core.toastyPopErrors('MESSAGE.SOMETHING_WENT_WRONG');
+                        }
+                    } else {
+                        Core.toastyPopErrors(response.data.message);
+                    }
+                });
+            });
+        };
 
 
 
-    /*
-      |---------------------------------------------------------------------------------------------
-      | State Change
-      |---------------------------------------------------------------------------------------------
-    */
-    $scope.backToIndex = function() {
-        $state.go('app.store.article.index');
-    };
-    $scope.create = function() {
-        $state.go('app.store.article.create');
-    };
-    $scope.edit = function(id) {
-        $state.go('app.store.article.edit', { article_id: id });
-    };
-    $scope.detail = function(id) {
-        $state.go('app.store.article.show', { article_id: id });
-    };
+        /*
+          |---------------------------------------------------------------------------------------------
+          | State Change
+          |---------------------------------------------------------------------------------------------
+        */
+        vm.backToIndex = function() {
+            Core.$state.go('app.store.article.index');
+        };
+        vm.create = function() {
+            Core.$state.go('app.store.article.create');
+        };
+        vm.edit = function(id) {
+            Core.$state.go('app.store.article.edit', { article_id: id });
+        };
+        vm.detail = function(id) {
+            Core.$state.go('app.store.article.show', { article_id: id });
+        };
+    }
+})();
 
-
-
-});

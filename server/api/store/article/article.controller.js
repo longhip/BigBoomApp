@@ -1,10 +1,11 @@
 'use strict';
-var Article = require('./article.model');
-var ResponseService = require.main.require('./services/response.service');
-var getSlug = require('speakingurl');
-var mongoose = require('mongoose');
-var q = require('q');
-var limit = 10;
+var Article             = require('./article.model');
+var ResponseService     = require.main.require('./services/response.service');
+var Common              = require.main.require('./api/common/common');
+var getSlug             = require('speakingurl');
+var mongoose            = require('mongoose');
+var q                   = require('q');
+var limit               = 10;
 
 
 var ArticleController = {
@@ -40,9 +41,9 @@ var ArticleController = {
                 seo_title: req.body.seo_title,
                 seo_description: req.body.seo_description,
                 feature_image: req.body.feature_image,
+                photos: req.body.photos,
                 tags: req.body.tags,
                 active: 1,
-                comments: [],
                 created_at: Date.now(),
                 created_by: new mongoose.Types.ObjectId(req.auth._id),
                 updated_by: new mongoose.Types.ObjectId(req.auth._id),
@@ -53,7 +54,12 @@ var ArticleController = {
                 if (err) {
                     ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
                 } else {
-                    ResponseService.json(res, true, result, 'MESSAGE.CREATE_SUCCESS');
+                    Common.insertStorePhoto( article.photos, { _id: article._id, type: 'article' }, req.auth ).then(function() {
+                        ResponseService.json(res, true, result, 'MESSAGE.CREATE_SUCCESS');
+                    }, function() {
+                        Article.findOneAndRemove({ _id: article._id});
+                        ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
+                    });
                 }
             });
         }
@@ -73,8 +79,8 @@ var ArticleController = {
                 }
                 if (article) {
                     var articleJson = article.toJSON();
-                    ArticleController.getComments(req.params.id).then(function(comments) {
-                        if(articleJson.comments.length > 0){
+                    Common.getComments(Article,req.params.id).then(function(comments) {
+                        if (articleJson.comments.length > 0) {
                             articleJson.comments = comments;
                         }
                         Article.find({ store_id: req.auth.store_id }).sort({ created_at: -1 }).limit(limit).exec(function(err, articles) {
@@ -114,12 +120,15 @@ var ArticleController = {
                     article.seo_description = req.body.seo_description;
                     article.feature_image = req.body.feature_image;
                     article.tags = req.body.tags;
+                    article.photos = req.body.photos;
                     article.active = req.body.active;
                     article.updated_by = new mongoose.Types.ObjectId(req.auth._id);
                     article.save(function(err, result) {
                         if (err) {
                             ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
                         } else {
+                            Common.insertStorePhoto( req.body.listPhotoInserted, { _id: article._id, type: 'article' }, req.auth );
+                            Common.removeStorePhoto( req.body.listPhotoRemoved, { _id: article._id, type: 'article' }, req.auth );
                             ResponseService.json(res, true, result, 'MESSAGE.UPDATE_SUCCESS');
                         }
                     });
@@ -190,83 +199,83 @@ var ArticleController = {
         }
     },
 
-    likeThisArticle: function(req,res){
-        if(parseInt(req.auth.type) === 0){
+    likeThisArticle: function(req, res) {
+        if (parseInt(req.auth.type) === 0) {
             ResponseService.json(res, false, '', 'MESSAGE.DONT_CANT_LIKE_THIS_ARTICLE');
-        }else{
+        } else {
             req.checkParams('id', 'VALIDATE_MESSAGE.PARAMS_REQUIRED').notEmpty();
             var errors = req.validationErrors();
             if (errors) {
                 ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
             } else {
-                return new Promise(function(resolve,reject){
+                return new Promise(function(resolve, reject) {
                     Article.findOne({ _id: req.params.id, created_by: req.auth._id }, function(err, article) {
                         if (article) {
-                            if(article.likes.indexOf(new mongoose.Types.ObjectId(req.auth._id)) === -1){
+                            if (article.likes.indexOf(new mongoose.Types.ObjectId(req.auth._id)) === -1) {
                                 article.likes.push(new mongoose.Types.ObjectId(req.auth._id));
-                                article.total_like +=1;
+                                article.total_like += 1;
                                 resolve(article);
-                            }else{
-                                reject({err:err,message:'MESSAGE.YOU_HAS_LIKE_THIS_ARTICLE'});
+                            } else {
+                                reject({ err: err, message: 'MESSAGE.YOU_HAS_LIKE_THIS_ARTICLE' });
                             }
-                        }else{
-                            reject({err:err,message:'MESSAGE.DATA_NOT_FOUND'});
+                        } else {
+                            reject({ err: err, message: 'MESSAGE.DATA_NOT_FOUND' });
                         }
                     });
-                }).then(function(article){
-                    article.save(function(err,result){
-                        if(result){
+                }).then(function(article) {
+                    article.save(function(err, result) {
+                        if (result) {
                             ResponseService.json(res, true, result, 'MESSAGE.LIKED');
-                        }else{
+                        } else {
                             ResponseService.json(res, false, result, 'MESSAGE.CANT_LIKE');
                         }
                     });
-                },function(rejected){
+                }, function(rejected) {
                     ResponseService.json(res, false, rejected.err, rejected.message);
                 });
             }
         }
     },
 
-    unLikeThisArticle: function(req,res){
-        if(parseInt(req.auth.type) === 0){
+    unLikeThisArticle: function(req, res) {
+        if (parseInt(req.auth.type) === 0) {
             ResponseService.json(res, false, '', 'MESSAGE.DONT_CANT_LIKE_THIS_ARTICLE');
-        }else{
+        } else {
             req.checkParams('id', 'VALIDATE_MESSAGE.PARAMS_REQUIRED').notEmpty();
             var errors = req.validationErrors();
             if (errors) {
                 ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
             } else {
-                return new Promise(function(resolve,reject){
+                return new Promise(function(resolve, reject) {
                     Article.findOne({ _id: req.params.id, created_by: req.auth._id }, function(err, article) {
                         if (article) {
                             var index = article.likes.indexOf(new mongoose.Types.ObjectId(req.auth._id));
-                            if(index > -1){
-                                article.likes.splice(index,1);
-                                article.total_like -=1;
+                            if (index > -1) {
+                                article.likes.splice(index, 1);
+                                article.total_like -= 1;
                                 resolve(article);
-                            }else{
+                            } else {
                                 reject({
-                                    err:err,
-                                    message:'MESSAGE.YOU_HAS_LIKE_THIS_ARTICLE'
+                                    err: err,
+                                    message: 'MESSAGE.YOU_HAS_LIKE_THIS_ARTICLE'
                                 });
                             }
-                        }else{
+                        } else {
                             reject({
-                                err:err,
-                                message:'MESSAGE.DATA_NOT_FOUND'
+                                err: err,
+                                message: 'MESSAGE.DATA_NOT_FOUND'
                             });
                         }
                     });
-                }).then(function(article){
-                    article.save(function(err,result){
-                        if(result){
+                }).then(function(article) {
+                    article.save(function(err, result) {
+                        if (result) {
                             ResponseService.json(res, true, result, 'MESSAGE.LIKED');
-                        }else{
+                        } else {
                             ResponseService.json(res, false, result, 'MESSAGE.CANT_LIKE');
                         }
                     });
-                },function(rejected){
+                }, function(rejected) {
                     ResponseService.json(res, false, rejected.err, rejected.message);
                 });
             }
@@ -279,11 +288,12 @@ var ArticleController = {
         if (errors) {
             ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
         } else {
-            Article.remove({ _id: req.params.id, created_by: req.auth._id }, function(err, result) {
+            Article.findOneAndRemove({ _id: req.params.id, created_by: req.auth._id }, function(err, result) {
                 if (err) {
                     ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
                 }
                 if (result) {
+                    Common.removeStorePhoto(result.photos);
                     ResponseService.json(res, true, result, 'MESSAGE.DELETE_SUCCESS');
                 }
                 if (!result) {
@@ -335,32 +345,6 @@ var ArticleController = {
                 ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
             }
         });
-    },
-
-    getComments: function(article_id) {
-        var comments = [];
-        var deferred = q.defer();
-        Article.aggregate([
-            { $match: { _id: new mongoose.Types.ObjectId(article_id) } },
-            { $unwind: '$comments' },
-            { $match: { 'comments.father_id': null } },
-            { $sort: { 'comments.created_at': -1 } },
-            { $limit: 5 },
-            { $project: { comments: 1 } }, {
-                $lookup: {
-                    from: 'users',
-                    localField: 'comments.user_id',
-                    foreignField: '_id',
-                    as: 'comments.users'
-                }
-            }
-        ], function(err, articles) {
-            articles.forEach(function(article) {
-                comments.push(article.comments);
-            });
-            deferred.resolve(comments);
-        });
-        return deferred.promise;
     },
 
 };

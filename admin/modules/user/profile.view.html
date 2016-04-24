@@ -1,4 +1,4 @@
-<div ng-controller="UserCtrl" ng-init="profile()">
+<div ng-controller="UserController as vm" ng-init="vm.profile()">
     <!-- Page header -->
     <div class="page-header">
         <!-- Header content -->
@@ -12,7 +12,7 @@
                 </ul>
             </div>
             <div class="heading-elements">
-                <a href="#/app/user/all" class="btn bg-blue btn-labeled heading-btn"><b><i class="icon-task"></i></b> {{'ACTION.BACK_TO_LIST' | translate}}</a>
+                <a ng-click="vm.backToIndex()" class="btn bg-blue btn-labeled heading-btn"><b><i class="icon-task"></i></b> {{'ACTION.BACK_TO_LIST' | translate}}</a>
             </div>
         </div>
         <!-- /header content -->
@@ -57,10 +57,10 @@
                 <!-- User thumbnail -->
                 <div class="thumbnail">
                     <div class="thumb thumb-rounded thumb-slide">
-                        <img ng-src="{{serverUrl}}{{user.avatar}}" class="img-responsive" alt="">
+                        <img ng-src="{{serverUrl}}{{vm.user.avatar}}" class="img-responsive" alt="">
                     </div>
                     <div class="caption text-center">
-                        <h6 class="text-semibold no-margin">{{user.name.firstname}} {{user.name.lastname}}</h6>
+                        <h6 class="text-semibold no-margin">{{vm.user.name.firstname}} {{vm.user.name.lastname}}</h6>
                         <ul class="icons-list mt-15">
                             <li><a data-popup="tooltip" title="Google Drive"><i class="icon-google-drive"></i></a></li>
                             <li><a data-popup="tooltip" title="Twitter"><i class="icon-twitter"></i></a></li>
@@ -100,14 +100,14 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="form-group text-center">
-                                        <span ng-repeat="avatar in avatars" style="padding:10px">
-                                            <input ng-checked="avatar == user.avatar" type="radio" name="optradio" ng-click="setAvatar(avatar)">
+                                        <span ng-repeat="avatar in vm.avatars" style="padding:10px">
+                                            <input ng-checked="avatar == vm.user.avatar" type="radio" name="optradio" ng-click="vm.setAvatar(avatar)">
                                             <img ng-src="{{serverUrl}}{{avatar}}" width="50" height="50" alt="">
                                         </span>
                                     </div>
                                     <hr>
                                     <div class="text-right">
-                                        <button disable-button type="submit" class="btn btn-primary" ng-click="changeAvatar()">{{'ACTION.SAVE' | translate}} <i class="icon-arrow-right14 position-right"></i></button>
+                                        <button disable-button type="submit" class="btn btn-primary" ng-click="vm.changeAvatar()">{{'ACTION.SAVE' | translate}} <i class="icon-arrow-right14 position-right"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="">{{'LABEL.FIRST_NAME' | translate}}:</label>
-                                                    <input type="text" name="firstname" class="form-control" ng-model="user.name.firstname"
+                                                    <input type="text" name="firstname" class="form-control" ng-model="vm.user.name.firstname"
                                                       validator="required,maxlength=60"
                                                       required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
                                                       maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
@@ -133,7 +133,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="">{{'LABEL.LAST_NAME' | translate}}:</label>
-                                                    <input type="text" name="lastname" class="form-control" ng-model="user.name.lastname"
+                                                    <input type="text" name="lastname" class="form-control" ng-model="vm.user.name.lastname"
                                                       validator="required,maxlength=60"
                                                       required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
                                                       maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
@@ -145,7 +145,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label>{{'LABEL.PHONE' | translate}}:</label>
-                                                    <input type="text" class="form-control" ng-model="user.phone"
+                                                    <input type="text" name="phone" class="form-control" ng-model="vm.user.phone"
                                                         validator="required,maxlength=60"
                                                         required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
                                                         maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
@@ -153,7 +153,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>Email</label>
-                                                    <input type="text" class="form-control" ng-model="user.email"
+                                                    <input type="text" name="email" class="form-control" ng-model="vm.user.email"
                                                       validator="required,email,maxlength=60"
                                                       required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
                                                       email-error-message="{{'VALIDATE_MESSAGE.EMAIL_INVALID' | translate}}"
@@ -162,7 +162,7 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                   <label>{{'LABEL.ADDRESS' | translate}}:</label>
-                                                  <input type="text" class="form-control" ng-model="user.address"
+                                                  <input type="text" name="address" class="form-control" ng-model="vm.user.address"
                                                       validator="maxlength=255"
                                                       required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
                                                       maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"
@@ -171,7 +171,7 @@
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button disable-button type="submit" class="btn btn-primary" ng-click="changeInformation(information)">{{'ACTION.SAVE' | translate}} <i class="icon-arrow-right14 position-right"></i></button>
+                                            <button disable-button type="submit" class="btn btn-primary" ng-click="vm.changeInformation(information)">{{'ACTION.SAVE' | translate}} <i class="icon-arrow-right14 position-right"></i></button>
                                         </div>
                                     </form>
                                 </div>
@@ -186,7 +186,7 @@
                                     <form name="password">
                                     	<div class="form-group">
                                         	<label>{{'LABEL.OLD_PASSWORD' | translate}}:</label>
-                                            <input type="password" ng-model="user.old_password" class="form-control"
+                                            <input type="password" name="old_password" ng-model="vm.user.old_password" class="form-control"
                                                 validator="required,minlength=6,maxlength=60"
                                                 required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
                                                 minlength-error-message="{{'VALIDATE_MESSAGE.PASSWORD_TOO_SHORT' | translate}}"
@@ -195,7 +195,7 @@
                                         </div>
                                         <div class="form-group">
                                         	<label>{{'LABEL.NEW_PASSWORD' | translate}}:</label>
-                                            <input type="password" ng-model="user.new_password" class="form-control"
+                                            <input type="password" name="new_password" ng-model="vm.user.new_password" class="form-control"
                                                 validator="required,minlength=6,maxlength=60"
                                                 required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
                                                 minlength-error-message="{{'VALIDATE_MESSAGE.PASSWORD_TOO_SHORT' | translate}}"
@@ -204,7 +204,7 @@
                                         </div>
                                         <div class="form-group">
                                         	<label>{{'LABEL.RE_PASSWORD' | translate}}:</label>
-                                            <input type="password" ng-model="user.re_password" class="form-control"
+                                            <input type="password" name="re_password" ng-model="vm.user.re_password" class="form-control"
                                                 validator="required,minlength=6,maxlength=60"
                                                 required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
                                                 minlength-error-message="{{'VALIDATE_MESSAGE.PASSWORD_TOO_SHORT' | translate}}"
@@ -212,7 +212,7 @@
                                             >
                                         </div>
                                         <div class="text-right">
-                                            <button disable-button ng-disabled="user.new_password != user.re_password" type="submit" class="btn btn-primary" ng-click="changePassword(password)">{{'ACTION.SAVE' | translate}} <i class="icon-arrow-right14 position-right"></i></button>
+                                            <button disable-button ng-disabled="vm.user.new_password != vm.user.re_password" type="submit" class="btn btn-primary" ng-click="vm.changePassword(password)">{{'ACTION.SAVE' | translate}} <i class="icon-arrow-right14 position-right"></i></button>
                                         </div>
                                     </form>
                                 </div>

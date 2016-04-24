@@ -140,7 +140,7 @@
                     </div>
                 </div>
             </li>
-            <li class="dropdown dropdown-user" ng-controller="AuthCtrl">
+            <li class="dropdown dropdown-user" ng-controller="AuthController as vm">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     <img ng-src="{{serverUrl}}{{rootAuth.avatar}}" alt="">
                     <span>{{rootAuth.name.firstname}} {{rootAuth.name.lastname}}</span>
@@ -152,7 +152,7 @@
                     <li><a><span class="badge bg-teal-400 pull-right">58</span> <i class="icon-comment-discussion"></i> Messages</a></li>
                     <li class="divider"></li>
                     <li><a><i class="icon-cog5"></i> Account settings</a></li>
-                    <li ng-click="logout()"><a><i class="icon-switch2"></i> Logout</a></li>
+                    <li ng-click="vm.logout()"><a><i class="icon-switch2"></i> Logout</a></li>
                 </ul>
             </li>
         </ul>

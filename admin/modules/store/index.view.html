@@ -1,4 +1,4 @@
-<div ng-controller="StoreCtrl" ng-init="index()">
+<div ng-controller="StoreController as vm" ng-init="vm.index()">
     <!-- Page header -->
     <div class="page-header no-padding">
         <div class="breadcrumb-line breadcrumb-line-wide no-margin">
@@ -27,21 +27,21 @@
     <!-- /page header -->
     <!-- Cover area -->
     <div class="profile-cover">
-        <div class="profile-cover-img" ng-style="{'background-image': 'url('+serverUrl+store.cover_image+')'}"></div>
+        <div class="profile-cover-img" ng-style="{'background-image': 'url('+serverUrl+vm.store.cover_image+')'}"></div>
         <div class="media">
             <div class="media-left">
                 <a class="profile-thumb" data-toggle="modal" data-target="#modal_update_logo">
-                    <img ng-src="{{serverUrl}}{{store.logo}}" class="img-circle" alt="">
+                    <img ng-src="{{serverUrl}}{{vm.store.logo}}" class="img-circle" alt="">
                 </a>
             </div>
             <div class="media-body">
-                <h1>{{store.name}} <small class="display-block">{{store.email}}</small></h1>
+                <h1>{{vm.store.name}} <small class="display-block">{{vm.store.email}}</small></h1>
             </div>
             <div class="media-right media-middle">
                 <ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
                     <li>
                         <button class="btn btn-default btn-file"><i class="icon-file-picture position-left"></i> {{'LABEL.COVER_IMAGE' | translate}}
-                            <input ngf-select="changeCoverImage($file)" name="file" accept="image/*" ngf-max-size="2MB" type="file">
+                            <input ngf-select="vm.changeCoverImage($file)" name="file" accept="image/*" ngf-max-size="2MB" type="file">
                         </button>
                     </li>
                 </ul>
@@ -392,7 +392,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <label>{{'LABEL.STORE_NAME' | translate}}:</label>
-                                                    <input type="text" name="name" ng-model="store.name" class="form-control" validator="required,maxlength=255" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                    <input type="text" name="name" ng-model="vm.store.name" class="form-control" validator="required,maxlength=255" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -400,11 +400,11 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label>{{'LABEL.EMAIL' | translate}}</label>
-                                                    <input type="text" name="email" ng-model="store.email" class="form-control" validator="required,maxlength=60,email" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" email-error-message="{{'VALIDATE_MESSAGE.EMAIL_INVALID' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                    <input type="text" name="email" ng-model="vm.store.email" class="form-control" validator="required,maxlength=60,email" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" email-error-message="{{'VALIDATE_MESSAGE.EMAIL_INVALID' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>{{'LABEL.PHONE' | translate}}</label>
-                                                    <input type="text" name="phone" ng-model="store.phone" class="form-control" validator="required,maxlength=30" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                    <input type="text" name="phone" ng-model="vm.store.phone" class="form-control" validator="required,maxlength=30" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -412,15 +412,15 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label>{{'LABEL.ADDRESS' | translate}}</label>
-                                                    <input type="text" name="address" ng-model="store.address" class="form-control" validator="required,maxlength=255" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                    <input type="text" name="address" ng-model="vm.store.address" class="form-control" validator="required,maxlength=255" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label>{{'LABEL.CITY' | translate}}</label>
-                                                    <select ng-model="store.city" name="city" class="form-control" ng-options="city.name as city.name for city in cities"></select>
+                                                    <select ng-model="vm.store.city" name="city" class="form-control" ng-options="city.name as city.name for city in vm.cities"></select>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label>{{'LABEL.REGOIN' | translate}}</label>
-                                                    <select class="form-control" name="region" ng-model="store.region" ng-options="region.id as region.name for region in regions"></select>
+                                                    <select class="form-control" name="region" ng-model="vm.store.region" ng-options="region.id as region.name for region in vm.regions"></select>
                                                 </div>
                                             </div>
                                         </div>
@@ -428,11 +428,11 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label>{{'LABEL.OPEN_TIME' | translate}} {{store.open}}</label>
-                                                    <select class="form-control" id="" ng-model="store.open" ng-options="time.name as time.name for time in times"></select>
+                                                    <select class="form-control" id="" ng-model="vm.store.open" ng-options="time.name as time.name for time in vm.times"></select>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>{{'LABEL.CLOSE_TIME' | translate}}</label>
-                                                    <select class="form-control" ng-model="store.close" ng-options="time.name as time.name for time in times"></select>
+                                                    <select class="form-control" ng-model="vm.store.close" ng-options="time.name as time.name for time in vm.times"></select>
                                                 </div>
                                             </div>
                                         </div>
@@ -440,11 +440,11 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label>{{'LABEL.WIFI_NAME' | translate}}</label>
-                                                    <input type="text" name="wifi_name" ng-model="store.wifi_name" class="form-control" validator="required,maxlength=60" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                    <input type="text" name="wifi_name" ng-model="vm.store.wifi_name" class="form-control" validator="required,maxlength=60" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>{{'LABEL.WIFI_PASS' | translate}}</label>
-                                                    <input type="text" name="wifi_pass" ng-model="store.wifi_pass" class="form-control" validator="required,maxlength=60" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                                                    <input type="text" name="wifi_pass" ng-model="vm.store.wifi_pass" class="form-control" validator="required,maxlength=60" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -452,16 +452,16 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label>{{'LABEL.PRICE_FROM' | translate}}</label>
-                                                    <input type="text" ng-model="store.price_from" class="form-control">
+                                                    <input type="text" ng-model="vm.store.price_from" class="form-control">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>{{'LABEL.TO_PRICE' | translate}}</label>
-                                                    <input type="text" ng-model="store.to_price" class="form-control">
+                                                    <input type="text" ng-model="vm.store.to_price" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <button disable-button ng-click="update(storeForm)" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
+                                            <button disable-button ng-click="vm.update(storeForm)" class="btn btn-primary">Save <i class="icon-arrow-right14 position-right"></i></button>
                                         </div>
                                     </form>
                                 </div>
@@ -500,7 +500,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link" data-dismiss="modal">{{'ACTION.CANCEL' | translate}}</button>
-                    <button type="button" class="btn btn-info" ng-click="changeLogo(croppedDataUrl, picFile.name)" data-dismiss="modal">{{'ACTION.SAVE' | translate}}</button>
+                    <button type="button" class="btn btn-info" ng-click="vm.changeLogo(croppedDataUrl, picFile.name)" data-dismiss="modal">{{'ACTION.SAVE' | translate}}</button>
                 </div>
             </div>
         </div>

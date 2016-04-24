@@ -1,0 +1,141 @@
+<div ng-controller="MenuController as vm" ng-init="vm.index()">
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><span class="text-semibold">{{'LABEL.MENU' | translate}}</span></h4>
+                <ul class="breadcrumb">
+                    <li><a href="#/app/dashboard">Home</a></li>
+                    <li><a>{{'LABEL.MENU' | translate}}</a></li>
+                </ul>
+            </div>
+            <div class="heading-elements">
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+    <!-- Content area -->
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- Navigation -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">{{'LABEL.ADD_NEW_MENU' | translate}}</h6>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a ng-click="vm.createMenu()"><i class="icon-plus3"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-body" ng-show="vm.isCreateMenu || vm.isEditMenu">
+                        <form name="createNewMenu">
+                            <div class="form-group">
+                                <input type="text" name="menu_name" ng-model="vm.menu.name" class="form-control" placeholder="{{'LABEL.MENU_NAME' | translate }}..." 
+                                validator="required,maxlength=30" 
+                                required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
+                                maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="menu_description" ng-model="vm.menu.description"  class="form-control" placeholder="{{'LABEL.MENU_DESCRIPTION' | translate}}..."
+                                validator="required,maxlength=255" 
+                                required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
+                                maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                            </div>
+                            <div class="form-group text-right">
+                                <button type="submit" ng-if="vm.isCreateMenu" disable-button ng-click="vm.storeMenu(createNewMenu)" class="btn btn-primary"><i class="icon-plus3"></i> {{'ACTION.ADD_NEW' | translate}}</button>
+                                <button type="submit" ng-if="vm.isEditMenu" disable-button ng-click="vm.updateMenu(createNewMenu)" class="btn btn-primary"><i class="icon-checkmark3"></i> {{'ACTION.SAVE' | translate}}</button>
+                                <button type="button" class="btn btn-link" ng-click="vm.cancelMenu()"> {{'ACTION.CANCEL' | translate}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /navigation -->    
+                <!-- Navigation -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">{{'LABEL.MENU' | translate}}</h6>
+                    </div>
+                    <div class="list-group list-group-borderless no-padding-top">
+                        <a class="list-group-item" ng-repeat="menuActive in vm.listMenuActive">{{menuActive.name}} 
+                            <span class="pull-right">
+                                <i class="icon-pencil" ng-click="vm.editMenu(menuActive)"></i>
+                                <i class="icon-trash-alt" ng-click="vm.moveTrashMenu(menuActive)"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <!-- /navigation -->     
+                <!-- Navigation -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">{{'LABEL.MENU_NON_ACTIVE' | translate}}</h6>
+                    </div>
+                    <div class="list-group list-group-borderless no-padding-top">
+                        <a class="list-group-item" ng-repeat="menuNonActive in vm.listMenuNonActive">{{menuNonActive.name}} 
+                            <span class="pull-right">
+                                <i class="icon-undo" ng-click="vm.activeMenu(menuNonActive)"></i>
+                                <i class="icon-cross2" ng-click="vm.deleteMenu(menuNonActive)"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <!-- /navigation -->        
+            </div>
+            <div class="col-lg-9">
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">{{vm.thisMenu.name}}:  <span class="badge badge-danger"> {{vm.thisMenu.listFood.length}} </span></h6>
+                        <div class="heading-elements">
+                            <button class="btn btn-primary" ng-click="vm.createFood(menu)"><i class="icon-plus3"></i> {{'ACTION.ADD_NEW_FOOD' | translate}} </button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6" ng-repeat="food in vm.thisMenu.listFood">
+                                <div class="thumbnail">
+                                    <div class="thumb">
+                                        <img ng-src="{{serverUrl}}{{food.feature_image}}" alt="">
+                                        <div class="caption-overflow">
+                                            <span>
+                                                <a class="btn btn-flat border-white text-white btn-rounded btn-icon"><i class="icon-zoomin3"></i></a>
+                                                <a href="#" class="btn btn-flat border-white text-white btn-rounded btn-icon"><i class="icon-link"></i></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <h6 class="text-semibold no-margin-top">{{food.name}} 
+                                            <span ng-if="food.active == 1" class="label label-success pull-right">{{'LABEL.ACTIVE' | translate}}</span>
+                                            <span ng-if="food.active == 0" class="label label-default pull-right">{{'LABEL.NON_ACTIVE' | translate}}</span>
+                                        </h6>
+                                        <span class="text-primary">{{food.price | number}} đ</span>
+                                    </div>
+                                    <div class="panel-footer panel-footer-transparent" style="padding-bottom: 20px">
+                                        <ul class="list-inline list-inline-condensed heading-text">
+                                            <li><a class="text-danger"><i class="icon-heart5"></i> {{food.total_wishlist}}</a></li>
+                                            <li><a class="text-primary"><i class="icon-thumbs-up3"></i> {{food.total_like}}</a></li>
+                                            <li><a class="text-info"><i class="icon-bubbles10"></i></a> {{food.total_comment}}</li>
+                                        </ul>
+                                        <ul class="heading-text list-inline pull-right">
+                                            <li class="dropdown">
+                                                <a class="dropdown-toggle text-default" data-toggle="dropdown"><i class="icon-menu7"></i><span class="caret"></span></a>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li><a ng-click="vm.detailThisFood(food._id)"><i class="icon-arrow-right7"></i> {{'ACTION.VIEW_DETAIL' | translate}}</a></li>
+                                                    <li ng-if="food.active == 1"><a ng-click="vm.hideThisFood(food)"><i class="icon-eye-blocked"></i> {{'ACTION.HIDE_THIS_FOOD' | translate}}</a></li>
+                                                    <li ng-if="food.active == 0"><a ng-click="vm.displayThisFood(food)"><i class="icon-eye"></i> {{'ACTION.DISPLAY_THIS_FOOD' | translate}}</a></li>
+                                                    <li><a ng-click="vm.editThisFood(food)"><i class="icon-pencil"></i> {{'ACTION.UPDATE_THIS_FOOD' | translate}}</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a ng-click="vm.destroyThisFood(food)"><i class="icon-trash"></i> {{'ACTION.DELETE_THIS_FOOD' | translate}}</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

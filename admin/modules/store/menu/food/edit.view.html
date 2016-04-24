@@ -1,0 +1,94 @@
+<div class="modal-header bg-primary" ng-init="vm.edit()">
+    <h3 class="modal-title"><i class="icon-plus3"></i> {{'LABEL.EDIT_THE_FOOD' | translate}} <i class="icon-arrow-right8"></i> {{vm.food.name}}</h3>
+</div>
+<div class="modal-body" style="overflow-y: auto; height: 800px;">
+    <div class="row">
+        <div class="col-md-12">
+            <form name="foodEditForm">
+                <div class="form-group">
+                    <label for="">{{'LABEL.FOOD_NAME' | translate}}:</label>
+                    <input type="text" class="form-control" name="food_name" ng-model="vm.food.name" validator="required" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}">
+                </div>
+                <div class="form-group">
+                    <label for="">{{'LABEL.SKU' | translate}}:</label>
+                    <input type="text" class="form-control" name="food_sku" ng-model="vm.food.sku" validator="required" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}">
+                </div>
+                <div class="form-group">
+                  <label for="">{{'LABEL.DESCRIPTION' | translate}}:</label>
+                    <textarea name="food_description" id="" cols="30" rows="3" class="form-control" ng-model="vm.food.description" validator="maxlength=255" maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}"></textarea>
+                </div>
+                <div class="form-group">
+                    <summernote ng-model="vm.food.content" on-image-upload="vm.uploadImageForEditorEdit(files)" on-media-delete="vm.onEditorMediaDeleteEdit(target)" editable="vm.editable" editor="vm.editor"></summernote>
+                </div>
+                <div class="form-group">
+                    <label for="">{{'LABEL.PRICE_REAL' | translate}}:</label>
+                    <input type="number" class="form-control" name="food_price_real" ng-model="vm.food.price_real" validator="required" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}">
+                </div>
+                <div class="form-group">
+                    <label for="">{{'LABEL.PRICE' | translate}}:</label>
+                    <input type="number" class="form-control" name="food_price" ng-model="vm.food.price" validator="required" required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}">
+                </div>
+                <div class="form-group">
+                    <label for="">Tags:</label>
+                    <tags-input ng-model="vm.food.tags" placeholder="{{'LABEL.ADD_NEW_TAG' | translate}}..."></tags-input>
+                </div>
+                <div class="form-group">
+                    <label for="">{{'LABEL.ARTICLE_SEO_TITLE' | translate}}</label>
+                    <input type="text" class="form-control" ng-model="vm.food.seo_title">
+                </div>
+                <div class="form-group">
+                    <label for="">{{'LABEL.ARTICLE_SEO_DESCRIPTION' | translate}}</label>
+                    <input type="text" class="form-control" ng-model="vm.food.seo_description">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-file btn-primary"><i class="icon-image4"></i> {{'ACTION.ADD_NEW_FEATURE_IMAGE' | translate}}
+                        <input ngf-select="vm.onSelectFeatureImageEdit($file)" name="file" accept="image/*" ngf-max-size="2MB" type="file">
+                    </button>
+                    <button class="btn btn-file btn-primary"><i class="icon-image4"></i> {{'ACTION.ADD_NEW_GALLERY' | translate}}
+                        <input ngf-select="vm.onSelectGalleriesEdit($files)" multiple accept="image/*" ngf-max-size="2MB" type="file">
+                    </button>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="thumbnail" ng-hide="vm.food.feature_image == null">
+                                <div class="thumb">
+                                    <img ng-src="{{serverUrl}}{{vm.food.feature_image}}" alt="">
+                                    <div class="caption-overflow">
+                                        <span>
+                                      <a ng-click="vm.removeFeatureImage('FROM_EDIT')" class="btn bg-warning-300 btn-icon"><i class="icon-trash"></i></a>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12" ng-show="food.galleries.length > 0">
+                            <p>{{'LABEL.GALLERIES' | translate}}:</p>
+                        </div>       
+                        <div class="col-md-3" ng-repeat="gallery in vm.food.galleries">
+                            <div class="thumbnail">
+                                <div class="thumb">
+                                    <img ng-src="{{serverUrl}}{{gallery}}" alt="">
+                                    <div class="caption-overflow">
+                                        <span>
+                                            <a ng-click="vm.removeGallery(gallery,'FROM_EDIT')" class="btn bg-warning-300 btn-icon"><i class="icon-trash"></i></a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group text-right">
+                    <button disable-button ng-click="vm.update(foodEditForm)" class="btn btn-primary"><i class="icon-checkmark3"></i> {{'ACTION.SAVE' | translate}}</button>
+                    <button class="btn btn-link" ng-click="vm.cancelEditFood()"> {{'ACTION.CANCEL' | translate}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,108 +1,130 @@
-'use strict';
-angular.module('BigBoomApp.User').controller('UserCtrl', function($rootScope, $state, $scope, $cookieStore, CommonFactory, CommonApiRequest, UserFactory, Toasty, USER_CONSTANT) {
+(function() {
+    'use strict';
 
-    function __construct() {
-        $scope.user = {};
-        $scope.avatars = [
-            USER_CONSTANT.AVATAR1,
-            USER_CONSTANT.AVATAR2,
-            USER_CONSTANT.AVATAR3,
-            USER_CONSTANT.AVATAR4,
-            USER_CONSTANT.AVATAR5,
-            USER_CONSTANT.AVATAR6,
-            USER_CONSTANT.AVATAR7,
-            USER_CONSTANT.AVATAR8,
-        ];
-        $scope.roles = {
-            1: { value: 1, name: 'Quản trị viên' },
-            2: { value: 2, name: 'Chủ cửa hàng' },
-            3: { value: 3, name: 'Nhân viên' },
-        };
-        $scope.users = [];
-        $scope.moduleApiUrl = $rootScope.serverApiUrl + USER_CONSTANT.MODULE_URL;
-    }
+    angular
+        .module('BigBoomApp.User')
+        .controller('UserController', UserController);
 
-    __construct();
 
-    $scope.index = function() {
-        CommonApiRequest.handle('GET', $scope.moduleApiUrl, '', '').then(function(response) {
-            if (response.data.status) {
-                $scope.users = response.data.data;
-            } else {
-                Toasty.popErrors(response.data.message);
-            }
-        });
-    };
+    function UserController(Core,USER_CONSTANT) {
+        var vm = this;
+        function __construct() {
+            vm.user = {};
+            vm.avatars = [
+                USER_CONSTANT.AVATAR1,
+                USER_CONSTANT.AVATAR2,
+                USER_CONSTANT.AVATAR3,
+                USER_CONSTANT.AVATAR4,
+                USER_CONSTANT.AVATAR5,
+                USER_CONSTANT.AVATAR6,
+                USER_CONSTANT.AVATAR7,
+                USER_CONSTANT.AVATAR8,
+            ];
+            vm.roles = {
+                1: { value: 1, name: 'Quản trị viên' },
+                2: { value: 2, name: 'Chủ cửa hàng' },
+                3: { value: 3, name: 'Nhân viên' },
+            };
+            vm.users = [];
+            vm.moduleApiUrl = Core.$rootScope.serverApiUrl + USER_CONSTANT.MODULE_URL;
+        }
 
-    $scope.changeInformation = function(form) {
-      CommonFactory.validateHandle(form).success(function() {
-        CommonApiRequest.handle('PUT', $scope.moduleApiUrl + '/information', $scope.user, '').then(function(response) {
-            if (response.data.status) {
-                $cookieStore.put('member', response.data.data);
-                $rootScope.rootAuth = response.data.data;
-                Toasty.popSuccess(response.data.message);
-            } else {
-                Toasty.popErrors(response.data.message);
-            }
-        });
-      }).error(function(){
-        Toasty.popErrors('MESSAGE.FORM_INVALID');
-      });
-    };
+        __construct();
 
-    $scope.changePassword = function(form) {
-        CommonFactory.validateHandle(form).success(function() {
-            CommonApiRequest.handle('PUT', $scope.moduleApiUrl + '/password', $scope.user, '').then(function(response) {
+        vm.index = function() {
+            Core.apiRequest('GET', vm.moduleApiUrl, '', '').then(function(response) {
                 if (response.data.status) {
-                    Toasty.popSuccess(response.data.message);
+                    vm.users = response.data.data;
                 } else {
-                    Toasty.popErrors(response.data.message);
+                    Core.toastyPopErrors(response.data.message);
+                }
+            });
+        };
+
+        vm.changeInformation = function(form) {
+          Core.validateHandle(form).success(function() {
+            Core.apiRequest('PUT', vm.moduleApiUrl + '/information', vm.user, '').then(function(response) {
+                if (response.data.status) {
+                    Core.$cookieStore.put('member', response.data.data);
+                    Core.$rootScope.rootAuth = response.data.data;
+                    Core.toastyPopSuccess(response.data.message);
+                } else {
+                    Core.toastyPopErrors(response.data.message);
                 }
             });
           }).error(function(){
-            Toasty.popErrors('MESSAGE.FORM_INVALID');
+            Core.toastyPopErrors('MESSAGE.FORM_INVALID');
           });
-    };
+        };
 
-    $scope.changeAvatar = function() {
-        CommonApiRequest.handle('PUT', $scope.moduleApiUrl + '/avatar', $scope.user, '').then(function(response) {
-            if (response.data.status) {
-                $cookieStore.put('member', response.data.data);
-                $rootScope.rootAuth = response.data.data;
-                Toasty.popSuccess(response.data.message);
-            } else {
-                Toasty.popErrors(response.data.message);
-            }
-        });
-    };
+        vm.changePassword = function(form) {
+            Core.validateHandle(form).success(function() {
+                Core.apiRequest('PUT', vm.moduleApiUrl + '/password', vm.user, '').then(function(response) {
+                    if (response.data.status) {
+                        Core.toastyPopSuccess(response.data.message);
+                    } else {
+                        Core.toastyPopErrors(response.data.message);
+                    }
+                });
+              }).error(function(){
+                Core.toastyPopErrors('MESSAGE.FORM_INVALID');
+              });
+        };
 
-    $scope.setAvatar = function(avatar) {
-        $scope.user.avatar = avatar;
-    };
-
-    $scope.store = function(form) {
-        CommonFactory.validateHandle(form).success(function() {
-            CommonApiRequest.handle('POST', $scope.moduleApiUrl, $scope.user, '').then(function(response) {
+        vm.changeAvatar = function() {
+            Core.apiRequest('PUT', vm.moduleApiUrl + '/avatar', vm.user, '').then(function(response) {
                 if (response.data.status) {
-                    $state.go('app.user.all');
-                    Toasty.popSuccess(response.data.message);
+                    Core.$cookieStore.put('member', response.data.data);
+                    Core.$rootScope.rootAuth = response.data.data;
+                    Core.toastyPopSuccess(response.data.message);
                 } else {
-                    Toasty.popErrors(response.data.message);
+                    Core.toastyPopErrors(response.data.message);
                 }
             });
-        }).error(function() {
-            Toasty.popErrors('MESSAGE.FORM_INVALID');
-        });
-    };
+        };
 
-    $scope.profile = function() {
-        CommonApiRequest.handle('GET', $scope.moduleApiUrl + '/profile', '', '').then(function(response) {
-            if (response.data.status) {
-                $scope.user = response.data.data;
-            } else {
-                Toasty.popErrors(response.data.message);
-            }
-        });
-    };
+        vm.setAvatar = function(avatar) {
+            vm.user.avatar = avatar;
+        };
 
-});
+        vm.store = function(form) {
+            Core.validateHandle(form).success(function() {
+                Core.apiRequest('POST', vm.moduleApiUrl, vm.user, '').then(function(response) {
+                    if (response.data.status) {
+                        Core.$state.go('app.user.all');
+                        Core.toastyPopSuccess(response.data.message);
+                    } else {
+                        Core.toastyPopErrors(response.data.message);
+                    }
+                });
+            }).error(function() {
+                Core.toastyPopErrors('MESSAGE.FORM_INVALID');
+            });
+        };
+
+        vm.profile = function() {
+            Core.apiRequest('GET', vm.moduleApiUrl + '/profile', '', '').then(function(response) {
+                if (response.data.status) {
+                    vm.user = response.data.data;
+                } else {
+                    Core.toastyPopErrors(response.data.message);
+                }
+            });
+        };
+
+        /*
+          |---------------------------------------------------------------------------------------------
+          | State Change
+          |---------------------------------------------------------------------------------------------
+        */
+        vm.backToIndex = function() {
+            Core.$state.go('app.user.all');
+        };
+        vm.create = function() {
+            Core.$state.go('app.user.create');
+        };
+        vm.goToProfile = function() {
+            Core.$state.go('app.user.profile');
+        };
+    }
+})();

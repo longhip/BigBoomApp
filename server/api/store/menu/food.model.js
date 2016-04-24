@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 module.exports = mongoose.model('Store_Food', {
+    sku: { type:String, index: true},
     name: { type: String, index:true },
     slug: { type: String },
     menu_id: {type:mongoose.Schema.Types.ObjectId,index:true},
@@ -14,9 +15,12 @@ module.exports = mongoose.model('Store_Food', {
     seo_description: { type: String,default:null },
     total_comment: { type: Number,default:0 },
     total_like: { type: Number,default:0 },
+    total_wishlist: { type: Number,default:0 },
     total_view: { type: Number,default:0 },
     total_sale: { type: Number,default:0 },
     likes: [],
+    sales: [],
+    wishlist:[],
     comments: [{
         user_id: {type:mongoose.Schema.Types.ObjectId,index:true},
         father_id: {type:mongoose.Schema.Types.ObjectId,index:true,default:null},
@@ -27,8 +31,10 @@ module.exports = mongoose.model('Store_Food', {
         created_at:{type:Date},
         updated_at:{type:Date,default:Date.now}
     }],
-    active:{type: Number, default:1},
+    status: {type: Number, default: 1},
+    active:{type: Number, default: 1},
     tags:[],
+    photos: [],
     created_at:{type:Date},
     updated_at:{type:Date,default:Date.now},
     created_by:{type:String, index:true},
