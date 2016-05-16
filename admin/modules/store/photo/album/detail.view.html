@@ -1,0 +1,134 @@
+<div class="modal-header bg-primary">
+    <h5 class="modal-title"><i class="icon-image2"></i> {{vm.album.name}} <small class="text-white">{{vm.album.description}}</small>
+        <li class="dropdown pull-right" style="list-style: none;">
+            <a class="dropdown-toggle text-white" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i><span class="caret"></span></a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li ng-click="vm.editPhoto()"><a><i class="icon-pencil"></i> Sửa mô tả</a></li>
+            </ul>
+        </li>
+    </h5>
+</div>
+<div class="modal-body" ng-init="vm.onloadPhoto()">
+    <div class="row" >
+        <div class="col-md-8">
+            <div class="thumbnail thumbnail-photo">
+                <div class="thumb">
+                    <img ng-src="{{serverUrl}}{{vm.album.photos[vm.photoIndex].path}}" alt="">
+                    <div class="caption-overflow">
+                        <span style="text-align: left">
+                            <a style="left: 0; position: absolute;" ng-click="vm.previusPhoto()" class="btn btn-flat border-white text-white btn-icon"><i class="icon-circle-left2"></i></a>
+                            <a style="right: 0; position: absolute;" ng-click="vm.nextPhoto()" class="btn btn-flat border-white text-white btn-icon"><i class="icon-circle-right2"></i></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <p ng-if="!vm.thisPhoto.edit">{{vm.thisPhoto.description}}</p>
+            <div ng-if="vm.thisPhoto.edit">
+                <div class="form-group">
+                    <textarea class="form-control" rows="5" ng-model="vm.thisPhoto.description"></textarea>
+                </div>
+                <div class="text-right">
+                    <button class="btn btn-primary" ng-click="vm.updatePhoto()"> {{'ACTION.SAVE' | translate}}</button>
+                    <button class="btn btn-link" ng-click="vm.close()"> {{'ACTION.CANCEL' | translate}}</button>
+                </div>
+            </div>
+            
+
+            <div class="media">
+                <div class="media-left">
+                    <a><img ng-src="{{serverUrl}}{{rootAuth.avatar}}" class="img-circle img-sm" alt=""></a>
+                </div>
+                <div class="media-body">
+                    <form ng-submit="vm.storeComment()">
+                        <input type="text" ng-model="vm.comment.content" class="form-control" placeholder="Bình luận...">
+                    </form>
+                </div>
+            </div>
+            <ul class="media-list content-group-lg stack-media-on-mobile margin-top-20">
+                <li class="media" ng-repeat="(comment_index,comment) in vm.thisPhoto.comments">
+                    <div class="media-left">
+                        <a href="#"><img ng-src="{{serverUrl}}{{comment.users[0].avatar}}" class="img-circle img-sm" alt=""></a>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-heading">
+                            <a class="text-semibold">{{comment.users[0].name.firstname}} {{comment.users[0].name.lastname}} ({{rootStore.name}})</a>
+                            <span class="media-annotation dotted" am-time-ago="comment.created_at"></span>
+                        </div>
+                        <p ng-if="!comment.isEditComment" ng-bind-html="comment.content"></p>
+                        <ul ng-if="!comment.isEditComment" class="list-inline list-inline-separate text-size-small">
+                            <li><a ng-click="vm.getReplyComment(comment)">{{'ACTION.REPLY' | translate}} ({{comment.total_replied}})</a></li>
+                            <li><a ng-click="comment.isEditComment = !comment.isEditComment">{{'ACTION.EDIT' | translate}}</a></li>
+                            <li><a ng-click="vm.destroyComment(comment_index,comment)">{{'ACTION.DELETE' | translate}}</a></li>
+                        </ul>
+
+                        <!-- Edit comment -->
+                        <textarea ng-if="comment.isEditComment" class="form-control" cols="10" rows="5" ng-model="comment.content"></textarea>
+                        <ul ng-if="comment.isEditComment" class="list-inline list-inline-separate text-size-small">
+                            <li><a ng-click="vm.updateComment(comment_index,comment)">{{'ACTION.SAVE' | translate}}</a></li>
+                            <li><a ng-click="comment.isEditComment = !comment.isEditComment">{{'ACTION.CANCEL' | translate}}</a></li>
+                        </ul>
+                        <!-- Edit comment -->
+
+                        <!-- Replied comment -->
+                        <div class="media" ng-repeat="(reply_index,reply) in comment.replieds">
+                            <div class="media-left">
+                                <a><img ng-src="{{serverUrl}}{{reply.users[0].avatar}}" class="img-circle img-sm" alt=""></a>
+                            </div>
+                            <div class="media-body">
+                                <!-- Comment -->
+                                <div class="media-heading">
+                                    <a href="#" class="text-semibold">{{reply.users[0].name.firstname}} {{reply.users[0].name.lastname}}</a>
+                                    <span class="media-annotation dotted" am-time-ago="reply.created_at"></span>
+                                </div>
+                                <p ng-if="!reply.isEditReplyComment" ng-bind-html="reply.content"></p>
+                                <ul ng-if="!reply.isEditReplyComment" class="list-inline list-inline-separate text-size-small">
+                                    <li><a ng-click="reply.isEditReplyComment = !reply.isEditReplyComment">{{'ACTION.EDIT' | translate}}</a></li>
+                                    <li><a ng-click="vm.destroyRepliedComment(comment_index,comment,reply_index,reply)">{{'ACTION.DELETE' | translate}}</a></li>
+                                </ul>
+                                <!-- Comment -->
+
+                                <!-- Edit reply comment -->
+                                <input ng-if="reply.isEditReplyComment" type="text" class="form-control" ng-model="reply.content">
+                                <ul ng-if="reply.isEditReplyComment" class="list-inline list-inline-separate text-size-small">
+                                    <li><a ng-click="vm.updateReplyComment(comment_index,reply_index,reply)">{{'ACTION.SAVE' | translate}}</a></li>
+                                    <li><a ng-click="reply.isEditReplyComment = !reply.isEditReplyComment">{{'ACTION.CANCEL' | translate}}</a></li>
+                                </ul>
+                                <!-- Edit reply comment -->
+                            </div>
+                        </div>
+                        <!-- New reply comment -->
+                        <div class="media" ng-show="comment.isReply">
+                            <div class="media-left">
+                                <a><img ng-src="{{serverUrl}}{{rootAuth.avatar}}" class="img-circle img-sm" alt=""></a>
+                            </div>
+                            <div class="media-body">
+                                <form ng-submit="vm.replyComment(comment)">
+                                    <input type="text" ng-model="comment.reply_content" class="form-control" placeholder="{{'LABEL.REPLY_COMMENT' | translate}}...">
+                                </form>
+                            </div>
+                        </div>
+                        <!-- New reply comment -->
+                        <!-- Replied comment -->
+                    </div>
+                </li>
+                <li class="media">
+                    <div class="media-body">
+                        <div class="media-heading">
+                            <a class="text-semibold" ng-if="vm.thisPhoto.comments.length < vm.thisPhoto.total_comment" ng-click="vm.loadMoreComment()">{{'ACTION.LOAD_MORE_COMMENT' | translate}}</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr/>
+            <div class="form-group text-right">
+                <button class="btn btn-link" ng-click="vm.close()"> {{'ACTION.CANCEL' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

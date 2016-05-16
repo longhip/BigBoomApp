@@ -26,6 +26,7 @@
             toastyPopSuccess            : toastyPopSuccess,
             toastyPopErrors             : toastyPopErrors,
             sweetAlert                  : SweetAlert,
+            
             // actual utilities
             $broadcast: $broadcast,
 	    };

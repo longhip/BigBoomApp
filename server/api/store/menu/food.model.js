@@ -34,6 +34,7 @@ module.exports = mongoose.model('Store_Food', {
     status: {type: Number, default: 1},
     active:{type: Number, default: 1},
     tags:[],
+    options:[],
     photos: [],
     created_at:{type:Date},
     updated_at:{type:Date,default:Date.now},

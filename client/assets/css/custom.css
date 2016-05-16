@@ -1,0 +1,101 @@
+.navbar-nav {
+    margin-left: 0px;
+}
+.store-page-nav-left {
+    margin-left: 20px;
+}
+.store-page-nav-right {
+    margin-right: 20px;
+}
+.display-block {
+    display: block !important;
+}
+.nav>li> .user-header{
+    padding-right: 0px;
+}
+
+.validation-valid {
+    color: #1abc9c;
+}
+
+.validation-invalid {
+    color: red;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-top-15 {
+    margin-top: 15px;
+}
+.margin-right-5{
+  margin-right: 5px;
+}
+
+.margin-top-25 {
+    margin-top: 25px;
+}
+
+.preview-image-post {
+    height: 280px;
+    border: 1px solid #ecf0f1;
+    margin-bottom: 10px;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.cropArea {
+    background: #E4E4E4;
+    overflow: hidden;
+    width: 100%;
+    height: 350px;
+}
+
+.note-editor.note-frame {
+    border: 1px solid #ddd !important;
+}
+/*.container-footer{
+    bottom: 0;
+    position: fixed;
+}*/
+
+@media screen and (min-width: 769px) {
+    .navbar-form .has-feedback .form-control-feedback {
+        top: 12;
+    }
+    .notification{
+        min-height: 44px;
+        padding-top: 16px !important;
+    }
+    .navbar-nav>li>a>.badge, .navbar-nav>li>a>.label {
+    position: absolute;
+    top: 4px;
+    right: 1px;
+    }
+}
+
+

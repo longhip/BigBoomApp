@@ -1,0 +1,124 @@
+<div ng-controller="PhotoController as vm" ng-init="vm.index()">
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><span class="text-semibold">{{'LABEL.PHOTO' | translate}}</span> - {{'LABEL.ALL_PHOTO' | translate}}</h4>
+                <ul class="breadcrumb">
+                    <li><a href="#/app/dashboard">Home</a></li>
+                    <li><a>{{'LABEL.PHOTO' | translate}}</a></li>
+                    <li class="active">{{'LABEL.ALL_PHOTO' | translate}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /page header -->
+    <!-- Content area -->
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- Navigation -->
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">{{'LABEL.SEARCH_THE_PHOTO' | translate}}</h6>
+                    </div>
+                    <div class="panel-body">
+                        <form ng-submit="vm.search()">
+                            <div class="has-feedback has-feedback-left">
+                                <input type="search" ng-model="query" class="form-control" placeholder="{{'LABEL.TYPE_AND_HIT_ENTER' | translate}}">
+                                <div class="form-control-feedback">
+                                    <i class="icon-search4 text-size-base text-muted"></i>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="panel panel-flat">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">{{'LABEL.NAVIGATOR' | translate}}</h6>
+                    </div>
+                    <div class="list-group list-group-borderless no-padding-top">
+                        <a class="list-group-item" ng-click="vm.createAlbum()"><i class="icon-plus2"></i> {{'ACTION.ADD_NEW_ALBUM' | translate}}</a>
+                        <a class="list-group-item" ng-click="vm.createPhoto()"><i class="icon-plus2"></i> {{'ACTION.ADD_NEW_PHOTO' | translate}}</a>
+                    </div>
+                </div>
+                <!-- /navigation -->
+            </div>
+            <div class="col-lg-9" ng-if="vm.isSearch">
+                <h4 class="text-primary">{{'LABEL.SEARCH_RESULT_FOR' | translate}}: "{{search_value}}"  | {{'LABEL.TOTAL_SEARCH_RESULT' | translate}}: {{searchTotal}} <button class="btn btn-danger btn-sm pull-right" ng-click="vm.cancelSearch()"><i class="icon-cancel-square"></i> {{'ACTION.CANCEL_SEARCH' | translate}}</button></h4>
+            </div>   
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" ng-repeat="album in vm.albums">
+                        <div class="thumbnail">
+                            <div class="thumb">
+                                <img ng-src="{{serverUrl}}{{album.photos[0].path}}" alt="" class="img-responsive">
+                                <div class="caption-overflow">
+                                    <span>
+                                        <button class="btn btn-primary" type="button" ng-click="vm.detailAlbum(album)">Xem chi tiết</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="caption">
+                                <div class="media-heading">
+                                    <p>Album: {{album.name}}</p>
+                                    <ul class="list-inline list-inline-condensed heading-text">
+                                        <li><a class="text-default"><i class="icon-images2"></i> </a> {{album.photos.length}}</li>
+                                        <li class="dropdown pull-right">
+                                            <a class="dropdown-toggle text-default" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i><span class="caret"></span></a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a><i class="icon-arrow-right7"></i> {{'ACTION.VIEW_DETAIL' | translate}}</a></li>
+                                                <li><a><i class="icon-eye-blocked"></i> Ẩn bộ sưu tập này</a></li>
+                                                <li><a><i class="icon-eye"></i> Hiện bộ sưu tập này</a></li>
+                                                <li ng-click="vm.editAlbum(album)"><a><i class="icon-pencil"></i> {{'ACTION.UPDATE_THIS_ALBUM' | translate}}</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#"><i class="icon-trash"></i> {{'ACTION.REMOVE_THIS_ALBUM' | translate}}</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <p>{{album.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/ ng-show="vm.albums.length > 0">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <div class="thumb">
+                                <img src="assets/images/demo/flat/21.png" alt="">
+                                <div class="caption-overflow">
+                                    <span>
+                                        <button class="btn btn-primary" type="button">Xem chi tiết</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="caption">
+                                <div class="media-heading">
+                                    <ul class="list-inline list-inline-condensed heading-text">
+                                        <li style="margin-right: 20px;"><a class="text-default"><i class="icon-thumbs-up2"></i> </a> 978</li>
+                                        <li style="margin-right: 20px;"><a class="text-default"><i class="icon-bubble9"></i></a> 107</li>
+                                        <li class="dropdown pull-right">
+                                            <a class="dropdown-toggle text-default" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i><span class="caret"></span></a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a><i class="icon-arrow-right7"></i> {{'ACTION.VIEW_DETAIL' | translate}}</a></li>
+                                                <li><a><i class="icon-eye-blocked"></i> Ẩn ảnh này</a></li>
+                                                <li><a><i class="icon-eye"></i> Hiện ảnh này</a></li>
+                                                <li><a><i class="icon-pencil"></i> {{'ACTION.UPDATE_THIS_PHOTO' | translate}}</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#"><i class="icon-trash"></i> {{'ACTION.REMOVE_THIS_PHOTO' | translate}}</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /content area -->
+</div>

@@ -92,7 +92,16 @@
         "IN": "Trong",
         "DISH": "Món",
         "DETAIL_FOOD": "Chi tiết món ăn",
-        "EDIT_THE_FOOD":"Sửa món ăn"
+        "EDIT_THE_FOOD":"Sửa món ăn",
+        "PHOTO":"Hình ảnh",
+        "ALL_PHOTO":"Tất cả hình ảnh",
+        "SEARCH_THE_PHOTO":"Tìm kiếm hình ảnh",
+        "ADD_NEW_ALBUM":"Thêm mới bộ sưu tập ảnh",
+        "CLICK_OR_DRAG_IMAGE_IN_THIS":"Click hoặc kéo thả ảnh vào đây",
+        "ALBUM_NAME":"Tên bộ sưu tập",
+        "ALBUM_DESCRIPTION":"Mô tả bộ sưu tập",
+        "NOT_SUPPORT_THIS_FILE_PLEASE_CHOOSE_IMAGE":"Chúng tôi không hỗ trợ định dạng tệp này! Xin vui lòng chọn ảnh!",
+        "EDIT_THIS_ALBUM":"Sửa bộ sưu tập"
     },
     "MESSAGE": {
         "LOGIN_SUCCESS": "Đăng nhập thành công!",
@@ -126,7 +135,9 @@
         "UPDATE_THIS_ARTICLE":"Sửa bài viết này",
         "DELETE_THIS_ARTICLE":"Xóa bài viết này",
         "HIDE_THIS_FOOD":"Ẩn món ăn này",
+        "HIDE_THIS_PHOTO":"Ẩn ảnh này",
         "DISPLAY_THIS_FOOD":"Hiện món ăn này",
+        "DISPLAY_THIS_PHOTO":"Hiện ảnh này",
         "UPDATE_THIS_FOOD":"Sửa món ăn này",
         "DELETE_THIS_FOOD":"Xóa món ăn này",
         "CANCEL_SEARCH":"Hủy tìm kiếm",
@@ -139,7 +150,13 @@
         "DISPLAY_THIS_ARTICLE":"Hiển thị bài viết này",
         "LOAD_MORE_COMMENT":"Tải thêm bình luận",
         "ADD_NEW_FOOD":"Thêm món ăn mới",
-        "ADD_NEW_GALLERY":"Thêm mới bộ ảnh"
+        "ADD_NEW_GALLERY":"Thêm mới bộ ảnh",
+        "UPDATE_THIS_PHOTO":"Sửa ảnh này",
+        "REMOVE_THIS_PHOTO":"Xóa ảnh này",
+        "ADD_NEW_ALBUM":"Thêm bộ sưu tập",
+        "ADD_NEW_PHOTO":"Thêm ảnh",
+        "UPDATE_THIS_ALBUM":"Cập nhật bộ sưu tập này",
+        "REMOVE_THIS_ALBUM":"Xóa bộ sưu tập này"
     },
     "VALIDATE_MESSAGE": {
         "REQUIRED": "Bạn không được để trống trường này!",

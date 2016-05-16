@@ -25,7 +25,7 @@ module.exports = mongoose.model('Store_Article', {
     active:Number,
     tags: [],
     photos: [],
-    created_at:{type:Date,},
+    created_at:{type:Date},
     updated_at:{type:Date,default:Date.now},
     created_by:{type:String, index:true},
     updated_by:{type:String, index:true},

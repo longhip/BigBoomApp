@@ -1,0 +1,54 @@
+<div class="modal-header bg-primary">
+    <h5 class="modal-title"><i class="icon-pencil"></i> {{'LABEL.EDIT_THIS_ALBUM' | translate}} - {{vm.album.name}}</h5>
+</div>
+<div class="modal-body">
+    <div class="row" >
+        <div class="col-md-3">
+            <form name="albumForm">
+                <div class="form-group">
+                    <label>{{'LABEL.ALBUM_NAME' | translate}}</label>
+                    <input class="form-control" ng-model="vm.album.name" validator="required,maxlength=255"
+                        required-error-message="{{'VALIDATE_MESSAGE.REQUIRED' | translate}}"
+                        maxlength-error-message="{{'VALIDATE_MESSAGE.TOO_LONG' | translate}}">
+                    </input>
+                </div>
+                <div class="form-group">
+                    <label>{{'LABEL.ALBUM_DESCRIPTION' | translate}}</label>
+                    <textarea class="form-control" ng-model="vm.album.description" rows="4"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <div ngf-drop ngf-select ng-model="vm.edit_files" class="drop-box" 
+                ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+                accept="image/*" 
+                ngf-pattern="'image/*'"><h2>{{'LABEL.CLICK_OR_DRAG_IMAGE_IN_THIS' | translate}}</h2>
+            </div>
+            <div ngf-no-file-drop><h2>{{'LABEL.NOT_SUPPORT_THIS_FILE_PLEASE_CHOOSE_IMAGE' | translate}}</h2></div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-3" ng-repeat="photo in vm.album.photos">
+                    <div class="thumbnail">
+                        <div class="thumb">
+                            <img ng-src="{{serverUrl}}{{photo.path}}" alt="">
+                            <div class="caption-overflow">
+                                <span>
+                              <a ng-click="vm.removePhotoEdit($index,photo)" class="btn bg-warning-300 btn-icon"><i class="icon-trash"></i></a>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr/>
+            <div class="form-group text-right">
+                <button disable-button ng-click="vm.update(albumForm)" class="btn btn-primary"><i class="icon-plus3"></i> {{'ACTION.SAVE' | translate}}</button>
+                <button class="btn btn-link" ng-click="vm.cancelEdit()"> {{'ACTION.CANCEL' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -35,14 +35,96 @@ var Common = {
         return deferred.promise;
     },
 
-    removeStorePhoto: function(photos, where, auth){
-    	photos.forEach(function(photo){
-            Photo.findOneAndRemove({ path: photo.path },function(err){
-            	if(!err){
-					fs.unlink(photo.path);
-            	} 
-            })
+    insertStorePhotoWithAlbum: function(photos, album_id, auth){
+        var deferred = q.defer();
+        var listPhoto = [];
+        photos.forEach(function(photo){
+            listPhoto.push({
+                name            : null,
+                path            : photo.path,
+                album_id        : ObjectId.generate(album_id),
+                from: {
+                    f_id: null,
+                    f_type: null
+                },
+                created_at      : Date.now(),
+                created_by      : ObjectId.generate(auth._id),
+                store_id        : ObjectId.generate(auth.store_id)
+            });
+            if(photos.length === listPhoto.length){
+                Photo.insertMany(listPhoto,function(err){
+                    if(err){
+                        deferred.reject({err:err, message: 'MESSAGE.SOMTHING_WENT_WRONG'});
+                    } else {
+                        Photo.find({ album_id: ObjectId.generate(album_id)}, function(err, photos){
+                            if(err){
+                                deferred.reject({err:err, message: 'MESSAGE.SOMTHING_WENT_WRONG'});
+                            } else {
+                                deferred.resolve(photos);
+                            }
+                        })
+                    }
+                })
+            }
         })
+        return deferred.promise;
+    },
+
+    getAlbums: function(model, auth){
+        var deferred = q.defer();
+        model.aggregate([
+            { $match: { store_id: ObjectId.generate(auth.store_id) } },
+            {
+                $lookup: {
+                    from: 'store_photos',
+                    localField: '_id',
+                    foreignField: 'album_id',
+                    as: 'photos'
+                }
+            }
+        ], function(err, albums) {
+            deferred.resolve(albums);
+        });
+        return deferred.promise;
+    },
+
+    removeStorePhoto: function(photos, where, auth){
+        if(photos.length > 0){
+            photos.forEach(function(photo){
+                Photo.findOneAndRemove({ path: photo.path },function(err, photo){
+                    if(photo){
+                        fs.access(photo.path, fs.F_OK, function(err) {
+                            if (!err) {
+                                fs.unlink(photo.path);
+                            }
+                        });
+                    } 
+                })
+            })
+        }
+    },
+
+    removeStorePhotoWithAlbum: function(photos, album_id){
+        var deferred = q.defer();
+        var i = 0;
+        if(photos.length > 0){
+            photos.forEach(function(photo){
+                i ++;
+                Photo.findOneAndRemove({ path: photo.path },function(err, photo){
+                    if(photo){
+                        fs.access(photo.path, fs.F_OK, function(err) {
+                            if (!err) {
+                                fs.unlink(photo.path);
+                            }
+                        });
+                    } 
+                })
+                if(i === photos.length){
+                    deferred.resolve();
+                }
+            })
+        }
+        return deferred.promise;
     },
 
     getComments: function(model, by_id){
@@ -310,6 +392,18 @@ var Common = {
 
             return deferred.promise;
         }
+    },
+
+    getPhotoByAlbumId: function(album_id){
+        var deferred = q.defer();
+        Photo.find({ album_id: album_id}, function(err, photos){
+            if(err){
+                deferred.reject({err:err, message: 'MESSAGE.SOMTHING_WENT_WRONG'});
+            } else {
+                deferred.resolve(photos);
+            }
+        })
+        return deferred.promise;
     }
 }
 

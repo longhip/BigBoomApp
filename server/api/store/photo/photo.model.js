@@ -22,10 +22,11 @@ module.exports = mongoose.model('Store_Photo', {
         created_at: { type: Date },
         updated_at: { type: Date, default: Date.now }
     }],
+    deleted: { type: Number, default: 0 },
     created_at: { type: Date },
     updated_at: { type: Date, default: Date.now },
-    created_by: { type: String, index: true },
-    updated_by: { type: String, index: true },
-    store_id: { type: String, index: true }
+    created_by: { type: mongoose.Schema.Types.ObjectId, index: true },
+    updated_by: { type: mongoose.Schema.Types.ObjectId, index: true },
+    store_id: { type: mongoose.Schema.Types.ObjectId, index: true },
 
 });

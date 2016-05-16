@@ -35,13 +35,16 @@
                         <a><i class="icon-store2"></i> <span>Cửa hàng</span></a>
                         <ul data-ng-class="{'hidden-ul': !$state.includes('app.store')}">
                             <li data-ng-class="{'active': $state.includes('app.store.index')}">
-                                <a href="#/app/store/index">Cửa hàng của tôi</a>
+                                <a href="#/app/store/index">Thông tin cửa hàng</a>
                             </li>
                             <li data-ng-class="{'active': $state.includes('app.store.article')}">
-                                <a href="#/app/store/article/index">Bài viết của tôi</a>
+                                <a href="#/app/store/article/index">Bài viết</a>
                             </li>
-                            <li data-ng-class="{'active': $state.includes('app.store.product')}">
-                                <a href="#/app/store/menu/index">Thực đơn của tôi</a>
+                            <li data-ng-class="{'active': $state.includes('app.store.menu')}">
+                                <a href="#/app/store/menu/index">Thực đơn</a>
+                            </li>
+                            <li data-ng-class="{'active': $state.includes('app.store.photo')}">
+                                <a href="#/app/store/photo/index">Hình ảnh</a>
                             </li>
                         </ul>
                     </li>
