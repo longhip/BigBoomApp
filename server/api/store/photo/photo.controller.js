@@ -8,29 +8,39 @@ var validator           = require('validator');
 var PhotoController = {
 
     index: function(req, res, next){
-        Common.getAlbums(Album, req.auth).then(function(albums){
-            Photo.find({ store_id: ObjectId.generate(req.auth.store_id), album_id:null}, function(err, photos){
-                if(err){
-                    next(err);
+        req.checkQuery('limit', 'MESSAGE.QUERY_REQUIRED').notEmpty();
+        req.checkQuery('skip', 'MESSAGE.QUERY_REQUIRED').notEmpty();
+        var errors = req.validationErrors();
+        if (errors) {
+            ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
+        } else {
+            Photo.count({ store_id: ObjectId.generate(req.auth.store_id), album_id:null}, function(err, total){
+                if(total > 0){
+                    Photo.find({ store_id: ObjectId.generate(req.auth.store_id), album_id:null}).sort({ created_at: -1 })
+                        .limit(parseInt(req.query.limit))
+                        .skip(parseInt(req.query.skip))
+                        .exec(function(err, photos){
+                            if(err){
+                                next(err);
+                            } else {
+                                ResponseService.json(res, true, { photos: photos, total: total }, '');
+                            }
+                        })
                 } else {
-                    ResponseService.json(res, true, {albums:albums, photos:photos}, '');
+                    ResponseService.json(res, true, { photos: [], total: 0 }, '');
                 }
-            })
-        });
-        
+            });
+        }
     },
 
     store: function(req, res, next) {
-        var album_id = req.body.album_id || null;
         var data = {
-            name: req.body.name,
+            name: null,
             path: req.body.path,
-            album_id: (album_id == null || !validator.isMongoId(req.params.album_id)) ? null : ObjectId.generate(req.body.album_id),
             from: {
-                id: ObjectId.generate(req.body.from.id),
-                type: req.body.from.type
+                id: null,
+                type: null
             },
-            description: req.body.description,
             created_at: Date.now(),
             created_by: ObjectId.generate(req.auth._id),
             store_id: ObjectId.generate(req.auth.store_id)
@@ -94,7 +104,7 @@ var PhotoController = {
     },
 
     hideThisPhoto: function(req, res, next){
-        req.checkBody('name', 'MESSAGE.CONTENT_REQUIRED').notEmpty();
+        req.checkParams('photo_id', 'MESSAGE.CONTENT_REQUIRED').notEmpty();
         var errors = req.validationErrors();
         if (errors || !validator.isMongoId(req.params.photo_id)) {
             ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
@@ -117,7 +127,7 @@ var PhotoController = {
     },
 
     displayThisPhoto: function(req, res, next){
-        req.checkBody('name', 'MESSAGE.CONTENT_REQUIRED').notEmpty();
+        req.checkParams('photo_id', 'MESSAGE.CONTENT_REQUIRED').notEmpty();
         var errors = req.validationErrors();
         if (errors || !validator.isMongoId(req.params.photo_id)) {
             ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
@@ -137,8 +147,23 @@ var PhotoController = {
                 }
             })
         }
-    }
+    },
 
+    destroy: function(req, res, next){
+        req.checkParams('photo_id', 'MESSAGE.CONTENT_REQUIRED').notEmpty();
+        var errors = req.validationErrors();
+        if (errors || !validator.isMongoId(req.params.photo_id)) {
+            ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
+        } else {
+            Photo.findOneAndRemove({ _id: ObjectId.generate(req.params.photo_id)}, function(err, photo){
+                if(err){
+                    next(err);
+                } else {
+                    ResponseService.json(res, true, photo, 'MESSAGE.DELETE_SUCCESS');
+                }
+            })
+        }
+    }
 }
 
 module.exports = PhotoController;

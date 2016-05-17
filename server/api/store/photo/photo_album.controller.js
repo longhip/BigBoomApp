@@ -8,13 +8,24 @@ var validator           = require('validator');
 var PhotoAlbumController = {
 
     index: function(req, res, next){
-        Album.find({ store_id: ObjectId.generate(req.auth.store_id)}, function(err, albums){
-            if(err){
-                next(err);
-            } else {
-                ResponseService.json(res, true, albums, '');
-            }
-        })
+        req.checkQuery('limit', 'MESSAGE.QUERY_REQUIRED').notEmpty();
+        req.checkQuery('skip', 'MESSAGE.QUERY_REQUIRED').notEmpty();
+        var errors = req.validationErrors();
+        if (errors) {
+            ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
+        } else {
+            Album.count( { store_id: ObjectId.generate(req.auth.store_id) }, function(err, total){
+                if(total > 0){
+                    Common.getAlbums(Album, req.auth, req.query.limit, req.query.skip).then(function(albums){
+                        ResponseService.json(res, true, {albums: albums, total: total}, '');
+                    }, function(){
+                        ResponseService.json(res, true, {albums: [], total: 0}, '');
+                    });
+                } else {
+                    ResponseService.json(res, true, {albums: [], total: 0}, '');
+                }
+            });
+        }
     },
 
     store: function(req, res, next) {
@@ -132,6 +143,52 @@ var PhotoAlbumController = {
                         ResponseService.json(res, true, albumJson, '');
                     }, function(errors){
                         ResponseService.json(res, true, errors.err, errors.message);
+                    })
+                }
+            })
+        }
+    },
+
+    hideThisAlbum: function(req, res, next){
+        req.checkParams('album_id', 'MESSAGE.CONTENT_REQUIRED').notEmpty();
+        var errors = req.validationErrors();
+        if (errors || !validator.isMongoId(req.params.album_id)) {
+            ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
+        } else {
+            Album.findById(ObjectId.generate(req.params.album_id), function(err, album){
+                if(err){
+                    next(err);
+                } else {
+                    album.deleted = 1;
+                    album.save(function(err, saveResult){
+                        if(err){
+                            next(err);
+                        } else {
+                            ResponseService.json(res, true, album, 'MESSAGE.UPDATE_SUCCESS');
+                        }
+                    })
+                }
+            })
+        }
+    },
+
+    displayThisAlbum: function(req, res, next){
+        req.checkParams('album_id', 'MESSAGE.CONTENT_REQUIRED').notEmpty();
+        var errors = req.validationErrors();
+        if (errors || !validator.isMongoId(req.params.album_id)) {
+            ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
+        } else {
+            Album.findById(ObjectId.generate(req.params.album_id), function(err, album){
+                if(err){
+                    next(err);
+                } else {
+                    album.deleted = 0;
+                    album.save(function(err, saveResult){
+                        if(err){
+                            next(err);
+                        } else {
+                            ResponseService.json(res, true, saveResult, 'MESSAGE.UPDATE_SUCCESS');
+                        }
                     })
                 }
             })

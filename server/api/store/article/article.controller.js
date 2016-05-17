@@ -54,12 +54,7 @@ var ArticleController = {
                 if (err) {
                     ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
                 } else {
-                    Common.insertStorePhoto( article.photos, { _id: article._id, type: 'article' }, req.auth ).then(function() {
-                        ResponseService.json(res, true, result, 'MESSAGE.CREATE_SUCCESS');
-                    }, function() {
-                        Article.findOneAndRemove({ _id: article._id});
-                        ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
-                    });
+                    ResponseService.json(res, true, result, 'MESSAGE.CREATE_SUCCESS');
                 }
             });
         }
@@ -127,8 +122,6 @@ var ArticleController = {
                         if (err) {
                             ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
                         } else {
-                            Common.insertStorePhoto( req.body.listPhotoInserted, { _id: article._id, type: 'article' }, req.auth );
-                            Common.removeStorePhoto( req.body.listPhotoRemoved, { _id: article._id, type: 'article' }, req.auth );
                             ResponseService.json(res, true, result, 'MESSAGE.UPDATE_SUCCESS');
                         }
                     });

@@ -20,26 +20,10 @@
                 <!-- Navigation -->
                 <div class="panel panel-flat">
                     <div class="panel-heading">
-                        <h6 class="panel-title">{{'LABEL.SEARCH_THE_PHOTO' | translate}}</h6>
-                    </div>
-                    <div class="panel-body">
-                        <form ng-submit="vm.search()">
-                            <div class="has-feedback has-feedback-left">
-                                <input type="search" ng-model="query" class="form-control" placeholder="{{'LABEL.TYPE_AND_HIT_ENTER' | translate}}">
-                                <div class="form-control-feedback">
-                                    <i class="icon-search4 text-size-base text-muted"></i>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
                         <h6 class="panel-title">{{'LABEL.NAVIGATOR' | translate}}</h6>
                     </div>
                     <div class="list-group list-group-borderless no-padding-top">
                         <a class="list-group-item" ng-click="vm.createAlbum()"><i class="icon-plus2"></i> {{'ACTION.ADD_NEW_ALBUM' | translate}}</a>
-                        <a class="list-group-item" ng-click="vm.createPhoto()"><i class="icon-plus2"></i> {{'ACTION.ADD_NEW_PHOTO' | translate}}</a>
                     </div>
                 </div>
                 <!-- /navigation -->
@@ -55,7 +39,7 @@
                                 <img ng-src="{{serverUrl}}{{album.photos[0].path}}" alt="" class="img-responsive">
                                 <div class="caption-overflow">
                                     <span>
-                                        <button class="btn btn-primary" type="button" ng-click="vm.detailAlbum(album)">Xem chi tiết</button>
+                                        <button class="btn btn-primary" type="button" ng-click="vm.detailAlbum(album)">{{'ACTION.VIEW_DETAIL' | translate}}</button>
                                     </span>
                                 </div>
                             </div>
@@ -67,30 +51,46 @@
                                         <li class="dropdown pull-right">
                                             <a class="dropdown-toggle text-default" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i><span class="caret"></span></a>
                                             <ul class="dropdown-menu dropdown-menu-right">
-                                                <li><a><i class="icon-arrow-right7"></i> {{'ACTION.VIEW_DETAIL' | translate}}</a></li>
-                                                <li><a><i class="icon-eye-blocked"></i> Ẩn bộ sưu tập này</a></li>
-                                                <li><a><i class="icon-eye"></i> Hiện bộ sưu tập này</a></li>
+                                                <li><a ng-click="vm.detailAlbum(album)"><i class="icon-arrow-right7"></i> {{'ACTION.VIEW_DETAIL' | translate}}</a></li>
+                                                <li><a ng-if="album.deleted == 0" ng-click="vm.hideThisAlbum(album)"><i class="icon-eye-blocked"></i> {{'ACTION.HIDE_THIS_ALBUM' | translate}}</a></li>
+                                                <li><a ng-if="album.deleted == 1" ng-click="vm.displayThisAlbum(album)"><i class="icon-eye"></i> {{'ACTION.DISPLAY_THIS_ALBUM' | translate}}</a></li>
                                                 <li ng-click="vm.editAlbum(album)"><a><i class="icon-pencil"></i> {{'ACTION.UPDATE_THIS_ALBUM' | translate}}</a></li>
                                                 <li class="divider"></li>
-                                                <li><a href="#"><i class="icon-trash"></i> {{'ACTION.REMOVE_THIS_ALBUM' | translate}}</a></li>
+                                                <li><a ng-click="vm.removeThisAlbum(album)"><i class="icon-trash"></i> {{'ACTION.REMOVE_THIS_ALBUM' | translate}}</a></li>
                                             </ul>
                                         </li>
+                                        <span style="margin:10px 10px 0px 0px" ng-if="album.deleted == 0" class="label label-success label-sm">{{'LABEL.ACTIVE' | translate}}</span>
+                                        <span style="margin:10px 10px 0px 0px" ng-if="album.deleted == 1" class="label label-default label-sm">{{'LABEL.NON_ACTIVE' | translate}}</span>
                                     </ul>
                                     <p>{{album.description}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-12 text-center" ng-if="vm.albums.length < vm.total_album">
+                        <button class="btn btn-primary" ng-click="vm.moreAlbum()">{{'ACTION.VIEW_MORE' | translate}}</button>
+                    </div>
+
                 </div>
                 <hr/ ng-show="vm.albums.length > 0">
                 <div class="row">
-                    <div class="col-sm-6 col-md-4">
+                    <div class="col-md-12">
+                        <div ngf-drop ngf-select ng-model="vm.files" class="drop-box-photo" 
+                            ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+                            accept="image/*" 
+                            ngf-pattern="'image/*'"><h3>{{'LABEL.CLICK_OR_DRAG_IMAGE_IN_THIS' | translate}}</h3>
+                        </div>
+                        <div ngf-no-file-drop><h3>{{'LABEL.NOT_SUPPORT_THIS_FILE_PLEASE_CHOOSE_IMAGE' | translate}}</h3></div>
+                        <hr/>
+                    </div>
+                    <div class="col-sm-6 col-md-4" ng-repeat="photo in vm.photos">
                         <div class="thumbnail">
                             <div class="thumb">
-                                <img src="assets/images/demo/flat/21.png" alt="">
+                                <img ng-src="{{serverUrl}}{{photo.path}}" alt="" class="img-responsive">
                                 <div class="caption-overflow">
                                     <span>
-                                        <button class="btn btn-primary" type="button">Xem chi tiết</button>
+                                        <button class="btn btn-primary" type="button" ng-click="vm.detailPhoto(photo)">{{'ACTION.VIEW_DETAIL' | translate}}</button>
                                     </span>
                                 </div>
                             </div>
@@ -102,20 +102,25 @@
                                         <li class="dropdown pull-right">
                                             <a class="dropdown-toggle text-default" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i><span class="caret"></span></a>
                                             <ul class="dropdown-menu dropdown-menu-right">
-                                                <li><a><i class="icon-arrow-right7"></i> {{'ACTION.VIEW_DETAIL' | translate}}</a></li>
-                                                <li><a><i class="icon-eye-blocked"></i> Ẩn ảnh này</a></li>
-                                                <li><a><i class="icon-eye"></i> Hiện ảnh này</a></li>
-                                                <li><a><i class="icon-pencil"></i> {{'ACTION.UPDATE_THIS_PHOTO' | translate}}</a></li>
+                                                <li><a ng-click="vm.detailPhoto(photo)"><i class="icon-arrow-right7"></i> {{'ACTION.VIEW_DETAIL' | translate}}</a></li>
+                                                <li><a ng-if="photo.deleted == 0" ng-click="vm.hideThisPhoto(photo)"><i class="icon-eye-blocked"></i> {{'ACTION.HIDE_THIS_PHOTO' | translate}}</a></li>
+                                                <li><a ng-if="photo.deleted == 1" ng-click="vm.displayThisPhoto(photo)"><i class="icon-eye"></i> {{'ACTION.DISPLAY_THIS_PHOTO' | translate}}</a></li>
                                                 <li class="divider"></li>
-                                                <li><a href="#"><i class="icon-trash"></i> {{'ACTION.REMOVE_THIS_PHOTO' | translate}}</a></li>
+                                                <li><a ng-click="vm.removeThisPhoto(photo)"><i class="icon-trash"></i> {{'ACTION.REMOVE_THIS_PHOTO' | translate}}</a></li>
                                             </ul>
                                         </li>
+                                        <span style="margin:10px 10px 0px 0px" ng-if="photo.deleted == 0" class="label label-success label-sm">{{'LABEL.ACTIVE' | translate}}</span>
+                                        <span style="margin:10px 10px 0px 0px" ng-if="photo.deleted == 1" class="label label-default label-sm">{{'LABEL.NON_ACTIVE' | translate}}</span>
                                     </ul>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing...</p>
                                 </div>
                             </div>
-                        </div>
+                        </div>  
                     </div>
+
+                    <div class="col-md-12 text-center" ng-if="vm.photos.length < vm.total_photo">
+                        <button class="btn btn-primary" ng-click="vm.morePhoto()">{{'ACTION.VIEW_MORE' | translate}}</button>
+                    </div>
+
                 </div>
             </div>
         </div>

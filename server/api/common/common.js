@@ -70,10 +70,13 @@ var Common = {
         return deferred.promise;
     },
 
-    getAlbums: function(model, auth){
+    getAlbums: function(model, auth, limit, skip){
         var deferred = q.defer();
         model.aggregate([
             { $match: { store_id: ObjectId.generate(auth.store_id) } },
+            { $sort: {created_at: -1} },
+            { $limit: parseInt(limit) },
+            { $skip: parseInt(skip) },
             {
                 $lookup: {
                     from: 'store_photos',

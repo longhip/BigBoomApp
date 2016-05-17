@@ -48,12 +48,7 @@ var FoodController = {
                 if (err) {
                     ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
                 } else {
-                    Common.insertStorePhoto( result.photos, { _id: result._id, type: 'food' }, req.auth ).then(function() {
-                        ResponseService.json(res, true, result, 'MESSAGE.CREATE_SUCCESS');
-                    }, function() {
-                        Food.findOneAndRemove({ _id: food._id});
-                        ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
-                    });
+                    ResponseService.json(res, true, result, 'MESSAGE.CREATE_SUCCESS');
                 }
             });
         }
@@ -127,8 +122,6 @@ var FoodController = {
                         if (err) {
                             ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
                         } else {
-                            Common.insertStorePhoto( req.body.listPhotoInserted, { _id: result._id, type: 'food' }, req.auth );
-                            Common.removeStorePhoto( req.body.listPhotoRemoved, { _id: result._id, type: 'food' }, req.auth );
                             ResponseService.json(res, true, result, 'MESSAGE.UPDATE_SUCCESS');
                         }
                     });

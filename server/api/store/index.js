@@ -148,11 +148,12 @@ router.delete('/food/comment/:food_id/:comment_id',MiddlewareAuth.handle,FoodCom
   |--------------------------------------------------------------------------
 */
 router.get('/photo',MiddlewareAuth.handle,PhotoController.index);
-router.post('/photo/:menu_id',MiddlewareAuth.handle,PhotoController.store);
+router.post('/photo',MiddlewareAuth.handle,PhotoController.store);
 router.put('/photo/:photo_id',MiddlewareAuth.handle,PhotoController.update);
 router.get('/photo/:photo_id',MiddlewareAuth.handle,PhotoController.show);
 router.put('/photo/hide/:photo_id',MiddlewareAuth.handle,PhotoController.hideThisPhoto);
 router.put('/photo/display/:photo_id',MiddlewareAuth.handle,PhotoController.displayThisPhoto);
+router.delete('/photo/:photo_id',MiddlewareAuth.handle,PhotoController.destroy);
 
 /*
   |--------------------------------------------------------------------------
@@ -186,6 +187,8 @@ router.get('/album',MiddlewareAuth.handle,PhotoAlbumController.index);
 router.post('/album',MiddlewareAuth.handle,PhotoAlbumController.store);
 router.get('/album/:album_id',MiddlewareAuth.handle,PhotoAlbumController.show);
 router.put('/album/:album_id',MiddlewareAuth.handle,PhotoAlbumController.update);
+router.put('/album/hide/:album_id',MiddlewareAuth.handle,PhotoAlbumController.hideThisAlbum);
+router.put('/album/display/:album_id',MiddlewareAuth.handle,PhotoAlbumController.displayThisAlbum);
 router.delete('/album/:album_id',MiddlewareAuth.handle,PhotoAlbumController.destroy);
 
 

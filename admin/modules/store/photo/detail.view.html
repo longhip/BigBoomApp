@@ -1,12 +1,12 @@
 <div class="modal-header bg-primary">
-    <h5 class="modal-title"><i class="icon-image2"></i> {{vm.album.name}} <small class="text-white">{{vm.album.description}}</small>
+    <h5 class="modal-title"><i class="icon-image2"></i> {{'LABEL.PHOTO_DETAIL' | translate}}</small>
         <li class="dropdown pull-right" style="list-style: none;">
             <a class="dropdown-toggle text-white" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i><span class="caret"></span></a>
             <ul class="dropdown-menu dropdown-menu-right">
                 <li ng-click="vm.editPhoto()">
                     <a><i class="icon-pencil"></i> 
-                        <span ng-if="vm.thisPhoto.description == ''"> {{'ACTION.ADD_NEW_DESCRIPTION' | translate}} </span>
-                        <span ng-if="vm.thisPhoto.description != ''"> {{'ACTION.EDIT_DESCRIPTION' | translate}} </span>
+                        <span ng-if="vm.photo.description == ''"> {{'ACTION.ADD_NEW_DESCRIPTION' | translate}} </span>
+                        <span ng-if="vm.photo.description != ''"> {{'ACTION.EDIT_DESCRIPTION' | translate}} </span>
                     </a>
                  </li>
             </ul>
@@ -18,7 +18,7 @@
         <div class="col-md-8">
             <div class="thumbnail thumbnail-photo">
                 <div class="thumb">
-                    <img ng-src="{{serverUrl}}{{vm.album.photos[vm.photoIndex].path}}" alt="">
+                    <img ng-src="{{serverUrl}}{{vm.photo.path}}" alt="">
                     <div class="caption-overflow">
                         <span style="text-align: left">
                             <a style="left: 0; position: absolute;" ng-click="vm.previusPhoto()" class="btn btn-flat border-white text-white btn-icon"><i class="icon-circle-left2"></i></a>
@@ -29,17 +29,16 @@
             </div>
         </div>
         <div class="col-md-4">
-            <p ng-if="!vm.thisPhoto.edit">{{vm.thisPhoto.description}}</p>
-            <div ng-if="vm.thisPhoto.edit">
+            <p ng-if="!vm.photo.edit">{{vm.photo.description}}</p>
+            <div ng-if="vm.photo.edit">
                 <div class="form-group">
-                    <textarea class="form-control" rows="5" ng-model="vm.thisPhoto.description"></textarea>
+                    <textarea class="form-control" rows="5" ng-model="vm.photo.description"></textarea>
                 </div>
                 <div class="text-right">
                     <button class="btn btn-primary" ng-click="vm.updatePhoto()"> {{'ACTION.SAVE' | translate}}</button>
                     <button class="btn btn-link" ng-click="vm.close()"> {{'ACTION.CANCEL' | translate}}</button>
                 </div>
             </div>
-            
 
             <div class="media">
                 <div class="media-left">
@@ -52,7 +51,7 @@
                 </div>
             </div>
             <ul class="media-list content-group-lg stack-media-on-mobile margin-top-20">
-                <li class="media" ng-repeat="(comment_index,comment) in vm.thisPhoto.comments">
+                <li class="media" ng-repeat="(comment_index,comment) in vm.photo.comments">
                     <div class="media-left">
                         <a href="#"><img ng-src="{{serverUrl}}{{comment.users[0].avatar}}" class="img-circle img-sm" alt=""></a>
                     </div>
@@ -121,7 +120,7 @@
                 <li class="media">
                     <div class="media-body">
                         <div class="media-heading">
-                            <a class="text-semibold" ng-if="vm.thisPhoto.comments.length < vm.thisPhoto.total_comment" ng-click="vm.loadMoreComment()">{{'ACTION.LOAD_MORE_COMMENT' | translate}}</a>
+                            <a class="text-semibold" ng-if="vm.photo.comments.length < vm.photo.total_comment" ng-click="vm.loadMoreComment()">{{'ACTION.LOAD_MORE_COMMENT' | translate}}</a>
                         </div>
                     </div>
                 </li>

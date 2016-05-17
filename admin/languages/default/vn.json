@@ -67,8 +67,8 @@
         "DO_YOU_WANT_REMOVE_THIS_MENU":"Bạn có chắc chắn muốn xóa thực đơn này, tất cả các món ăn trong thực đơn này sẽ bị xóa?",
         "IM_SURE":"Tôi chắc chắn!",
         "ARE_YOU_SURE":"Bạn có chắc chắn?",
-        "THIS_ARTICLE_HAS_DELETED":"Bài viết này đã được xóa!",
-        "THIS_COMMENT_HAS_DELETED":"Bình luận này đã được xóa!",
+        "THIS_ARTICLE_HAS_DELETED":"Bài viết đã được xóa!",
+        "THIS_COMMENT_HAS_DELETED":"Bình luận đã được xóa!",
         "THIS_MENU_HAS_DELETED":"Thực đơn này đã được xóa!",
         "DELETED":"Đã xóa!",
         "LAST_NAME":"Tên",
@@ -101,7 +101,12 @@
         "ALBUM_NAME":"Tên bộ sưu tập",
         "ALBUM_DESCRIPTION":"Mô tả bộ sưu tập",
         "NOT_SUPPORT_THIS_FILE_PLEASE_CHOOSE_IMAGE":"Chúng tôi không hỗ trợ định dạng tệp này! Xin vui lòng chọn ảnh!",
-        "EDIT_THIS_ALBUM":"Sửa bộ sưu tập"
+        "EDIT_THIS_ALBUM":"Sửa bộ sưu tập",
+        "PHOTO_DETAIL":"Chi tiết hình ảnh",
+        "DO_YOU_WANT_REMOVE_THIS_PHOTO":"Bạn có chắc chắn muốn xóa hình ảnh này?",
+        "THIS_PHOTO_HAS_DELETED":"Ảnh đã được xóa!",
+        "DO_YOU_WANT_REMOVE_THIS_ALBUM":"Bạn có chắc chắn muốn xóa bộ sưu tập này?",
+        "THIS_ALBUM_HAS_DELETED":"Bộ sưu tập đã được xóa!"
     },
     "MESSAGE": {
         "LOGIN_SUCCESS": "Đăng nhập thành công!",
@@ -155,8 +160,14 @@
         "REMOVE_THIS_PHOTO":"Xóa ảnh này",
         "ADD_NEW_ALBUM":"Thêm bộ sưu tập",
         "ADD_NEW_PHOTO":"Thêm ảnh",
-        "UPDATE_THIS_ALBUM":"Cập nhật bộ sưu tập này",
-        "REMOVE_THIS_ALBUM":"Xóa bộ sưu tập này"
+        "UPDATE_THIS_ALBUM": "Cập nhật bộ sưu tập này",
+        "REMOVE_THIS_ALBUM": "Xóa bộ sưu tập này",
+        "ADD_NEW_DESCRIPTION": "Thêm mới mô tả",
+        "EDIT_DESCRIPTION": "Sửa mô tả",
+        "HIDE_THIS_PHOTO": "Ẩn ảnh này",
+        "DISPLAY_THIS_PHOTO" : "Hiện ảnh này",
+        "HIDE_THIS_ALBUM": "Ẩn bộ sưu tập này",
+        "DISPLAY_THIS_ALBUM": "Hiện bộ sưu tập này"
     },
     "VALIDATE_MESSAGE": {
         "REQUIRED": "Bạn không được để trống trường này!",
