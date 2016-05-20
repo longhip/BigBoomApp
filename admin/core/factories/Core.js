@@ -20,6 +20,7 @@
             isNumber                    : isNumber,
             textContains                : textContains,
             validateHandle              : validateHandle,
+            resetValidateHandle         : resetValidateHandle,
             sweetAlertHandle            : sweetAlertHandle,
             removeSingleFile            : removeSingleFile,
             uploadSingleFile            : uploadSingleFile,
@@ -55,6 +56,12 @@
             var $validationProvider = $injector.get('$validation');
             return $validationProvider.validate(form);
         }
+
+        function resetValidateHandle(form) {
+            var $validationProvider = $injector.get('$validation');
+            return $validationProvider.reset(form);
+        }
+
         function sweetAlertHandle(content) {
             var deferred = $q.defer();
             SweetAlert.swal({

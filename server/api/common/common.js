@@ -91,18 +91,14 @@ var Common = {
         return deferred.promise;
     },
 
-    removeStorePhoto: function(photos, where, auth){
+    removeStorePhoto: function(photos){
         if(photos.length > 0){
             photos.forEach(function(photo){
-                Photo.findOneAndRemove({ path: photo.path },function(err, photo){
-                    if(photo){
-                        fs.access(photo.path, fs.F_OK, function(err) {
-                            if (!err) {
-                                fs.unlink(photo.path);
-                            }
-                        });
-                    } 
-                })
+                fs.access(photo.path, fs.F_OK, function(err) {
+                    if (!err) {
+                        fs.unlink(photo.path);
+                    }
+                });
             })
         }
     },

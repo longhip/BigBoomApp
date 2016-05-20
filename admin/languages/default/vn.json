@@ -77,7 +77,6 @@
         "MENU":"Thực đơn",
         "FOOD":"Món ăn",
         "MENU_NON_ACTIVE":"Thực đơn không kích hoạt",
-        "ADD_NEW_MENU":"Thêm mới thực đơn",
         "MENU_NAME":"Tên thực đơn",
         "MENU_DESCRIPTION":"Mô tả thực đơn",
         "LIST_FOOD":"Danh sách món ăn",
@@ -167,7 +166,10 @@
         "HIDE_THIS_PHOTO": "Ẩn ảnh này",
         "DISPLAY_THIS_PHOTO" : "Hiện ảnh này",
         "HIDE_THIS_ALBUM": "Ẩn bộ sưu tập này",
-        "DISPLAY_THIS_ALBUM": "Hiện bộ sưu tập này"
+        "DISPLAY_THIS_ALBUM": "Hiện bộ sưu tập này",
+        "ADD_NEW_AND_BACK_TO_LIST": "Thêm mới và quay lại danh sách",
+        "SAVE_AND_BACK_TO_LIST":"Lưu lại và quay lại danh sách",
+        "ADD_NEW_MENU":"Thêm mới thực đơn"
     },
     "VALIDATE_MESSAGE": {
         "REQUIRED": "Bạn không được để trống trường này!",

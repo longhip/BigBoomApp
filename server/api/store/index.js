@@ -99,6 +99,7 @@ router.get('/menu',MiddlewareAuth.handle,MenuController.index);
 router.post('/menu',MiddlewareAuth.handle,MenuController.store);
 router.put('/menu/:menu_id',MiddlewareAuth.handle,MenuController.update);
 router.put('/menu/active/:menu_id',MiddlewareAuth.handle,MenuController.active);
+router.get('/menu/food-by-menu/:menu_id',MiddlewareAuth.handle,MenuController.getFoodByMenu);
 router.get('/menu/:menu_id',MiddlewareAuth.handle,MenuController.show);
 router.delete('/menu/:menu_id',MiddlewareAuth.handle,MenuController.delete);
 
@@ -114,7 +115,7 @@ router.delete('/menu/:menu_id',MiddlewareAuth.handle,MenuController.delete);
   |--------------------------------------------------------------------------
 */
 router.get('/food/:food_id',MiddlewareAuth.handle,FoodController.show);
-router.post('/food/:menu_id',MiddlewareAuth.handle,FoodController.store);
+router.post('/food',MiddlewareAuth.handle,FoodController.store);
 router.put('/food/:food_id',MiddlewareAuth.handle,FoodController.update);
 router.put('/food/hide/:food_id',MiddlewareAuth.handle,FoodController.hideThisFood);
 router.put('/food/display/:food_id',MiddlewareAuth.handle,FoodController.displayThisFood);

@@ -179,5 +179,8 @@ tags-input .tags {
    -webkit-animation-name: fadeOutDown;
    animation-name: fadeOutDown;
 }
+.real-price {
+    text-decoration: line-through;
+}
 
 

@@ -1,4 +1,4 @@
-<div ng-controller="MenuController as vm" ng-init="vm.showThisFood()">
+<div ng-controller="FoodController as vm" ng-init="vm.show()">
     <!-- Page header -->
     <div class="page-header">
         <div class="page-header-content">
@@ -37,9 +37,9 @@
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li ng-if="vm.food.active == 1"><a ng-click="vm.hideThisFood(vm.food)"><i class="icon-eye-blocked"></i> {{'ACTION.HIDE_THIS_FOOD' | translate}}</a></li>
                                         <li ng-if="vm.food.active == 0"><a ng-click="vm.displayThisFood(vm.food)"><i class="icon-eye"></i> {{'ACTION.DISPLAY_THIS_FOOD' | translate}}</a></li>
-                                        <li><a ng-click="vm.editThisFood(vm.food,'fromDetail')"><i class="icon-pencil"></i> {{'ACTION.UPDATE_THIS_FOOD' | translate}}</a></li>
+                                        <li><a ng-click="vm.editThisFood(vm.food)"><i class="icon-pencil"></i> {{'ACTION.UPDATE_THIS_FOOD' | translate}}</a></li>
                                         <li class="divider"></li>
-                                        <li><a ng-click="vm.destroyThisFood(vm.food,'fromDetail')"><i class="icon-trash"></i> {{'ACTION.DELETE_THIS_FOOD' | translate}}</a></li>
+                                        <li><a ng-click="vm.destroy(vm.food)"><i class="icon-trash"></i> {{'ACTION.DELETE_THIS_FOOD' | translate}}</a></li>
                                     </ul>
                                 </li>
                             </ul>

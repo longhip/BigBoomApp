@@ -17,6 +17,7 @@
         'ngFileUpload',
         'angularMoment',
         'ui.bootstrap',
+        'ngTagsInput',
         'duScroll',
         'summernote',
         'ngImgCrop',

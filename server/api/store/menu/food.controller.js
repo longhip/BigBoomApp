@@ -11,10 +11,11 @@ var Common                  = require.main.require('./api/common/common');
 var FoodController = {
 
     store: function(req, res) {
-        req.assert('name', 'VALIDATE_MESSAGE.REQUIRED').notEmpty();
-        req.assert('sku', 'VALIDATE_MESSAGE.REQUIRED').notEmpty();
-        req.assert('content', 'VALIDATE_MESSAGE.REQUIRED').notEmpty();
-        req.assert('price', 'VALIDATE_MESSAGE.REQUIRED').notEmpty();
+        req.checkBody('name', 'VALIDATE_MESSAGE.REQUIRED').notEmpty();
+        req.checkBody('menu_id', 'VALIDATE_MESSAGE.REQUIRED').notEmpty();
+        req.checkBody('sku', 'VALIDATE_MESSAGE.REQUIRED').notEmpty();
+        req.checkBody('content', 'VALIDATE_MESSAGE.REQUIRED').notEmpty();
+        req.checkBody('price', 'VALIDATE_MESSAGE.REQUIRED').notEmpty();
         var errors = req.validationErrors();
         if (errors) {
             ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
@@ -23,7 +24,7 @@ var FoodController = {
                 sku: req.body.sku,
                 name: req.body.name,
                 slug: getSlug(req.body.name) + '-' + Date.now(),
-                menu_id: CreateObjectIdService.generate(req.params.menu_id),
+                menu_id: CreateObjectIdService.generate(req.body.menu_id),
                 content: req.body.content,
                 price: req.body.price,
                 price_real: req.body.price_real,

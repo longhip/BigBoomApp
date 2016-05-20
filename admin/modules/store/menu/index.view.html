@@ -3,13 +3,12 @@
     <div class="page-header">
         <div class="page-header-content">
             <div class="page-title">
-                <h4><span class="text-semibold">{{'LABEL.MENU' | translate}}</span></h4>
+                <h4><span class="text-semibold">{{'LABEL.MENU' | translate}}</span> - {{'LABEL.ALL_PHOTO' | translate}}</h4>
                 <ul class="breadcrumb">
                     <li><a href="#/app/dashboard">Home</a></li>
                     <li><a>{{'LABEL.MENU' | translate}}</a></li>
+                    <li class="active">{{'LABEL.ALL_PHOTO' | translate}}</li>
                 </ul>
-            </div>
-            <div class="heading-elements">
             </div>
         </div>
     </div>
@@ -21,12 +20,11 @@
                 <!-- Navigation -->
                 <div class="panel panel-flat">
                     <div class="panel-heading">
-                        <h6 class="panel-title">{{'LABEL.ADD_NEW_MENU' | translate}}</h6>
-                        <div class="heading-elements">
-                            <ul class="icons-list">
-                                <li><a ng-click="vm.createMenu()"><i class="icon-plus3"></i></a></li>
-                            </ul>
-                        </div>
+                        <h6 class="panel-title">{{'LABEL.NAVIGATOR' | translate}}</h6>
+                    </div>
+                    <div class="list-group list-group-borderless no-padding-top">
+                        <a class="list-group-item" ng-click="vm.createMenu()"><i class="icon-plus2"></i> {{'ACTION.ADD_NEW_MENU' | translate}}</a>
+                        <a class="list-group-item" ng-click="vm.createFood()"><i class="icon-plus2"></i> {{'ACTION.ADD_NEW_FOOD' | translate}}</a>
                     </div>
                     <div class="panel-body" ng-show="vm.isCreateMenu || vm.isEditMenu">
                         <form name="createNewMenu">
@@ -50,92 +48,78 @@
                         </form>
                     </div>
                 </div>
-                <!-- /navigation -->    
-                <!-- Navigation -->
+                <!-- /navigation -->
+
+                <!-- list menu -->
                 <div class="panel panel-flat">
                     <div class="panel-heading">
                         <h6 class="panel-title">{{'LABEL.MENU' | translate}}</h6>
                     </div>
                     <div class="list-group list-group-borderless no-padding-top">
-                        <a class="list-group-item" ng-repeat="menuActive in vm.listMenuActive">{{menuActive.name}} 
-                            <span class="pull-right">
-                                <i class="icon-pencil" ng-click="vm.editMenu(menuActive)"></i>
-                                <i class="icon-trash-alt" ng-click="vm.moveTrashMenu(menuActive)"></i>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-                <!-- /navigation -->     
-                <!-- Navigation -->
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
-                        <h6 class="panel-title">{{'LABEL.MENU_NON_ACTIVE' | translate}}</h6>
-                    </div>
-                    <div class="list-group list-group-borderless no-padding-top">
-                        <a class="list-group-item" ng-repeat="menuNonActive in vm.listMenuNonActive">{{menuNonActive.name}} 
-                            <span class="pull-right">
-                                <i class="icon-undo" ng-click="vm.activeMenu(menuNonActive)"></i>
-                                <i class="icon-cross2" ng-click="vm.deleteMenu(menuNonActive)"></i>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-                <!-- /navigation -->        
-            </div>
-            <div class="col-lg-9">
-                <div class="panel panel-flat">
-                    <div class="panel-heading">
-                        <h6 class="panel-title">{{vm.thisMenu.name}}:  <span class="badge badge-danger"> {{vm.thisMenu.listFood.length}} </span></h6>
-                        <div class="heading-elements">
-                            <button class="btn btn-primary" ng-click="vm.createFood(menu)"><i class="icon-plus3"></i> {{'ACTION.ADD_NEW_FOOD' | translate}} </button>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-6" ng-repeat="food in vm.thisMenu.listFood">
-                                <div class="thumbnail">
-                                    <div class="thumb">
-                                        <img ng-src="{{serverUrl}}{{food.feature_image}}" alt="">
-                                        <div class="caption-overflow">
-                                            <span>
-                                                <a class="btn btn-flat border-white text-white btn-rounded btn-icon"><i class="icon-zoomin3"></i></a>
-                                                <a href="#" class="btn btn-flat border-white text-white btn-rounded btn-icon"><i class="icon-link"></i></a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="caption">
-                                        <h6 class="text-semibold no-margin-top">{{food.name}} 
-                                            <span ng-if="food.active == 1" class="label label-success pull-right">{{'LABEL.ACTIVE' | translate}}</span>
-                                            <span ng-if="food.active == 0" class="label label-default pull-right">{{'LABEL.NON_ACTIVE' | translate}}</span>
-                                        </h6>
-                                        <span class="text-primary">{{food.price | number}} đ</span>
-                                    </div>
-                                    <div class="panel-footer panel-footer-transparent" style="padding-bottom: 20px">
-                                        <ul class="list-inline list-inline-condensed heading-text">
-                                            <li><a class="text-danger"><i class="icon-heart5"></i> {{food.total_wishlist}}</a></li>
-                                            <li><a class="text-primary"><i class="icon-thumbs-up3"></i> {{food.total_like}}</a></li>
-                                            <li><a class="text-info"><i class="icon-bubbles10"></i></a> {{food.total_comment}}</li>
-                                        </ul>
-                                        <ul class="heading-text list-inline pull-right">
-                                            <li class="dropdown">
-                                                <a class="dropdown-toggle text-default" data-toggle="dropdown"><i class="icon-menu7"></i><span class="caret"></span></a>
-                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li><a ng-click="vm.detailThisFood(food._id)"><i class="icon-arrow-right7"></i> {{'ACTION.VIEW_DETAIL' | translate}}</a></li>
-                                                    <li ng-if="food.active == 1"><a ng-click="vm.hideThisFood(food)"><i class="icon-eye-blocked"></i> {{'ACTION.HIDE_THIS_FOOD' | translate}}</a></li>
-                                                    <li ng-if="food.active == 0"><a ng-click="vm.displayThisFood(food)"><i class="icon-eye"></i> {{'ACTION.DISPLAY_THIS_FOOD' | translate}}</a></li>
-                                                    <li><a ng-click="vm.editThisFood(food)"><i class="icon-pencil"></i> {{'ACTION.UPDATE_THIS_FOOD' | translate}}</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a ng-click="vm.destroyThisFood(food)"><i class="icon-trash"></i> {{'ACTION.DELETE_THIS_FOOD' | translate}}</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
+                        <a class="list-group-item" ng-click="vm.viewFoodByMenu(menu)" ng-repeat="menu in vm.listMenu">
+                            <label class="radio-inline">
+                                <div class="choice">
+                                    <span ng-class="{'checked': menu.selected}"><input type="radio" name="menu" class="styled"></span>
                                 </div>
-                            </div>  
+                                {{menu.name}}
+                            </label>
+                            <span class="pull-right">
+                                <i ng-click="vm.editMenu(menu)" class="icon-pencil"></i>
+                                <i ng-click="vm.deleteMenu(menu)" class="icon-trash"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <!-- /list menu -->
+            </div>
+            <div class="col-lg-9" ng-if="vm.isSearch">
+                <h4 class="text-primary">{{'LABEL.SEARCH_RESULT_FOR' | translate}}: "{{search_value}}"  | {{'LABEL.TOTAL_SEARCH_RESULT' | translate}}: {{searchTotal}} <button class="btn btn-danger btn-sm pull-right" ng-click="vm.cancelSearch()"><i class="icon-cancel-square"></i> {{'ACTION.CANCEL_SEARCH' | translate}}</button></h4>
+            </div>   
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" ng-repeat="food in vm.listFood">
+                        <div class="thumbnail">
+                            <div class="thumb">
+                                <img ng-src="{{serverUrl}}{{food.feature_image}}" alt="" class="img-responsive">
+                                <div class="caption-overflow">
+                                    <span>
+                                        <button class="btn btn-primary" type="button" ng-click="vm.detailThisFood(food._id)">{{'ACTION.VIEW_DETAIL' | translate}}</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="caption">
+                                <div class="media-heading">
+                                    <p>{{food.name}}</p>
+                                    <ul class="list-inline list-inline-condensed heading-text">
+                                        <li><a class="text-default">{{food.price}}đ -  <span class="real-price">{{food.price_real}}đ</span></a></li>
+                                        <li class="dropdown pull-right">
+                                            <a class="dropdown-toggle text-default" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i><span class="caret"></span></a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a ng-click="vm.detailThisFood(food)"><i class="icon-arrow-right7"></i> {{'ACTION.VIEW_DETAIL' | translate}}</a></li>
+                                                <li><a ng-if="food.active == 1" ng-click="vm.hideThisAlbum(food)"><i class="icon-eye-blocked"></i> {{'ACTION.HIDE_THIS_ALBUM' | translate}}</a></li>
+                                                <li><a ng-if="food.active == 0" ng-click="vm.displayThisAlbum(food)"><i class="icon-eye"></i> {{'ACTION.DISPLAY_THIS_ALBUM' | translate}}</a></li>
+                                                <li ng-click="vm.editAlbum(food)"><a><i class="icon-pencil"></i> {{'ACTION.UPDATE_THIS_ALBUM' | translate}}</a></li>
+                                                <li class="divider"></li>
+                                                <li><a ng-click="vm.removeThisAlbum(food)"><i class="icon-trash"></i> {{'ACTION.REMOVE_THIS_ALBUM' | translate}}</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a class="text-default">
+                                            <span style="margin:10px 10px 0px 0px" ng-if="food.active == 1" class="label label-success label-sm">{{'LABEL.ACTIVE' | translate}}</span>
+                                            <span style="margin:10px 10px 0px 0px" ng-if="food.active == 0" class="label label-default label-sm">{{'LABEL.NON_ACTIVE' | translate}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-md-12 text-center" ng-if="vm.albums.length < vm.total_album">
+                        <button class="btn btn-primary" ng-click="vm.moreAlbum()">{{'ACTION.VIEW_MORE' | translate}}</button>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+    <!-- /content area -->
 </div>
