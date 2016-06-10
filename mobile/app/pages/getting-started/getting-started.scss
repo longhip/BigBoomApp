@@ -1,0 +1,53 @@
+$center: center;
+.getting-started {
+	// background: #FF6633;
+    p {
+        margin: 10px 0;
+        line-height: 22px;
+        font-size: 13px;
+    }
+    .card-custom{
+    	width:100%;
+    	margin:0px;
+    	padding: 0px;
+    	border:none;
+    	box-shadow:none;
+    }
+    .text-center{
+    	text-align:center;
+    }
+    .page-title{
+        font-size: 36px;
+        margin-top: 20%;
+    }
+    .margin-top-20{
+        margin-top: 20px;
+    }
+    .padding-top-bot-20{
+        padding-top:20px;
+        padding-bottom: 20px;
+    }
+    ion-card {
+        position: relative;
+        text-align: center;
+        width:100%;
+    	margin:0px;
+    	padding: 0px;
+    	border:none;
+    	box-shadow:none;
+    }
+    .card-new-store{
+    	ion-card {
+            position: relative;
+            border:none;
+            text-align: left;
+            box-shadow:none;
+            ion-card-content{
+                padding: 0;
+                ion-card-title{
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
