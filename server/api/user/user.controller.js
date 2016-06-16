@@ -4,14 +4,18 @@ var ResponseService = require.main.require('./services/response.service');
 var bcrypt = require('bcrypt-nodejs');
 var fs = require('fs');
 var uploadPath = 'public/uploads/';
+var jwt = require('jsonwebtoken');
+var config = require.main.require('./config/express');
 var mongoose = require('mongoose');
 var feilds = {
-  password:0,
+    password: 0,
 };
 var UserController = {
 
     index: function(req, res) {
-        User.find({ store_id: req.auth.store_id },feilds, function(err, results) {
+        User.find({
+            store_id: req.auth.store_id
+        }, feilds, function(err, results) {
             if (err) {
                 ResponseService.json(res, false, '', 'MESSAGE.SOMETHING_WENT_WRONG');
             } else {
@@ -31,7 +35,9 @@ var UserController = {
         if (errors) {
             ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
         } else {
-            User.findOne({ email: req.body.email }, function(err, result) {
+            User.findOne({
+                email: req.body.email
+            }, function(err, result) {
                 if (err) {
                     ResponseService.json(res, false, '', 'MESSAGE.SOMETHING_WENT_WRONG');
                 }
@@ -47,7 +53,7 @@ var UserController = {
                         password: bcrypt.hashSync(req.body.password),
                         address: req.body.address,
                         avatar: req.body.avatar,
-                        role_id:req.body.role_id,
+                        role_id: req.body.role_id,
                         active: 1,
                         status: 1,
                         feeds: [],
@@ -55,7 +61,7 @@ var UserController = {
                         store_likes: [],
                         store_follows: [],
                         type: 0,
-                        permissions:[],
+                        permissions: [],
                         created_at: Date.now(),
                         updated_at: Date.now(),
                         created_by: new mongoose.Types.ObjectId(req.auth._id),
@@ -66,11 +72,11 @@ var UserController = {
                     user.save(function(err, result) {
                         if (err) {
                             ResponseService.json(res, false, err, 'MESSAGE.CREATE_FAILED');
-                        }else{
-                          if (!fs.existsSync(uploadPath + user._id)){
-                              fs.mkdirSync(uploadPath + user._id);
-                          }
-                          ResponseService.json(res, true, result, 'MESSAGE.CREATE_SUCCESS');
+                        } else {
+                            if (!fs.existsSync(uploadPath + user._id)) {
+                                fs.mkdirSync(uploadPath + user._id);
+                            }
+                            ResponseService.json(res, true, result, 'MESSAGE.CREATE_SUCCESS');
                         }
                     });
                 }
@@ -88,7 +94,9 @@ var UserController = {
         if (errors) {
             ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
         } else {
-            User.findOne({ _id: req.auth._id }, function(err, result) {
+            User.findOne({
+                _id: req.auth._id
+            }, function(err, result) {
                 if (err) {
                     ResponseService.json(res, false, '', 'MESSAGE.SOMETHING_WENT_WRONG');
                 }
@@ -97,7 +105,9 @@ var UserController = {
                 }
                 if (result) {
                     var email = req.body.email;
-                    User.findOne({ email: email }, function(err, user) {
+                    User.findOne({
+                        email: email
+                    }, function(err, user) {
                         if (err) {
                             ResponseService.json(res, false, '', 'MESSAGE.SOMETHING_WENT_WRONG');
                         }
@@ -143,7 +153,9 @@ var UserController = {
         if (errors) {
             ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
         } else {
-            User.findOne({ _id: req.auth._id }, function(err, user) {
+            User.findOne({
+                _id: req.auth._id
+            }, function(err, user) {
                 if (err) {
                     ResponseService.json(res, false, '', 'MESSAGE.SOMETHING_WENT_WRONG');
                 }
@@ -174,7 +186,9 @@ var UserController = {
         if (errors) {
             ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
         } else {
-            User.findOne({ _id: req.auth._id }, function(err, user) {
+            User.findOne({
+                _id: req.auth._id
+            }, function(err, user) {
                 if (err) {
                     ResponseService.json(res, false, '', 'MESSAGE.SOMETHING_WENT_WRONG');
                 }
@@ -196,14 +210,82 @@ var UserController = {
     },
 
     profile: function(req, res) {
-        User.findOne({ _id: req.auth._id }, function(err, result) {
+        User.findOne({
+            _id: req.auth._id
+        }, function(err, result) {
             if (err) {
                 ResponseService.json(res, false, err, 'MESSAGE.SOMETHING_WENT_WRONG');
             } else {
                 ResponseService.json(res, true, result, '');
             }
         });
+    },
+
+
+    register: function(req, res) {
+        req.assert('name.firstname', 'VALIDATE_MESSAGE.REQUIRED').notEmpty();
+        req.assert('name.lastname', 'VALIDATE_MESSAGE.REQUIRED').notEmpty();
+        req.assert('email', 'VALIDATE_MESSAGE.EMAIL_INVALID').notEmpty().isEmail();
+        req.assert('password', 'VALIDATE_MESSAGE.PASSWORD_TOO_SHORT').len(6, 100);
+        var errors = req.validationErrors();
+        if (errors) {
+            ResponseService.json(res, false, errors, 'MESSAGE.VALIDATOR_FAILED');
+        } else {
+            User.findOne({
+                email: req.body.email
+            }, function(err, result) {
+                if (err) {
+                    ResponseService.json(res, false, '', 'MESSAGE.SOMETHING_WENT_WRONG');
+                }
+                if (result) {
+                    ResponseService.json(res, false, '', 'MESSAGE.YOUR_EMAIL_ALREADY_EXISTS');
+                }
+                if (!result) {
+                    var data = {
+                        name: req.body.name,
+                        email: req.body.email,
+                        phone: null,
+                        gender: null,
+                        password: bcrypt.hashSync(req.body.password),
+                        address: null,
+                        avatar: null,
+                        role_id: null,
+                        active: 1,
+                        status: 1,
+                        feeds: [],
+                        friends: [],
+                        store_likes: [],
+                        store_follows: [],
+                        type: 1,
+                        permissions: [],
+                        created_at: Date.now(),
+                        updated_at: Date.now(),
+                        created_by: null,
+                        updated_by: null,
+                        store_id: null,
+                    };
+                    var user = new User(data);
+                    user.save(function(err, result) {
+                        if (err) {
+                            ResponseService.json(res, false, err, 'MESSAGE.CREATE_FAILED');
+                        } else {
+                            if (!fs.existsSync(uploadPath + user._id)) {
+                                fs.mkdirSync(uploadPath + user._id);
+                            }
+                            var token = jwt.sign(result, config.secret, {
+                                expiresIn: '1 days'
+                            });
+                            ResponseService.json(res, true, {
+                                member: result,
+                                token: token
+                            }, 'MESSAGE.CREATE_SUCCESS');
+                        }
+                    });
+                }
+            });
+        }
     }
+
 };
 
 

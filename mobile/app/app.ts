@@ -1,5 +1,6 @@
 import {ViewChild} from '@angular/core';
 import {App, Platform, Nav} from 'ionic-angular';
+import { HTTP_PROVIDERS } from '@angular/http';
 import {StatusBar} from 'ionic-native';
 import {GettingStartedPage} from './pages/getting-started/getting-started';
 import {ListPage} from './pages/list/list';
@@ -10,7 +11,8 @@ import {StorePage} from './pages/store/store';
 
 @App({
   templateUrl: 'build/app.html',
-  config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+  config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
+  providers: [HTTP_PROVIDERS]
 })
 class MyApp {
   @ViewChild(Nav) nav: Nav;
