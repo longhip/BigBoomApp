@@ -21,7 +21,7 @@ function Header() {
       <div className="navbar navbar-inverse navbar-lg">
         <div className="container">
           <div className="navbar-collapse collapse" id="navbar-mobile">
-              <a className="navbar-brand" href="index.html"><img src="assets/images/logo_light.png" alt="" /></a>
+              <a className="navbar-brand" href="index.html"><img src="/assets/images/logo_light.png" alt="" /></a>
               <ul className="nav navbar-nav pull-right visible-xs-block">
                   <li><a data-toggle="collapse" data-target="#navbar-mobile"><i className="icon-tree5"></i></a></li>
               </ul>

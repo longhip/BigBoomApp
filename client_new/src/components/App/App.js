@@ -13,6 +13,7 @@ import s from './App.css';
 import Header from '../Header';
 import Feedback from '../Feedback';
 import Footer from '../Footer';
+import language from '../../languages/vn.json';
 
 class App extends Component {
 
@@ -39,6 +40,10 @@ class App extends Component {
       setTitle: context.setTitle || emptyFunction,
       setMeta: context.setMeta || emptyFunction,
     };
+  }
+
+  componentDidMount(){
+    console.log(language);
   }
 
   componentWillMount() {
