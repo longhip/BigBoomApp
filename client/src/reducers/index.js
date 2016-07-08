@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import {reducer as form} from 'redux-form';
 import runtime from './runtime';
 import intl from './intl';
 import register from './register';
@@ -8,5 +9,6 @@ export default combineReducers({
   	runtime,
   	intl,
   	register,
-  	todos
+  	todos,
+    form
 });
