@@ -114,19 +114,19 @@ module.exports =
   
   var _routes2 = _interopRequireDefault(_routes);
   
-  var _assets = __webpack_require__(94);
+  var _assets = __webpack_require__(97);
   
   var _assets2 = _interopRequireDefault(_assets);
   
   var _config = __webpack_require__(7);
   
-  var _configureStore = __webpack_require__(95);
+  var _configureStore = __webpack_require__(98);
   
   var _configureStore2 = _interopRequireDefault(_configureStore);
   
-  var _runtime = __webpack_require__(105);
+  var _runtime = __webpack_require__(108);
   
-  var _Provide = __webpack_require__(106);
+  var _Provide = __webpack_require__(109);
   
   var _Provide2 = _interopRequireDefault(_Provide);
   
@@ -176,7 +176,7 @@ module.exports =
   // Register server-side rendering middleware
   // -----------------------------------------------------------------------------
   app.get('*', function () {
-    var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(req, res, next) {
+    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(req, res, next) {
       return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -190,7 +190,7 @@ module.exports =
                       case 0:
                         css = [];
                         statusCode = 200;
-                        template = __webpack_require__(108); // eslint-disable-line global-require
+                        template = __webpack_require__(111); // eslint-disable-line global-require
   
                         locale = req.language;
                         data = {
@@ -301,9 +301,8 @@ module.exports =
         }
       }, _callee2, undefined, [[0, 4]]);
     }));
-  
     return function (_x, _x2, _x3) {
-      return _ref.apply(this, arguments);
+      return ref.apply(this, arguments);
     };
   }());
   
@@ -317,7 +316,7 @@ module.exports =
   app.use(function (err, req, res, next) {
     // eslint-disable-line no-unused-vars
     console.log(pe.render(err)); // eslint-disable-line no-console
-    var template = __webpack_require__(111); // eslint-disable-line global-require
+    var template = __webpack_require__(114); // eslint-disable-line global-require
     var statusCode = err.status || 500;
     res.status(statusCode);
     res.send(template({
@@ -572,11 +571,11 @@ module.exports =
   
   var _register2 = _interopRequireDefault(_register);
   
-  var _content = __webpack_require__(86);
+  var _content = __webpack_require__(89);
   
   var _content2 = _interopRequireDefault(_content);
   
-  var _error = __webpack_require__(90);
+  var _error = __webpack_require__(93);
   
   var _error2 = _interopRequireDefault(_error);
   
@@ -1172,10 +1171,10 @@ module.exports =
   function Header() {
     return _react2.default.createElement(
       'div',
-      null,
+      { className: '' },
       _react2.default.createElement(
         'div',
-        { className: 'navbar navbar-inverse navbar-lg' },
+        { className: 'navbar bg-danger navbar-fixed-top navbar-inverse navbar-sm' },
         _react2.default.createElement(
           'div',
           { className: 'container' },
@@ -1300,19 +1299,10 @@ module.exports =
   
   
   // module
-  exports.push([module.id, "/**\n * React Starter Kit (https://www.reactstarterkit.com/)\n *\n * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE.txt file in the root directory of this source tree.\n */\n\n/**\n * React Starter Kit (https://www.reactstarterkit.com/)\n *\n * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE.txt file in the root directory of this source tree.\n */\n\n:root {\n  /*\n   * Typography\n   * ======================================================================== */\n\n  /*\n   * Layout\n   * ======================================================================== */\n\n  /*\n   * Media queries breakpoints\n   * ======================================================================== */  /* Extra small screen / phone */  /* Small screen / tablet */  /* Medium screen / desktop */ /* Large screen / wide desktop */\n}\n\n.Header_root_3Gi {\n  background: #373277;\n  color: #fff;\n}\n\n.Header_container_1rG {\n  margin: 0 auto;\n  padding: 20px 0;\n  max-width: 1000px;\n}\n\n.Header_brand_19l {\n  color: rgb(146, 229, 252);\n  text-decoration: none;\n  font-size: 1.75em; /* ~28px */\n}\n\n.Header_brandTxt_2mi {\n  margin-left: 10px;\n}\n\n.Header_nav_1zC {\n  float: right;\n  margin-top: 6px;\n}\n\n.Header_banner_2Lc {\n  text-align: center;\n}\n\n.Header_bannerTitle_2Qz {\n  margin: 0;\n  padding: 10px;\n  font-weight: normal;\n  font-size: 4em;\n  line-height: 1em;\n}\n\n.Header_bannerDesc_3mm {\n  padding: 0;\n  color: rgba(255, 255, 255, 0.5);\n  font-size: 1.25em;\n  margin: 0;\n}\n", "", {"version":3,"sources":["/./components/Header/Header.css","/./components/variables.css"],"names":[],"mappings":"AAAA;;;;;;;GAOG;;ACPH;;;;;;;GAOG;;AAEH;EACE;;gFAE8E;;EAI9E;;gFAE8E;;EAI9E;;gFAE8E,EAErD,gCAAgC,EAChC,2BAA2B,EAC3B,6BAA6B,CAC7B,iCAAiC;CAC3D;;ADfD;EACE,oBAAoB;EACpB,YAAY;CACb;;AAED;EACE,eAAe;EACf,gBAAgB;EAChB,kBAAoC;CACrC;;AAED;EACE,0BAAiD;EACjD,sBAAsB;EACtB,kBAAkB,CAAC,WAAW;CAC/B;;AAED;EACE,kBAAkB;CACnB;;AAED;EACE,aAAa;EACb,gBAAgB;CACjB;;AAED;EACE,mBAAmB;CACpB;;AAED;EACE,UAAU;EACV,cAAc;EACd,oBAAoB;EACpB,eAAe;EACf,iBAAiB;CAClB;;AAED;EACE,WAAW;EACX,gCAAgC;EAChC,kBAAkB;EAClB,UAAU;CACX","file":"Header.css","sourcesContent":["/**\n * React Starter Kit (https://www.reactstarterkit.com/)\n *\n * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE.txt file in the root directory of this source tree.\n */\n\n@import '../variables.css';\n\n:root {\n  --brand-color: #61dafb;\n}\n\n.root {\n  background: #373277;\n  color: #fff;\n}\n\n.container {\n  margin: 0 auto;\n  padding: 20px 0;\n  max-width: var(--max-content-width);\n}\n\n.brand {\n  color: color(var(--brand-color) lightness(+10%));\n  text-decoration: none;\n  font-size: 1.75em; /* ~28px */\n}\n\n.brandTxt {\n  margin-left: 10px;\n}\n\n.nav {\n  float: right;\n  margin-top: 6px;\n}\n\n.banner {\n  text-align: center;\n}\n\n.bannerTitle {\n  margin: 0;\n  padding: 10px;\n  font-weight: normal;\n  font-size: 4em;\n  line-height: 1em;\n}\n\n.bannerDesc {\n  padding: 0;\n  color: rgba(255, 255, 255, 0.5);\n  font-size: 1.25em;\n  margin: 0;\n}\n","/**\n * React Starter Kit (https://www.reactstarterkit.com/)\n *\n * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE.txt file in the root directory of this source tree.\n */\n\n:root {\n  /*\n   * Typography\n   * ======================================================================== */\n\n  --font-family-base: 'Segoe UI', 'HelveticaNeue-Light', sans-serif;\n\n  /*\n   * Layout\n   * ======================================================================== */\n\n  --max-content-width: 1000px;\n\n  /*\n   * Media queries breakpoints\n   * ======================================================================== */\n\n  --screen-xs-min: 480px;  /* Extra small screen / phone */\n  --screen-sm-min: 768px;  /* Small screen / tablet */\n  --screen-md-min: 992px;  /* Medium screen / desktop */\n  --screen-lg-min: 1200px; /* Large screen / wide desktop */\n}\n"],"sourceRoot":"webpack://"}]);
+  exports.push([module.id, "/**\n * React Starter Kit (https://www.reactstarterkit.com/)\n *\n * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE.txt file in the root directory of this source tree.\n */\n\n/**\n * React Starter Kit (https://www.reactstarterkit.com/)\n *\n * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE.txt file in the root directory of this source tree.\n */\n\n:root {\n  /*\n   * Typography\n   * ======================================================================== */\n\n  /*\n   * Layout\n   * ======================================================================== */\n\n  /*\n   * Media queries breakpoints\n   * ======================================================================== */  /* Extra small screen / phone */  /* Small screen / tablet */  /* Medium screen / desktop */ /* Large screen / wide desktop */\n}", "", {"version":3,"sources":["/./components/Header/Header.css","/./components/variables.css"],"names":[],"mappings":"AAAA;;;;;;;GAOG;;ACPH;;;;;;;GAOG;;AAEH;EACE;;gFAE8E;;EAI9E;;gFAE8E;;EAI9E;;gFAE8E,EAErD,gCAAgC,EAChC,2BAA2B,EAC3B,6BAA6B,CAC7B,iCAAiC;CAC3D","file":"Header.css","sourcesContent":["/**\n * React Starter Kit (https://www.reactstarterkit.com/)\n *\n * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE.txt file in the root directory of this source tree.\n */\n\n@import '../variables.css';\n\n:root {\n  --brand-color: #61dafb;\n}","/**\n * React Starter Kit (https://www.reactstarterkit.com/)\n *\n * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE.txt file in the root directory of this source tree.\n */\n\n:root {\n  /*\n   * Typography\n   * ======================================================================== */\n\n  --font-family-base: 'Segoe UI', 'HelveticaNeue-Light', sans-serif;\n\n  /*\n   * Layout\n   * ======================================================================== */\n\n  --max-content-width: 1000px;\n\n  /*\n   * Media queries breakpoints\n   * ======================================================================== */\n\n  --screen-xs-min: 480px;  /* Extra small screen / phone */\n  --screen-sm-min: 768px;  /* Small screen / tablet */\n  --screen-md-min: 992px;  /* Medium screen / desktop */\n  --screen-lg-min: 1200px; /* Large screen / wide desktop */\n}\n"],"sourceRoot":"webpack://"}]);
   
   // exports
-  exports.locals = {
-  	"root": "Header_root_3Gi",
-  	"container": "Header_container_1rG",
-  	"brand": "Header_brand_19l",
-  	"brandTxt": "Header_brandTxt_2mi",
-  	"nav": "Header_nav_1zC",
-  	"banner": "Header_banner_2Lc",
-  	"bannerTitle": "Header_bannerTitle_2Qz",
-  	"bannerDesc": "Header_bannerDesc_3mm"
-  };
+
 
 /***/ },
 /* 41 */
@@ -2857,7 +2847,7 @@ module.exports =
       var locale = _ref.locale;
   
       return function () {
-          var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(dispatch) {
+          var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(dispatch) {
               var messages, maxAge;
               return _regenerator2.default.wrap(function _callee$(_context) {
                   while (1) {
@@ -2916,9 +2906,8 @@ module.exports =
                   }
               }, _callee, _this, [[1, 7]]);
           }));
-  
           return function (_x) {
-              return _ref2.apply(this, arguments);
+              return ref.apply(this, arguments);
           };
       }();
   }
@@ -4250,7 +4239,7 @@ module.exports =
   
   var _register = __webpack_require__(85);
   
-  var _Register = __webpack_require__(113);
+  var _Register = __webpack_require__(86);
   
   var _Register2 = _interopRequireDefault(_Register);
   
@@ -4286,21 +4275,42 @@ module.exports =
     context.setTitle(title);
     return _react2.default.createElement(
       'div',
-      { className: _App2.default.root },
+      { className: 'page-container' },
       _react2.default.createElement(
         'div',
-        { className: _App2.default.container },
+        { className: 'container content' },
         _react2.default.createElement(
-          'h1',
-          null,
-          title
-        ),
-        _react2.default.createElement(
-          'p',
-          { className: _App2.default.lead },
-          'Register with your username or company email address.'
-        ),
-        _react2.default.createElement(_Register2.default, { registerHandle: props.postRegister, customProps: 'a' })
+          'div',
+          { className: 'col-lg-6 col-lg-offset-3' },
+          _react2.default.createElement(
+            'div',
+            { className: 'panel registration-form' },
+            _react2.default.createElement(
+              'div',
+              { className: 'panel-body' },
+              _react2.default.createElement(
+                'div',
+                { className: 'text-center' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'icon-object border-success text-success' },
+                  _react2.default.createElement('i', { className: 'icon-plus3' })
+                ),
+                _react2.default.createElement(
+                  'h5',
+                  { className: 'content-group-lg' },
+                  'Create account ',
+                  _react2.default.createElement(
+                    'small',
+                    { className: 'display-block' },
+                    'All fields are required'
+                  )
+                )
+              ),
+              _react2.default.createElement(_Register2.default, { registerHandle: props.postRegister })
+            )
+          )
+        )
       )
     );
   }
@@ -4341,6 +4351,232 @@ module.exports =
     value: true
   });
   
+  var _extends2 = __webpack_require__(42);
+  
+  var _extends3 = _interopRequireDefault(_extends2);
+  
+  var _getPrototypeOf = __webpack_require__(23);
+  
+  var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+  
+  var _classCallCheck2 = __webpack_require__(24);
+  
+  var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+  
+  var _createClass2 = __webpack_require__(25);
+  
+  var _createClass3 = _interopRequireDefault(_createClass2);
+  
+  var _possibleConstructorReturn2 = __webpack_require__(26);
+  
+  var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+  
+  var _inherits2 = __webpack_require__(27);
+  
+  var _inherits3 = _interopRequireDefault(_inherits2);
+  
+  var _react = __webpack_require__(17);
+  
+  var _react2 = _interopRequireDefault(_react);
+  
+  var _reduxForm = __webpack_require__(88);
+  
+  var _Message = __webpack_require__(115);
+  
+  var _Message2 = _interopRequireDefault(_Message);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  var validate = function validate(values) {
+    var errors = {};
+    if (!values.firstname) {
+      errors.firstname = 'Required';
+    } else if (values.firstname.length > 50) {
+      errors.firstname = 'Must be 50 character or less';
+    } else if (values.firstname.length < 6) {
+      errors.firstname = 'Must be 5 character or more';
+    }
+    if (!values.lastname) {
+      errors.lastname = 'Required';
+    } else if (values.lastname.length > 50) {
+      errors.lastname = 'Must be 50 character or less';
+    } else if (values.lastname.length < 6) {
+      errors.lastname = 'Must be 6 character or more';
+    }
+    if (!values.email) {
+      errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = 'Email Invalid';
+    }
+    if (!values.password) {
+      errors.password = 'Required';
+    } else if (values.password.length > 30) {
+      errors.password = 'Must be 30 character or less';
+    } else if (values.password.length < 6) {
+      errors.password = 'Must be 6 character or more';
+    }
+    if (!values.re_password) {
+      errors.re_password = 'Required';
+    } else if (values.re_password != values.password) {
+      errors.re_password = 'Re password not pass';
+    }
+    return errors;
+  };
+  
+  var RegisterFormComponent = function (_React$Component) {
+    (0, _inherits3.default)(RegisterFormComponent, _React$Component);
+  
+    function RegisterFormComponent() {
+      (0, _classCallCheck3.default)(this, RegisterFormComponent);
+      return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RegisterFormComponent).apply(this, arguments));
+    }
+  
+    (0, _createClass3.default)(RegisterFormComponent, [{
+      key: 'render',
+      value: function render() {
+        var _this2 = this;
+  
+        var _props = this.props;
+        var _props$fields = _props.fields;
+        var firstname = _props$fields.firstname;
+        var lastname = _props$fields.lastname;
+        var email = _props$fields.email;
+        var password = _props$fields.password;
+        var re_password = _props$fields.re_password;
+        var handleSubmit = _props.handleSubmit;
+        var registerHandle = _props.registerHandle;
+        var submitting = _props.submitting;
+  
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'form',
+            { onSubmit: handleSubmit(function (data) {
+                _this2.props.registerHandle(data);
+              }) },
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'usernameOrEmail' },
+                'First name:'
+              ),
+              _react2.default.createElement('input', (0, _extends3.default)({
+                className: 'form-control',
+                id: 'fistname',
+                type: 'text',
+                name: 'fistname',
+                autoFocus: true
+              }, firstname)),
+              firstname.touched && firstname.error && _react2.default.createElement(_Message2.default, { message: firstname.error })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'usernameOrEmail' },
+                'Last name:'
+              ),
+              _react2.default.createElement('input', (0, _extends3.default)({
+                className: 'form-control',
+                id: 'lastname',
+                type: 'text',
+                name: 'lastname'
+              }, lastname)),
+              lastname.touched && lastname.error && _react2.default.createElement(_Message2.default, { message: lastname.error })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'usernameOrEmail' },
+                'Username or email address:'
+              ),
+              _react2.default.createElement('input', (0, _extends3.default)({
+                className: 'form-control',
+                id: 'email',
+                type: 'text',
+                name: 'email'
+              }, email)),
+              email.touched && email.error && _react2.default.createElement(_Message2.default, { message: email.error })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'password' },
+                'Password:'
+              ),
+              _react2.default.createElement('input', (0, _extends3.default)({
+                className: 'form-control',
+                id: 'password',
+                type: 'password',
+                name: 'password'
+              }, password)),
+              password.touched && password.error && _react2.default.createElement(_Message2.default, { message: password.error })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'password' },
+                'Re-Password:'
+              ),
+              _react2.default.createElement('input', (0, _extends3.default)({
+                className: 'form-control',
+                id: 'password',
+                type: 'password',
+                name: 'password'
+              }, re_password)),
+              re_password.touched && re_password.error && _react2.default.createElement(_Message2.default, { message: re_password.error })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'button',
+                { className: 'btn bg-danger btn-block', type: 'submit', disabled: submitting },
+                'Register'
+              )
+            )
+          )
+        );
+      }
+    }]);
+    return RegisterFormComponent;
+  }(_react2.default.Component);
+  
+  RegisterFormComponent = (0, _reduxForm.reduxForm)({ // <----- THIS IS THE IMPORTANT PART!
+    form: 'registerForm', // a unique name for this form
+    fields: ['firstname', 'lastname', 'email', 'password', 're_password'], // all the fields in your form
+    asyncBlurFields: ['fistname', 'lastname', 'email', 'password', 're_password'],
+    validate: validate
+  })(RegisterFormComponent);
+  exports.default = RegisterFormComponent;
+
+/***/ },
+/* 87 */,
+/* 88 */
+/***/ function(module, exports) {
+
+  module.exports = require("redux-form");
+
+/***/ },
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+  'use strict';
+  
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  
   var _regenerator = __webpack_require__(1);
   
   var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -4357,7 +4593,7 @@ module.exports =
   
   var _react2 = _interopRequireDefault(_react);
   
-  var _Content = __webpack_require__(87);
+  var _Content = __webpack_require__(90);
   
   var _Content2 = _interopRequireDefault(_Content);
   
@@ -4441,7 +4677,7 @@ module.exports =
       */
 
 /***/ },
-/* 87 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -4478,7 +4714,7 @@ module.exports =
   
   var _withStyles2 = _interopRequireDefault(_withStyles);
   
-  var _Content = __webpack_require__(88);
+  var _Content = __webpack_require__(91);
   
   var _Content2 = _interopRequireDefault(_Content);
   
@@ -4537,11 +4773,11 @@ module.exports =
   exports.default = (0, _withStyles2.default)(_Content2.default)(Content);
 
 /***/ },
-/* 88 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
   
-      var content = __webpack_require__(89);
+      var content = __webpack_require__(92);
       var insertCss = __webpack_require__(32);
   
       if (typeof content === 'string') {
@@ -4571,7 +4807,7 @@ module.exports =
     
 
 /***/ },
-/* 89 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
   exports = module.exports = __webpack_require__(31)();
@@ -4588,7 +4824,7 @@ module.exports =
   };
 
 /***/ },
-/* 90 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -4605,7 +4841,7 @@ module.exports =
   
   var _App2 = _interopRequireDefault(_App);
   
-  var _ErrorPage = __webpack_require__(91);
+  var _ErrorPage = __webpack_require__(94);
   
   var _ErrorPage2 = _interopRequireDefault(_ErrorPage);
   
@@ -4636,7 +4872,7 @@ module.exports =
       */
 
 /***/ },
-/* 91 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -4653,7 +4889,7 @@ module.exports =
   
   var _withStyles2 = _interopRequireDefault(_withStyles);
   
-  var _ErrorPage = __webpack_require__(92);
+  var _ErrorPage = __webpack_require__(95);
   
   var _ErrorPage2 = _interopRequireDefault(_ErrorPage);
   
@@ -4709,11 +4945,11 @@ module.exports =
   exports.default = (0, _withStyles2.default)(_ErrorPage2.default)(ErrorPage);
 
 /***/ },
-/* 92 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
   
-      var content = __webpack_require__(93);
+      var content = __webpack_require__(96);
       var insertCss = __webpack_require__(32);
   
       if (typeof content === 'string') {
@@ -4743,7 +4979,7 @@ module.exports =
     
 
 /***/ },
-/* 93 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
   exports = module.exports = __webpack_require__(31)();
@@ -4757,13 +4993,13 @@ module.exports =
 
 
 /***/ },
-/* 94 */
+/* 97 */
 /***/ function(module, exports) {
 
   module.exports = require("./assets");
 
 /***/ },
-/* 95 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -4773,13 +5009,13 @@ module.exports =
   });
   exports.default = configureStore;
   
-  var _redux = __webpack_require__(96);
+  var _redux = __webpack_require__(99);
   
-  var _reduxThunk = __webpack_require__(97);
+  var _reduxThunk = __webpack_require__(100);
   
   var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
   
-  var _reducers = __webpack_require__(98);
+  var _reducers = __webpack_require__(101);
   
   var _reducers2 = _interopRequireDefault(_reducers);
   
@@ -4822,19 +5058,19 @@ module.exports =
   }
 
 /***/ },
-/* 96 */
+/* 99 */
 /***/ function(module, exports) {
 
   module.exports = require("redux");
 
 /***/ },
-/* 97 */
+/* 100 */
 /***/ function(module, exports) {
 
   module.exports = require("redux-thunk");
 
 /***/ },
-/* 98 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -4843,23 +5079,23 @@ module.exports =
     value: true
   });
   
-  var _redux = __webpack_require__(96);
+  var _redux = __webpack_require__(99);
   
-  var _reduxForm = __webpack_require__(112);
+  var _reduxForm = __webpack_require__(88);
   
-  var _runtime = __webpack_require__(99);
+  var _runtime = __webpack_require__(102);
   
   var _runtime2 = _interopRequireDefault(_runtime);
   
-  var _intl = __webpack_require__(101);
+  var _intl = __webpack_require__(104);
   
   var _intl2 = _interopRequireDefault(_intl);
   
-  var _register = __webpack_require__(102);
+  var _register = __webpack_require__(105);
   
   var _register2 = _interopRequireDefault(_register);
   
-  var _todos = __webpack_require__(103);
+  var _todos = __webpack_require__(106);
   
   var _todos2 = _interopRequireDefault(_todos);
   
@@ -4874,7 +5110,7 @@ module.exports =
   });
 
 /***/ },
-/* 99 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -4883,7 +5119,7 @@ module.exports =
     value: true
   });
   
-  var _defineProperty2 = __webpack_require__(100);
+  var _defineProperty2 = __webpack_require__(103);
   
   var _defineProperty3 = _interopRequireDefault(_defineProperty2);
   
@@ -4910,13 +5146,13 @@ module.exports =
   }
 
 /***/ },
-/* 100 */
+/* 103 */
 /***/ function(module, exports) {
 
   module.exports = require("babel-runtime/helpers/defineProperty");
 
 /***/ },
-/* 101 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -4925,7 +5161,7 @@ module.exports =
     value: true
   });
   
-  var _defineProperty2 = __webpack_require__(100);
+  var _defineProperty2 = __webpack_require__(103);
   
   var _defineProperty3 = _interopRequireDefault(_defineProperty2);
   
@@ -4983,7 +5219,7 @@ module.exports =
   }
 
 /***/ },
-/* 102 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -5009,7 +5245,7 @@ module.exports =
   }
 
 /***/ },
-/* 103 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -5018,7 +5254,7 @@ module.exports =
   	value: true
   });
   
-  var _toConsumableArray2 = __webpack_require__(104);
+  var _toConsumableArray2 = __webpack_require__(107);
   
   var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
   
@@ -5038,13 +5274,13 @@ module.exports =
   exports.default = todos;
 
 /***/ },
-/* 104 */
+/* 107 */
 /***/ function(module, exports) {
 
   module.exports = require("babel-runtime/helpers/toConsumableArray");
 
 /***/ },
-/* 105 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -5070,7 +5306,7 @@ module.exports =
   }
 
 /***/ },
-/* 106 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -5085,7 +5321,7 @@ module.exports =
   
   var _reactRedux = __webpack_require__(53);
   
-  var _IntlProvider = __webpack_require__(107);
+  var _IntlProvider = __webpack_require__(110);
   
   var _IntlProvider2 = _interopRequireDefault(_IntlProvider);
   
@@ -5118,7 +5354,7 @@ module.exports =
   exports.default = Provide;
 
 /***/ },
-/* 107 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -5165,71 +5401,71 @@ module.exports =
   })(ProvideIntl);
 
 /***/ },
-/* 108 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
-  var jade = __webpack_require__(109);
+  var jade = __webpack_require__(112);
   
   module.exports = function template(locals) {
-  var jade_debug = [ new jade.DebugItem( 1, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ) ];
+  var jade_debug = [ new jade.DebugItem( 1, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ) ];
   try {
   var buf = [];
   var jade_mixins = {};
   var jade_interp;
   ;var locals_for_with = (locals || {});(function (body, css, description, entry, lang, state, title, trackingId) {
-  jade_debug.unshift(new jade.DebugItem( 0, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
-  jade_debug.unshift(new jade.DebugItem( 1, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 0, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 1, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<!DOCTYPE html>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 2, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 2, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<html" + (jade.attr("lang", lang, true, true)) + " class=\"no-js\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 3, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 3, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<head>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 4, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 4, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<meta charset=\"utf-8\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 5, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 5, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 6, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 6, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<title>" + (jade.escape(null == (jade_interp = title) ? "" : jade_interp)));
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</title>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 7, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 7, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<meta name=\"description\"" + (jade.attr("description", description, true, true)) + ">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 8, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 8, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 9, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 9, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 10, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 10, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 11, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 11, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Roboto\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 12, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 12, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"/assets/css/icons/icomoon/styles.css\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 13, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 13, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"/assets/css/bootstrap.css\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 14, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 14, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"/assets/css/core.css\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 15, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 15, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"/assets/css/colors.css\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 16, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 16, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"/assets/css/components.css\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 17, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 17, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<style id=\"css\">" + (null == (jade_interp = css) ? "" : jade_interp));
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
@@ -5238,40 +5474,40 @@ module.exports =
   jade_debug.shift();
   buf.push("</head>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 18, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
-  buf.push("<body>");
+  jade_debug.unshift(new jade.DebugItem( 18, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  buf.push("<body class=\"navbar-top\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 19, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 19, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<div id=\"app\">" + (null == (jade_interp = body) ? "" : jade_interp));
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</div>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 20, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 20, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script id=\"source\"" + (jade.attr("src", entry, true, true)) + (jade.attr("data-initial-state", state, true, true)) + ">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</script>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 21, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 21, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script src=\"/assets/js/core/libraries/jquery.min.js\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</script>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 22, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 22, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script src=\"/assets/js/core/libraries/bootstrap.min.js\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</script>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 23, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 23, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script src=\"/assets/js/core/app.js\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</script>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 24, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 24, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script>");
   jade_debug.unshift(new jade.DebugItem( 26, jade_debug[0].filename ));
   jade_debug.unshift(new jade.DebugItem( 26, jade_debug[0].filename ));
@@ -5284,11 +5520,11 @@ module.exports =
   jade_debug.shift();
   buf.push("</script>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 27, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 27, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   if ( trackingId)
   {
-  jade_debug.unshift(new jade.DebugItem( 28, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
-  jade_debug.unshift(new jade.DebugItem( 28, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 28, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 28, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script src=\"https://www.google-analytics.com/analytics.js\" async defer>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
@@ -5305,12 +5541,12 @@ module.exports =
   jade_debug.shift();
   jade_debug.shift();}.call(this,"body" in locals_for_with?locals_for_with.body:typeof body!=="undefined"?body:undefined,"css" in locals_for_with?locals_for_with.css:typeof css!=="undefined"?css:undefined,"description" in locals_for_with?locals_for_with.description:typeof description!=="undefined"?description:undefined,"entry" in locals_for_with?locals_for_with.entry:typeof entry!=="undefined"?entry:undefined,"lang" in locals_for_with?locals_for_with.lang:typeof lang!=="undefined"?lang:undefined,"state" in locals_for_with?locals_for_with.state:typeof state!=="undefined"?state:undefined,"title" in locals_for_with?locals_for_with.title:typeof title!=="undefined"?title:undefined,"trackingId" in locals_for_with?locals_for_with.trackingId:typeof trackingId!=="undefined"?trackingId:undefined));;return buf.join("");
   } catch (err) {
-    jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, "doctype html\nhtml(class=\"no-js\", lang=lang)\n  head\n    meta(charset=\"utf-8\")\n    meta(http-equiv=\"x-ua-compatible\", content=\"ie=edge\")\n    title= title\n    meta(name=\"description\", description=description)\n    meta(name=\"viewport\", content=\"width=device-width, initial-scale=1\")\n    link(rel=\"apple-touch-icon\", href=\"apple-touch-icon.png\")\n    link(rel=\"apple-touch-icon\", href=\"apple-touch-icon.png\")\n    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto')\n    link(rel='stylesheet', href='/assets/css/icons/icomoon/styles.css')\n    link(rel='stylesheet', href='/assets/css/bootstrap.css')\n    link(rel='stylesheet', href='/assets/css/core.css')\n    link(rel='stylesheet', href='/assets/css/colors.css')\n    link(rel='stylesheet', href='/assets/css/components.css')\n    style#css!= css\n  body\n    #app!= body\n    script#source(src=entry, data-initial-state=state)\n    script(src='/assets/js/core/libraries/jquery.min.js')\n    script(src='/assets/js/core/libraries/bootstrap.min.js')\n    script(src='/assets/js/core/app.js')\n    script.\n      window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;\n      ga('create','#{trackingId}','auto');ga('send','pageview')\n    if trackingId\n      script(src=\"https://www.google-analytics.com/analytics.js\", async=true, defer=true)\n");
+    jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, "doctype html\nhtml(class=\"no-js\", lang=lang)\n  head\n    meta(charset=\"utf-8\")\n    meta(http-equiv=\"x-ua-compatible\", content=\"ie=edge\")\n    title= title\n    meta(name=\"description\", description=description)\n    meta(name=\"viewport\", content=\"width=device-width, initial-scale=1\")\n    link(rel=\"apple-touch-icon\", href=\"apple-touch-icon.png\")\n    link(rel=\"apple-touch-icon\", href=\"apple-touch-icon.png\")\n    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto')\n    link(rel='stylesheet', href='/assets/css/icons/icomoon/styles.css')\n    link(rel='stylesheet', href='/assets/css/bootstrap.css')\n    link(rel='stylesheet', href='/assets/css/core.css')\n    link(rel='stylesheet', href='/assets/css/colors.css')\n    link(rel='stylesheet', href='/assets/css/components.css')\n    style#css!= css\n  body.navbar-top\n    #app!= body\n    script#source(src=entry, data-initial-state=state)\n    script(src='/assets/js/core/libraries/jquery.min.js')\n    script(src='/assets/js/core/libraries/bootstrap.min.js')\n    script(src='/assets/js/core/app.js')\n    script.\n      window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;\n      ga('create','#{trackingId}','auto');ga('send','pageview')\n    if trackingId\n      script(src=\"https://www.google-analytics.com/analytics.js\", async=true, defer=true)\n");
   }
   }
 
 /***/ },
-/* 109 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -5530,7 +5766,7 @@ module.exports =
       throw err;
     }
     try {
-      str = str || __webpack_require__(110).readFileSync(filename, 'utf8')
+      str = str || __webpack_require__(113).readFileSync(filename, 'utf8')
     } catch (ex) {
       rethrow(err, null, lineno)
     }
@@ -5562,38 +5798,38 @@ module.exports =
 
 
 /***/ },
-/* 110 */
+/* 113 */
 /***/ function(module, exports) {
 
   module.exports = require("fs");
 
 /***/ },
-/* 111 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
-  var jade = __webpack_require__(109);
+  var jade = __webpack_require__(112);
   
   module.exports = function template(locals) {
-  var jade_debug = [ new jade.DebugItem( 1, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ) ];
+  var jade_debug = [ new jade.DebugItem( 1, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ) ];
   try {
   var buf = [];
   var jade_mixins = {};
   var jade_interp;
   ;var locals_for_with = (locals || {});(function (stack) {
-  jade_debug.unshift(new jade.DebugItem( 0, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
-  jade_debug.unshift(new jade.DebugItem( 1, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 0, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 1, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<!DOCTYPE html>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 2, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 2, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<html lang=\"en\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 3, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 3, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<head>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 4, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 4, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<meta charset=\"utf-8\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 5, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 5, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<title>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.unshift(new jade.DebugItem( 5, jade_debug[0].filename ));
@@ -5602,10 +5838,10 @@ module.exports =
   jade_debug.shift();
   buf.push("</title>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 6, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 6, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 7, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 7, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<style>");
   jade_debug.unshift(new jade.DebugItem( 56, jade_debug[0].filename ));
   jade_debug.unshift(new jade.DebugItem( 56, jade_debug[0].filename ));
@@ -5809,10 +6045,10 @@ module.exports =
   jade_debug.shift();
   buf.push("</head>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 57, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 57, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<body>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 58, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 58, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<h1>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.unshift(new jade.DebugItem( 58, jade_debug[0].filename ));
@@ -5821,7 +6057,7 @@ module.exports =
   jade_debug.shift();
   buf.push("</h1>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 59, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 59, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<p>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.unshift(new jade.DebugItem( 59, jade_debug[0].filename ));
@@ -5830,7 +6066,7 @@ module.exports =
   jade_debug.shift();
   buf.push("</p>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 60, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 60, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<pre>" + (jade.escape(null == (jade_interp = stack) ? "" : jade_interp)));
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
@@ -5842,7 +6078,7 @@ module.exports =
   jade_debug.shift();
   buf.push("</html>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 61, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 61, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<!-- IE needs 512+ bytes: http://blogs.msdn.com/b/ieinternals/archive/2010/08/19/http-error-pages-in-internet-explorer.aspx-->");
   jade_debug.shift();
   jade_debug.shift();}.call(this,"stack" in locals_for_with?locals_for_with.stack:typeof stack!=="undefined"?stack:undefined));;return buf.join("");
@@ -5852,24 +6088,14 @@ module.exports =
   }
 
 /***/ },
-/* 112 */
-/***/ function(module, exports) {
-
-  module.exports = require("redux-form");
-
-/***/ },
-/* 113 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
-  'use strict';
+  "use strict";
   
   Object.defineProperty(exports, "__esModule", {
-    value: true
+  	value: true
   });
-  
-  var _extends2 = __webpack_require__(42);
-  
-  var _extends3 = _interopRequireDefault(_extends2);
   
   var _getPrototypeOf = __webpack_require__(23);
   
@@ -5895,123 +6121,30 @@ module.exports =
   
   var _react2 = _interopRequireDefault(_react);
   
-  var _reduxForm = __webpack_require__(112);
-  
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
-  var RegisterFormComponent = function (_React$Component) {
-    (0, _inherits3.default)(RegisterFormComponent, _React$Component);
+  var ValidateMessageComponent = function (_React$Component) {
+  	(0, _inherits3.default)(ValidateMessageComponent, _React$Component);
   
-    function RegisterFormComponent() {
-      (0, _classCallCheck3.default)(this, RegisterFormComponent);
-      return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RegisterFormComponent).apply(this, arguments));
-    }
+  	function ValidateMessageComponent() {
+  		(0, _classCallCheck3.default)(this, ValidateMessageComponent);
+  		return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ValidateMessageComponent).apply(this, arguments));
+  	}
   
-    (0, _createClass3.default)(RegisterFormComponent, [{
-      key: 'render',
-      value: function render() {
-        var _this2 = this;
-  
-        var _props = this.props;
-        var _props$fields = _props.fields;
-        var firstname = _props$fields.firstname;
-        var lastname = _props$fields.lastname;
-        var email = _props$fields.email;
-        var password = _props$fields.password;
-        var handleSubmit = _props.handleSubmit;
-        var registerHandle = _props.registerHandle;
-        var submitting = _props.submitting;
-  
-        return _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'form',
-            { onSubmit: handleSubmit(function (data) {
-                _this2.props.registerHandle(data);
-              }) },
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'usernameOrEmail' },
-                'First name:'
-              ),
-              _react2.default.createElement('input', (0, _extends3.default)({
-                className: 'form-control',
-                id: 'fistname',
-                type: 'text',
-                name: 'fistname',
-                autoFocus: true
-              }, firstname))
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'usernameOrEmail' },
-                'Last name:'
-              ),
-              _react2.default.createElement('input', (0, _extends3.default)({
-                className: 'form-control',
-                id: 'lastname',
-                type: 'text',
-                name: 'lastname'
-              }, lastname))
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'usernameOrEmail' },
-                'Username or email address:'
-              ),
-              _react2.default.createElement('input', (0, _extends3.default)({
-                className: 'form-control',
-                id: 'email',
-                type: 'text',
-                name: 'email'
-              }, email))
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'password' },
-                'Password:'
-              ),
-              _react2.default.createElement('input', (0, _extends3.default)({
-                className: 'form-control',
-                id: 'password',
-                type: 'password',
-                name: 'password'
-              }, password))
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group' },
-              _react2.default.createElement(
-                'button',
-                { className: 'btn bg-slate-700 btn-block', type: 'submit', disabled: submitting },
-                'Register'
-              )
-            )
-          )
-        );
-      }
-    }]);
-    return RegisterFormComponent;
+  	(0, _createClass3.default)(ValidateMessageComponent, [{
+  		key: "render",
+  		value: function render() {
+  			return _react2.default.createElement(
+  				"p",
+  				{ className: "text-danger" },
+  				this.props.message
+  			);
+  		}
+  	}]);
+  	return ValidateMessageComponent;
   }(_react2.default.Component);
   
-  RegisterFormComponent = (0, _reduxForm.reduxForm)({ // <----- THIS IS THE IMPORTANT PART!
-    form: 'registerForm', // a unique name for this form
-    fields: ['firstname', 'lastname', 'email', 'password'] // all the fields in your form
-  })(RegisterFormComponent);
-  exports.default = RegisterFormComponent;
+  exports.default = ValidateMessageComponent;
 
 /***/ }
 /******/ ]);

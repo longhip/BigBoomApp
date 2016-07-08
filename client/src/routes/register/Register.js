@@ -39,11 +39,19 @@ const RegisterContainer = connect(
 function Register(props, context) {
   context.setTitle(title);
   return (
-    <div className={s.root}>
-      <div className={s.container}>
-        <h1>{title}</h1>
-        <p className={s.lead}>Register with your username or company email address.</p>
-        <RegisterFormComponent registerHandle={props.postRegister} customProps="a"/>
+    <div className="page-container">
+      <div className="container content">
+        <div className="col-lg-6 col-lg-offset-3">
+          <div className="panel registration-form">
+            <div className="panel-body">
+              <div className="text-center">
+                <div className="icon-object border-success text-success"><i className="icon-plus3"></i></div>
+                <h5 className="content-group-lg">Create account <small className="display-block">All fields are required</small></h5>
+              </div>
+              <RegisterFormComponent registerHandle={props.postRegister}/>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

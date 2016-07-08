@@ -36,8 +36,8 @@ const messages = defineMessages({
 
 function Header() {
   return (
-    <div>
-      <div className="navbar navbar-inverse navbar-lg">
+    <div className="">
+      <div className="navbar bg-danger navbar-fixed-top navbar-inverse navbar-sm">
         <div className="container">
           <div className="navbar-collapse collapse" id="navbar-mobile">
               <a className="navbar-brand" href="index.html"><img src="/assets/images/logo_light.png" alt="" /></a>
