@@ -1,7 +1,8 @@
 import React from 'react';
 import {reduxForm} from 'redux-form';
-import {getValues} from 'redux-form';
 import ValidateMessageComponent from '../Validate/Message';
+const fields =  ['firstname', 'lastname', 'email', 'password', 're_password'];
+const asyncBlurFields = [ 'firstname', 'lastname', 'email', 'password', 're_password' ];
 
 const validate = values => {
   const errors = {}
@@ -41,11 +42,11 @@ const validate = values => {
 
 class RegisterFormComponent extends React.Component{
   render(){
-    const {fields: {firstname, lastname, email, password, re_password}, handleSubmit, registerHandle, submitting} = this.props;
+    const {fields: {firstname, lastname, email, password, re_password}, handleSubmit, submitting} = this.props;
     return (
       <div>
         <form onSubmit={handleSubmit(data => {
-          this.props.registerHandle(data);
+          this.props.submit(data);
         })}>
           <div className="form-group">
               <label htmlFor="usernameOrEmail">
@@ -123,10 +124,10 @@ class RegisterFormComponent extends React.Component{
     );
   }
 }
-RegisterFormComponent = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
-  form: 'registerForm',                           // a unique name for this form
-  fields: ['firstname', 'lastname', 'email', 'password', 're_password'], // all the fields in your form
-  asyncBlurFields: [ 'fistname', 'lastname', 'email', 'password', 're_password' ],
-  validate 
+RegisterFormComponent = reduxForm({
+  form: 'registerForm',
+  fields,
+  asyncBlurFields,
+  validate
 })(RegisterFormComponent);
 export default RegisterFormComponent;

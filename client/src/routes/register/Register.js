@@ -11,20 +11,20 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from '../../components/App/App.css';
 import { connect } from 'react-redux';
-import { postRegister } from '../../actions/register';
+import { register } from '../../actions/auth';
 import RegisterFormComponent from '../../components/Form/Register';
 
 const title = 'New User Registration';
 const mapStateToProps = (state) => {
   	return {
-    	register: state.register
+    	auth: state.auth
   	};
 };
 
 const mapDispatchToProps = (dispatch) => {
   	return {
-    	postRegister: (registrationData) => {
-      		dispatch(postRegister(registrationData));
+    	submit: (data) => {
+      		dispatch(register(data));
     	}
   	};
 };
@@ -48,7 +48,7 @@ function Register(props, context) {
                 <div className="icon-object border-success text-success"><i className="icon-plus3"></i></div>
                 <h5 className="content-group-lg">Create account <small className="display-block">All fields are required</small></h5>
               </div>
-              <RegisterFormComponent registerHandle={props.postRegister}/>
+              <RegisterFormComponent submit={props.submit}/>
             </div>
           </div>
         </div>

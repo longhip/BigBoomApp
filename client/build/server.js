@@ -176,7 +176,7 @@ module.exports =
   // Register server-side rendering middleware
   // -----------------------------------------------------------------------------
   app.get('*', function () {
-    var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(req, res, next) {
+    var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(req, res, next) {
       return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -301,8 +301,9 @@ module.exports =
         }
       }, _callee2, undefined, [[0, 4]]);
     }));
+  
     return function (_x, _x2, _x3) {
-      return ref.apply(this, arguments);
+      return _ref.apply(this, arguments);
     };
   }());
   
@@ -2847,7 +2848,7 @@ module.exports =
       var locale = _ref.locale;
   
       return function () {
-          var ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(dispatch) {
+          var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(dispatch) {
               var messages, maxAge;
               return _regenerator2.default.wrap(function _callee$(_context) {
                   while (1) {
@@ -2906,8 +2907,9 @@ module.exports =
                   }
               }, _callee, _this, [[1, 7]]);
           }));
+  
           return function (_x) {
-              return ref.apply(this, arguments);
+              return _ref2.apply(this, arguments);
           };
       }();
   }
@@ -3150,7 +3152,15 @@ module.exports =
   var SET_LOCALE_START = exports.SET_LOCALE_START = 'SET_LOCALE_START';
   var SET_LOCALE_SUCCESS = exports.SET_LOCALE_SUCCESS = 'SET_LOCALE_SUCCESS';
   var SET_LOCALE_ERROR = exports.SET_LOCALE_ERROR = 'SET_LOCALE_ERROR';
-  var REGISTER = exports.REGISTER = 'REGISTER';
+  var REGISTER_START = exports.REGISTER_START = 'REGISTER_START';
+  var REGISTER_SUCCESS = exports.REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+  var REGISTER_FAILED = exports.REGISTER_FAILED = 'REGISTER_FAILED';
+  var LOGIN_START = exports.LOGIN_START = 'LOGIN_START';
+  var LOGIN_SUCCESS = exports.LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+  var LOGIN_FAILED = exports.LOGIN_FAILED = 'LOGIN_FAILED';
+  var LOGOUT_START = exports.LOGOUT_START = 'LOGOUT_START';
+  var LOGOUT_SUCCESS = exports.LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+  var LOGOUT_FAILED = exports.LOGOUT_FAILED = 'LOGOUT_FAILED';
 
 /***/ },
 /* 61 */
@@ -4237,7 +4247,7 @@ module.exports =
   
   var _reactRedux = __webpack_require__(53);
   
-  var _register = __webpack_require__(85);
+  var _auth = __webpack_require__(115);
   
   var _Register = __webpack_require__(86);
   
@@ -4257,14 +4267,14 @@ module.exports =
   var title = 'New User Registration';
   var mapStateToProps = function mapStateToProps(state) {
     return {
-      register: state.register
+      auth: state.auth
     };
   };
   
   var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
-      postRegister: function postRegister(registrationData) {
-        dispatch((0, _register.postRegister)(registrationData));
+      submit: function submit(data) {
+        dispatch((0, _auth.register)(data));
       }
     };
   };
@@ -4307,7 +4317,7 @@ module.exports =
                   )
                 )
               ),
-              _react2.default.createElement(_Register2.default, { registerHandle: props.postRegister })
+              _react2.default.createElement(_Register2.default, { submit: props.submit })
             )
           )
         )
@@ -4320,28 +4330,7 @@ module.exports =
   exports.default = (0, _withStyles2.default)(_App2.default)(RegisterContainer);
 
 /***/ },
-/* 85 */
-/***/ function(module, exports, __webpack_require__) {
-
-  'use strict';
-  
-  Object.defineProperty(exports, "__esModule", {
-  	value: true
-  });
-  exports.postRegister = undefined;
-  
-  var _constants = __webpack_require__(60);
-  
-  var postRegister = exports.postRegister = function postRegister(registrationData) {
-  	return {
-  		type: _constants.REGISTER,
-  		payload: {
-  			registrationData: registrationData
-  		}
-  	};
-  };
-
-/***/ },
+/* 85 */,
 /* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4379,13 +4368,16 @@ module.exports =
   
   var _react2 = _interopRequireDefault(_react);
   
-  var _reduxForm = __webpack_require__(88);
+  var _reduxForm = __webpack_require__(87);
   
-  var _Message = __webpack_require__(115);
+  var _Message = __webpack_require__(88);
   
   var _Message2 = _interopRequireDefault(_Message);
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  var fields = ['firstname', 'lastname', 'email', 'password', 're_password'];
+  var asyncBlurFields = ['firstname', 'lastname', 'email', 'password', 're_password'];
   
   var validate = function validate(values) {
     var errors = {};
@@ -4444,7 +4436,6 @@ module.exports =
         var password = _props$fields.password;
         var re_password = _props$fields.re_password;
         var handleSubmit = _props.handleSubmit;
-        var registerHandle = _props.registerHandle;
         var submitting = _props.submitting;
   
         return _react2.default.createElement(
@@ -4453,7 +4444,7 @@ module.exports =
           _react2.default.createElement(
             'form',
             { onSubmit: handleSubmit(function (data) {
-                _this2.props.registerHandle(data);
+                _this2.props.submit(data);
               }) },
             _react2.default.createElement(
               'div',
@@ -4552,20 +4543,78 @@ module.exports =
     return RegisterFormComponent;
   }(_react2.default.Component);
   
-  RegisterFormComponent = (0, _reduxForm.reduxForm)({ // <----- THIS IS THE IMPORTANT PART!
-    form: 'registerForm', // a unique name for this form
-    fields: ['firstname', 'lastname', 'email', 'password', 're_password'], // all the fields in your form
-    asyncBlurFields: ['fistname', 'lastname', 'email', 'password', 're_password'],
+  RegisterFormComponent = (0, _reduxForm.reduxForm)({
+    form: 'registerForm',
+    fields: fields,
+    asyncBlurFields: asyncBlurFields,
     validate: validate
   })(RegisterFormComponent);
   exports.default = RegisterFormComponent;
 
 /***/ },
-/* 87 */,
-/* 88 */
+/* 87 */
 /***/ function(module, exports) {
 
   module.exports = require("redux-form");
+
+/***/ },
+/* 88 */
+/***/ function(module, exports, __webpack_require__) {
+
+  "use strict";
+  
+  Object.defineProperty(exports, "__esModule", {
+  	value: true
+  });
+  
+  var _getPrototypeOf = __webpack_require__(23);
+  
+  var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+  
+  var _classCallCheck2 = __webpack_require__(24);
+  
+  var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+  
+  var _createClass2 = __webpack_require__(25);
+  
+  var _createClass3 = _interopRequireDefault(_createClass2);
+  
+  var _possibleConstructorReturn2 = __webpack_require__(26);
+  
+  var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+  
+  var _inherits2 = __webpack_require__(27);
+  
+  var _inherits3 = _interopRequireDefault(_inherits2);
+  
+  var _react = __webpack_require__(17);
+  
+  var _react2 = _interopRequireDefault(_react);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  var ValidateMessageComponent = function (_React$Component) {
+  	(0, _inherits3.default)(ValidateMessageComponent, _React$Component);
+  
+  	function ValidateMessageComponent() {
+  		(0, _classCallCheck3.default)(this, ValidateMessageComponent);
+  		return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ValidateMessageComponent).apply(this, arguments));
+  	}
+  
+  	(0, _createClass3.default)(ValidateMessageComponent, [{
+  		key: "render",
+  		value: function render() {
+  			return _react2.default.createElement(
+  				"p",
+  				{ className: "text-danger" },
+  				this.props.message
+  			);
+  		}
+  	}]);
+  	return ValidateMessageComponent;
+  }(_react2.default.Component);
+  
+  exports.default = ValidateMessageComponent;
 
 /***/ },
 /* 89 */
@@ -5081,7 +5130,7 @@ module.exports =
   
   var _redux = __webpack_require__(99);
   
-  var _reduxForm = __webpack_require__(88);
+  var _reduxForm = __webpack_require__(87);
   
   var _runtime = __webpack_require__(102);
   
@@ -5091,9 +5140,9 @@ module.exports =
   
   var _intl2 = _interopRequireDefault(_intl);
   
-  var _register = __webpack_require__(105);
+  var _auth = __webpack_require__(116);
   
-  var _register2 = _interopRequireDefault(_register);
+  var _auth2 = _interopRequireDefault(_auth);
   
   var _todos = __webpack_require__(106);
   
@@ -5104,7 +5153,7 @@ module.exports =
   exports.default = (0, _redux.combineReducers)({
     runtime: _runtime2.default,
     intl: _intl2.default,
-    register: _register2.default,
+    auth: _auth2.default,
     todos: _todos2.default,
     form: _reduxForm.reducer
   });
@@ -5219,32 +5268,7 @@ module.exports =
   }
 
 /***/ },
-/* 105 */
-/***/ function(module, exports, __webpack_require__) {
-
-  'use strict';
-  
-  Object.defineProperty(exports, "__esModule", {
-  	value: true
-  });
-  exports.default = register;
-  
-  var _constants = __webpack_require__(60);
-  
-  function register() {
-  	var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-  	var action = arguments[1];
-  
-  	switch (action.type) {
-  		case _constants.REGISTER:
-  			state = action.payload.registrationData;
-  			return state;
-  		default:
-  			return state;
-  	}
-  }
-
-/***/ },
+/* 105 */,
 /* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -5407,65 +5431,65 @@ module.exports =
   var jade = __webpack_require__(112);
   
   module.exports = function template(locals) {
-  var jade_debug = [ new jade.DebugItem( 1, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ) ];
+  var jade_debug = [ new jade.DebugItem( 1, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ) ];
   try {
   var buf = [];
   var jade_mixins = {};
   var jade_interp;
   ;var locals_for_with = (locals || {});(function (body, css, description, entry, lang, state, title, trackingId) {
-  jade_debug.unshift(new jade.DebugItem( 0, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
-  jade_debug.unshift(new jade.DebugItem( 1, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 0, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 1, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<!DOCTYPE html>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 2, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 2, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<html" + (jade.attr("lang", lang, true, true)) + " class=\"no-js\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 3, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 3, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<head>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 4, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 4, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<meta charset=\"utf-8\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 5, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 5, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 6, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 6, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<title>" + (jade.escape(null == (jade_interp = title) ? "" : jade_interp)));
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</title>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 7, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 7, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<meta name=\"description\"" + (jade.attr("description", description, true, true)) + ">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 8, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 8, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 9, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 9, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 10, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 10, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 11, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 11, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Roboto\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 12, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 12, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"/assets/css/icons/icomoon/styles.css\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 13, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 13, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"/assets/css/bootstrap.css\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 14, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 14, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"/assets/css/core.css\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 15, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 15, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"/assets/css/colors.css\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 16, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 16, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<link rel=\"stylesheet\" href=\"/assets/css/components.css\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 17, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 17, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<style id=\"css\">" + (null == (jade_interp = css) ? "" : jade_interp));
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
@@ -5474,40 +5498,40 @@ module.exports =
   jade_debug.shift();
   buf.push("</head>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 18, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 18, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<body class=\"navbar-top\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 19, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 19, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<div id=\"app\">" + (null == (jade_interp = body) ? "" : jade_interp));
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</div>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 20, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 20, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script id=\"source\"" + (jade.attr("src", entry, true, true)) + (jade.attr("data-initial-state", state, true, true)) + ">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</script>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 21, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 21, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script src=\"/assets/js/core/libraries/jquery.min.js\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</script>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 22, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 22, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script src=\"/assets/js/core/libraries/bootstrap.min.js\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</script>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 23, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 23, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script src=\"/assets/js/core/app.js\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
   buf.push("</script>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 24, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 24, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script>");
   jade_debug.unshift(new jade.DebugItem( 26, jade_debug[0].filename ));
   jade_debug.unshift(new jade.DebugItem( 26, jade_debug[0].filename ));
@@ -5520,11 +5544,11 @@ module.exports =
   jade_debug.shift();
   buf.push("</script>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 27, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 27, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   if ( trackingId)
   {
-  jade_debug.unshift(new jade.DebugItem( 28, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
-  jade_debug.unshift(new jade.DebugItem( 28, "/Users/Lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 28, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 28, "/Users/lynn/Work/BigBoom/client/src/views/index.jade" ));
   buf.push("<script src=\"https://www.google-analytics.com/analytics.js\" async defer>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
@@ -5810,26 +5834,26 @@ module.exports =
   var jade = __webpack_require__(112);
   
   module.exports = function template(locals) {
-  var jade_debug = [ new jade.DebugItem( 1, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ) ];
+  var jade_debug = [ new jade.DebugItem( 1, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ) ];
   try {
   var buf = [];
   var jade_mixins = {};
   var jade_interp;
   ;var locals_for_with = (locals || {});(function (stack) {
-  jade_debug.unshift(new jade.DebugItem( 0, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
-  jade_debug.unshift(new jade.DebugItem( 1, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 0, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 1, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<!DOCTYPE html>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 2, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 2, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<html lang=\"en\">");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 3, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 3, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<head>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 4, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 4, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<meta charset=\"utf-8\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 5, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 5, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<title>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.unshift(new jade.DebugItem( 5, jade_debug[0].filename ));
@@ -5838,10 +5862,10 @@ module.exports =
   jade_debug.shift();
   buf.push("</title>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 6, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 6, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 7, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 7, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<style>");
   jade_debug.unshift(new jade.DebugItem( 56, jade_debug[0].filename ));
   jade_debug.unshift(new jade.DebugItem( 56, jade_debug[0].filename ));
@@ -6045,10 +6069,10 @@ module.exports =
   jade_debug.shift();
   buf.push("</head>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 57, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 57, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<body>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
-  jade_debug.unshift(new jade.DebugItem( 58, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 58, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<h1>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.unshift(new jade.DebugItem( 58, jade_debug[0].filename ));
@@ -6057,7 +6081,7 @@ module.exports =
   jade_debug.shift();
   buf.push("</h1>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 59, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 59, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<p>");
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.unshift(new jade.DebugItem( 59, jade_debug[0].filename ));
@@ -6066,7 +6090,7 @@ module.exports =
   jade_debug.shift();
   buf.push("</p>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 60, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 60, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<pre>" + (jade.escape(null == (jade_interp = stack) ? "" : jade_interp)));
   jade_debug.unshift(new jade.DebugItem( undefined, jade_debug[0].filename ));
   jade_debug.shift();
@@ -6078,7 +6102,7 @@ module.exports =
   jade_debug.shift();
   buf.push("</html>");
   jade_debug.shift();
-  jade_debug.unshift(new jade.DebugItem( 61, "/Users/Lynn/Work/BigBoom/client/src/views/error.jade" ));
+  jade_debug.unshift(new jade.DebugItem( 61, "/Users/lynn/Work/BigBoom/client/src/views/error.jade" ));
   buf.push("<!-- IE needs 512+ bytes: http://blogs.msdn.com/b/ieinternals/archive/2010/08/19/http-error-pages-in-internet-explorer.aspx-->");
   jade_debug.shift();
   jade_debug.shift();}.call(this,"stack" in locals_for_with?locals_for_with.stack:typeof stack!=="undefined"?stack:undefined));;return buf.join("");
@@ -6091,60 +6115,101 @@ module.exports =
 /* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
-  "use strict";
+  'use strict';
   
   Object.defineProperty(exports, "__esModule", {
-  	value: true
+    value: true
   });
+  exports.register = undefined;
   
-  var _getPrototypeOf = __webpack_require__(23);
+  var _constants = __webpack_require__(60);
   
-  var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+  var registerSuccess = function registerSuccess(response) {
+    return {
+      type: _constants.REGISTER_SUCCESS,
+      payload: {
+        response: response
+      }
+    };
+  };
   
-  var _classCallCheck2 = __webpack_require__(24);
+  var registerFailed = function registerFailed(response) {
+    return {
+      type: _constants.REGISTER_FAILED,
+      payload: {
+        response: response
+      }
+    };
+  };
   
-  var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+  var register = exports.register = function register(data) {
+    // console.log(data);
+    return {
+      type: _constants.REGISTER_START,
+      payload: {
+        data: data
+      }
+    };
+  };
+
+/***/ },
+/* 116 */
+/***/ function(module, exports, __webpack_require__) {
+
+  'use strict';
   
-  var _createClass2 = __webpack_require__(25);
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = auth;
   
-  var _createClass3 = _interopRequireDefault(_createClass2);
+  var _constants = __webpack_require__(60);
   
-  var _possibleConstructorReturn2 = __webpack_require__(26);
+  function auth() {
+    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var action = arguments[1];
   
-  var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-  
-  var _inherits2 = __webpack_require__(27);
-  
-  var _inherits3 = _interopRequireDefault(_inherits2);
-  
-  var _react = __webpack_require__(17);
-  
-  var _react2 = _interopRequireDefault(_react);
-  
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-  
-  var ValidateMessageComponent = function (_React$Component) {
-  	(0, _inherits3.default)(ValidateMessageComponent, _React$Component);
-  
-  	function ValidateMessageComponent() {
-  		(0, _classCallCheck3.default)(this, ValidateMessageComponent);
-  		return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ValidateMessageComponent).apply(this, arguments));
-  	}
-  
-  	(0, _createClass3.default)(ValidateMessageComponent, [{
-  		key: "render",
-  		value: function render() {
-  			return _react2.default.createElement(
-  				"p",
-  				{ className: "text-danger" },
-  				this.props.message
-  			);
-  		}
-  	}]);
-  	return ValidateMessageComponent;
-  }(_react2.default.Component);
-  
-  exports.default = ValidateMessageComponent;
+    switch (action.type) {
+      case _constants.REGISTER_START:
+        {
+          // state = action.payload;
+          // return state;
+          console.log(action.payload);
+        }
+      case _constants.REGISTER_SUCCESS:
+        {
+          state = action.payload;
+          return state;
+        }
+      case _constants.REGISTER_FAILED:
+        {
+          state = action.payload;
+          return state;
+        }
+      case _constants.LOGIN_SUCCESS:
+        {
+          state = action.payload;
+          return state;
+        }
+      case _constants.LOGIN_FAILED:
+        {
+          state = action.payload;
+          return state;
+        }
+      case _constants.LOGOUT_SUCCESS:
+        {
+          state = action.payload;
+          return state;
+        }
+      case _constants.LOGOUT_FAILED:
+        {
+          state = action.payload;
+          return state;
+        }
+      default:
+        return state;
+    }
+  }
 
 /***/ }
 /******/ ]);
